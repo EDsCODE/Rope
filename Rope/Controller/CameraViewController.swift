@@ -20,15 +20,29 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
     var topPanel: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(blurEffectView)
         return view
     }()
     
     var bottomPanel: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(blurEffectView)
         return view
+    }()
+    
+    var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
     
     override func viewDidLoad() {
@@ -40,6 +54,15 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         
         self.view.addSubview(topPanel)
         self.view.addSubview(bottomPanel)
+        
+        //setup tableview
+        tableView.delegate = self
+        self.view.addSubview(tableView)
+        tableView.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.35)
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.register(UINib(nibName: "RopeCell", bundle: nil), forCellReuseIdentifier: "ropeCell")
+        
         let constraints = [
             topPanel.topAnchor.constraint(equalTo: self.view.topAnchor),
             topPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -48,7 +71,11 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
             bottomPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             bottomPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             bottomPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            bottomPanel.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - self.view.bounds.width) / 2)
+            bottomPanel.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - self.view.bounds.width) / 2),
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
         setupLongPressforVideo()
@@ -65,13 +92,13 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         if sender.state == .ended {
             print("UIGestureRecognizerStateEnded")
             stopVideoRecording()
-            
             pause(shapeLayer!)
             self.buttonTimer?.invalidate()
             //Do Whatever You want on End of Gesture
         }
         else if sender.state == .began {
             print("UIGestureRecognizerStateBegan.")
+            tableView.isHidden = true
             startVideoRecording()
             buttonTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(cancel(_:)), userInfo: nil, repeats: false)
             animateRecordingLine()
@@ -222,6 +249,7 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
             if let url = capturedURL {
                 destination?.videoURL = url
                 self.capturedURL = nil
+                tableView.isHidden = false
             }
         }
     }
@@ -239,3 +267,30 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
     
 }
 
+extension CameraViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.contentView.backgroundColor = UIColor.clear
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
+}
+
+extension CameraViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ropeCell", for: indexPath) as! RopeCell
+        cell.backgroundColor = .clear
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+}

@@ -24,6 +24,8 @@
 		1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */; };
 		1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF861FAB697600EC8780 /* CustomSegues.swift */; };
 		1AB5FF901FAD73AD00EC8780 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */; };
+		1AB5FF921FAD747B00EC8780 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */; };
+		1AB5FF961FAE237100EC8780 /* RopeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AB5FF951FAE237100EC8780 /* RopeCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
 		1AB5FF861FAB697600EC8780 /* CustomSegues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegues.swift; sourceTree = "<group>"; };
 		1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		1AB5FF951FAE237100EC8780 /* RopeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RopeCell.xib; sourceTree = "<group>"; };
 		50F5BFEBB349A5F357FAD6B3 /* Pods-Rope.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rope.release.xcconfig"; path = "Pods/Target Support Files/Pods-Rope/Pods-Rope.release.xcconfig"; sourceTree = "<group>"; };
 		7D3E04C1E7D03CE3F5A08044 /* Pods_Rope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA65B7248470CE8810E8062 /* Pods-Rope.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rope.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Rope/Pods-Rope.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4BE1791FAA2199001EEB15 /* RopeCell.swift */,
+				1AB5FF951FAE237100EC8780 /* RopeCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */,
+				1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */,
 				1A72EE191FA22B810048A45F /* Auth */,
 			);
 			path = Controller;
@@ -222,6 +228,7 @@
 				1A1785301FA0C85C00427741 /* Assets.xcassets in Resources */,
 				1A5576251FA0DD93001D404D /* Auth.storyboard in Resources */,
 				1A17852E1FA0C85C00427741 /* Main.storyboard in Resources */,
+				1AB5FF961FAE237100EC8780 /* RopeCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +298,7 @@
 				1A1785291FA0C85C00427741 /* AppDelegate.swift in Sources */,
 				1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */,
 				1A4BE17A1FAA2199001EEB15 /* RopeCell.swift in Sources */,
+				1AB5FF921FAD747B00EC8780 /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

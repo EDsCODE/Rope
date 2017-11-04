@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="114" id="Ypb-We-fSE" customClass="RopeCell" customModule="Rope" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="114"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ypb-We-fSE" id="72G-OV-gjj">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="113.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kae-K7-g7b">
+                        <rect key="frame" x="10" y="8" width="355" height="97.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trip to the Store" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dka-ma-G3S">
+                                <rect key="frame" x="8" y="8" width="248.5" height="58.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 hours left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dol-xe-8eh">
+                                <rect key="frame" x="8" y="66.5" width="248.5" height="31"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28          knots" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wjs-Rv-2To">
+                                <rect key="frame" x="256.5" y="0.0" width="98.5" height="97.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="dka-ma-G3S" firstAttribute="height" secondItem="kae-K7-g7b" secondAttribute="height" multiplier="0.6" id="A1F-aB-6lH"/>
+                            <constraint firstAttribute="bottom" secondItem="Wjs-Rv-2To" secondAttribute="bottom" id="IWC-Cc-pM0"/>
+                            <constraint firstItem="dka-ma-G3S" firstAttribute="top" secondItem="kae-K7-g7b" secondAttribute="top" constant="8" id="KTK-6f-ebD"/>
+                            <constraint firstItem="Dol-xe-8eh" firstAttribute="leading" secondItem="kae-K7-g7b" secondAttribute="leading" constant="8" id="LED-Np-xer"/>
+                            <constraint firstItem="Wjs-Rv-2To" firstAttribute="top" secondItem="kae-K7-g7b" secondAttribute="top" id="Mya-mD-P8i"/>
+                            <constraint firstItem="Dol-xe-8eh" firstAttribute="top" secondItem="dka-ma-G3S" secondAttribute="bottom" id="WYa-cn-1vF"/>
+                            <constraint firstItem="Dol-xe-8eh" firstAttribute="width" secondItem="dka-ma-G3S" secondAttribute="width" id="Z5f-ij-aKQ"/>
+                            <constraint firstAttribute="bottom" secondItem="Dol-xe-8eh" secondAttribute="bottom" id="l3c-QD-f8I"/>
+                            <constraint firstAttribute="trailing" secondItem="Wjs-Rv-2To" secondAttribute="trailing" id="lVL-j8-Dmo"/>
+                            <constraint firstItem="dka-ma-G3S" firstAttribute="width" secondItem="kae-K7-g7b" secondAttribute="width" multiplier="0.7" id="uRu-vf-tTH"/>
+                            <constraint firstItem="Wjs-Rv-2To" firstAttribute="leading" secondItem="dka-ma-G3S" secondAttribute="trailing" id="wmF-Jj-wzk"/>
+                            <constraint firstItem="dka-ma-G3S" firstAttribute="leading" secondItem="kae-K7-g7b" secondAttribute="leading" constant="8" id="xpw-af-1Jf"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="kae-K7-g7b" secondAttribute="bottom" constant="8" id="7fS-en-Nqc"/>
+                    <constraint firstItem="kae-K7-g7b" firstAttribute="leading" secondItem="72G-OV-gjj" secondAttribute="leading" constant="10" id="NrL-hr-dnJ"/>
+                    <constraint firstAttribute="trailing" secondItem="kae-K7-g7b" secondAttribute="trailing" constant="10" id="ef7-Th-PIo"/>
+                    <constraint firstItem="kae-K7-g7b" firstAttribute="top" secondItem="72G-OV-gjj" secondAttribute="top" constant="8" id="jkd-cc-KMC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="bubbleView" destination="kae-K7-g7b" id="oi3-VR-04M"/>
+                <outlet property="knotLabel" destination="Wjs-Rv-2To" id="XQF-Kq-1hY"/>
+                <outlet property="timeLabel" destination="Dol-xe-8eh" id="9Re-HM-tSN"/>
+                <outlet property="titleLabel" destination="dka-ma-G3S" id="M46-DU-ZtZ"/>
+            </connections>
+            <point key="canvasLocation" x="364.5" y="305"/>
+        </tableViewCell>
+    </objects>
+</document>
