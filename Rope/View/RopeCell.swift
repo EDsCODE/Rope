@@ -14,10 +14,10 @@ class RopeCell: UITableViewCell {
     @IBOutlet weak var infoView: UIView!
     
     override func layoutSubviews() {
-        self.ropeImage.layer.cornerRadius = 8.0;
-        self.ropeImage.contentMode = .scaleAspectFit;
-        self.ropeImage.layer.masksToBounds = true;
-        infoView.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 8.0)
+        self.ropeImage.layer.cornerRadius = 8.0
+        self.ropeImage.contentMode = .scaleAspectFit
+        self.ropeImage.layer.masksToBounds = true
+        //infoView.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 8.0)
     }
     
 }
