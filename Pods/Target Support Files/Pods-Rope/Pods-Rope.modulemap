@@ -1,0 +1,6 @@
+framework module Pods_Rope {
+  umbrella header "Pods-Rope-umbrella.h"
+
+  export *
+  module * { export * }
+}
