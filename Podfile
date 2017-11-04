@@ -7,9 +7,6 @@ target 'Rope' do
 
   pod 'Firebase/Core'
   pod 'PhoneNumberKit'
-  pod 'Tabman'
-  pod 'Pageboy'
-  pod 'PureLayout'
   pod 'SwiftyCam'
 
   

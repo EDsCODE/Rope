@@ -8,14 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		09D85CBE43E06E1B57DB6FA3 /* Pods_Rope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D3E04C1E7D03CE3F5A08044 /* Pods_Rope.framework */; };
-		1A14AC6E1FA2B78A00BD9EF9 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A14AC6D1FA2B78A00BD9EF9 /* CameraViewController.swift */; };
 		1A1785291FA0C85C00427741 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1785281FA0C85C00427741 /* AppDelegate.swift */; };
 		1A17852B1FA0C85C00427741 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A17852A1FA0C85C00427741 /* LoginViewController.swift */; };
 		1A17852E1FA0C85C00427741 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A17852C1FA0C85C00427741 /* Main.storyboard */; };
 		1A1785301FA0C85C00427741 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A17852F1FA0C85C00427741 /* Assets.xcassets */; };
 		1A1785331FA0C85C00427741 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A1785311FA0C85C00427741 /* LaunchScreen.storyboard */; };
 		1A17853B1FA0C8DC00427741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A17853A1FA0C8DC00427741 /* GoogleService-Info.plist */; };
-		1A4BE1781FAA1A9E001EEB15 /* RopeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4BE1771FAA1A9E001EEB15 /* RopeTableViewController.swift */; };
 		1A4BE17A1FAA2199001EEB15 /* RopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4BE1791FAA2199001EEB15 /* RopeCell.swift */; };
 		1A5576251FA0DD93001D404D /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5576241FA0DD93001D404D /* Auth.storyboard */; };
 		1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */; };
@@ -24,14 +22,10 @@
 		1A55762F1FA11DC4001D404D /* LastNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A55762E1FA11DC4001D404D /* LastNameViewController.swift */; };
 		1A5576311FA12A9D001D404D /* AgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576301FA12A9D001D404D /* AgeViewController.swift */; };
 		1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */; };
-		1A72EE1F1FA2721B0048A45F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A72EE1E1FA2721B0048A45F /* MainViewController.swift */; };
-		1AB5FF851FAABE8400EC8780 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF841FAABE8400EC8780 /* PreviewViewController.swift */; };
 		1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF861FAB697600EC8780 /* CustomSegues.swift */; };
-		1AE05FD41FA2CC6E00C785B0 /* BraidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE05FD31FA2CC6E00C785B0 /* BraidingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A14AC6D1FA2B78A00BD9EF9 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		1A1785251FA0C85C00427741 /* Rope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A1785281FA0C85C00427741 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A17852A1FA0C85C00427741 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +34,6 @@
 		1A1785321FA0C85C00427741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1A1785341FA0C85C00427741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A17853A1FA0C8DC00427741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		1A4BE1771FAA1A9E001EEB15 /* RopeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeTableViewController.swift; sourceTree = "<group>"; };
 		1A4BE1791FAA2199001EEB15 /* RopeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeCell.swift; sourceTree = "<group>"; };
 		1A5576241FA0DD93001D404D /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
@@ -49,10 +42,7 @@
 		1A55762E1FA11DC4001D404D /* LastNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNameViewController.swift; sourceTree = "<group>"; };
 		1A5576301FA12A9D001D404D /* AgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeViewController.swift; sourceTree = "<group>"; };
 		1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
-		1A72EE1E1FA2721B0048A45F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		1AB5FF841FAABE8400EC8780 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		1AB5FF861FAB697600EC8780 /* CustomSegues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegues.swift; sourceTree = "<group>"; };
-		1AE05FD31FA2CC6E00C785B0 /* BraidingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BraidingViewController.swift; sourceTree = "<group>"; };
 		50F5BFEBB349A5F357FAD6B3 /* Pods-Rope.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rope.release.xcconfig"; path = "Pods/Target Support Files/Pods-Rope/Pods-Rope.release.xcconfig"; sourceTree = "<group>"; };
 		7D3E04C1E7D03CE3F5A08044 /* Pods_Rope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA65B7248470CE8810E8062 /* Pods-Rope.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rope.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Rope/Pods-Rope.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,11 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				1A72EE191FA22B810048A45F /* Auth */,
-				1A72EE1E1FA2721B0048A45F /* MainViewController.swift */,
-				1A14AC6D1FA2B78A00BD9EF9 /* CameraViewController.swift */,
-				1AE05FD31FA2CC6E00C785B0 /* BraidingViewController.swift */,
-				1A4BE1771FAA1A9E001EEB15 /* RopeTableViewController.swift */,
-				1AB5FF841FAABE8400EC8780 /* PreviewViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -297,13 +282,8 @@
 				1A17852B1FA0C85C00427741 /* LoginViewController.swift in Sources */,
 				1A5576311FA12A9D001D404D /* AgeViewController.swift in Sources */,
 				1A55762D1FA116F0001D404D /* FirstNameViewController.swift in Sources */,
-				1A14AC6E1FA2B78A00BD9EF9 /* CameraViewController.swift in Sources */,
 				1A55762F1FA11DC4001D404D /* LastNameViewController.swift in Sources */,
-				1AE05FD41FA2CC6E00C785B0 /* BraidingViewController.swift in Sources */,
 				1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */,
-				1A72EE1F1FA2721B0048A45F /* MainViewController.swift in Sources */,
-				1AB5FF851FAABE8400EC8780 /* PreviewViewController.swift in Sources */,
-				1A4BE1781FAA1A9E001EEB15 /* RopeTableViewController.swift in Sources */,
 				1A1785291FA0C85C00427741 /* AppDelegate.swift in Sources */,
 				1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */,
 				1A4BE17A1FAA2199001EEB15 /* RopeCell.swift in Sources */,
