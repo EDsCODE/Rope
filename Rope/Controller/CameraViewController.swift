@@ -42,15 +42,19 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
     var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.bounces = false
         return tableView
     }()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraDelegate = self
         
         self.videoQuality = .resolution1920x1080
-        self.maximumVideoDuration = 3.0
         
         self.view.addSubview(topPanel)
         self.view.addSubview(bottomPanel)
@@ -62,7 +66,7 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: "RopeCell", bundle: nil), forCellReuseIdentifier: "ropeCell")
-        
+        tableView.register(UINib(nibName: "AddRopeCell", bundle: nil), forCellReuseIdentifier: "addRopeCell")
         let constraints = [
             topPanel.topAnchor.constraint(equalTo: self.view.topAnchor),
             topPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -72,7 +76,7 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
             bottomPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             bottomPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             bottomPanel.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - self.view.bounds.width) / 2),
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: UIApplication.shared.statusBarFrame.height),
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -81,6 +85,20 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         setupLongPressforVideo()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+        statusBar.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.35)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        tableView.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        
+        guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+        statusBar.backgroundColor = .clear
     }
     
     func setupLongPressforVideo() {
@@ -99,6 +117,7 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         else if sender.state == .began {
             print("UIGestureRecognizerStateBegan.")
             tableView.isHidden = true
+            self.tabBarController?.tabBar.isHidden = true
             startVideoRecording()
             buttonTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(cancel(_:)), userInfo: nil, repeats: false)
             animateRecordingLine()
@@ -249,7 +268,6 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
             if let url = capturedURL {
                 destination?.videoURL = url
                 self.capturedURL = nil
-                tableView.isHidden = false
             }
         }
     }
@@ -274,23 +292,57 @@ extension CameraViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+        if indexPath.section == 0 {
+            return 50.0
+        } else {
+            return 100.0
+        }
     }
     
 }
 
 extension CameraViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ropeCell", for: indexPath) as! RopeCell
-        cell.backgroundColor = .clear
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "addRopeCell", for: indexPath)
+            cell.backgroundColor = .clear
+            return cell
+        } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ropeCell", for: indexPath) as! RopeCell
+            cell.backgroundColor = .clear
+            return cell
+        }
+        return UITableViewCell()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if section == 0 {
+            return 1
+        } else {
+            return 0
+        }
     }
+    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = UIView(frame: CGRect(x: self.view.bounds.width - 25.0, y: 0, width: self.view.bounds.width, height: 50.0))
+//        view.backgroundColor = .black
+//        let button = UIButton()
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.backgroundColor = .clear
+//        button.setImage(#imageLiteral(resourceName: "plus-symbol"), for: .normal)
+//        view.addSubview(button)
+//        view.addConstraint(NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0))
+//        view.addConstraint(NSLayoutConstraint(item: button, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: 0.0))
+//        view.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.6, constant: 0.0))
+//        view.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: button, attribute: .height, multiplier: 1.0, constant: 0.0))
+//        return view
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 50.0
+//    }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="u5y-B4-MY0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="UL9-c4-I7i">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,7 +9,44 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Camera View Controller-->
+        <!--Rope-->
+        <scene sceneID="iHc-Zx-riz">
+            <objects>
+                <viewController id="R3a-Ys-tSm" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bf2-V8-l7q"/>
+                        <viewControllerLayoutGuide type="bottom" id="MvF-ou-1SP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NDG-Jd-Ygd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" tag="2000" title="Rope" id="SmE-Ny-JzR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QWk-Ob-GOv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="454" y="1038"/>
+        </scene>
+        <!--Tab Bar View Controller-->
+        <scene sceneID="1k1-qz-2Uu">
+            <objects>
+                <tabBarController id="UL9-c4-I7i" customClass="TabBarViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="PNc-af-BiP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="u5y-B4-MY0" kind="relationship" relationship="viewControllers" id="7bu-z7-Okn"/>
+                        <segue destination="R3a-Ys-tSm" kind="relationship" relationship="viewControllers" id="2QA-Id-OYp"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rGV-d8-6if" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-497" y="703"/>
+        </scene>
+        <!--Knot-->
         <scene sceneID="QWa-bk-cfs">
             <objects>
                 <viewController id="u5y-B4-MY0" customClass="CameraViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,12 +55,15 @@
                         <viewControllerLayoutGuide type="bottom" id="R9d-iR-O7B"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="FGt-VM-oNM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" tag="1000" title="Knot" id="6tp-rK-rMQ">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </tabBarItem>
                     <connections>
-                        <segue destination="Iy5-K2-bbZ" kind="show" identifier="showPreview" id="xb6-7n-t8H"/>
+                        <segue destination="Iy5-K2-bbZ" kind="show" identifier="showPreview" customClass="SegueFromLeft" customModule="Rope" customModuleProvider="target" id="xb6-7n-t8H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Wc-CV-eUZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
