@@ -11,11 +11,13 @@ import SwiftyCam
 import AVFoundation
 import Photos
 
-class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDelegate {
+class CameraViewController: SwiftyCamViewController {
     
     weak var buttonTimer: Timer?
     weak var shapeLayer: CAShapeLayer?
     var capturedURL: URL?
+    var isRecording = false
+    @IBOutlet weak var cancelButton: UIButton!
     
     var topPanel: UIView = {
         let view = UIView()
@@ -46,6 +48,13 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         return tableView
     }()
     
+    var previewView: PreviewView = {
+        let preview = PreviewView()
+        preview.translatesAutoresizingMaskIntoConstraints = false
+        preview.isHidden = true
+        return preview
+    }()
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -58,14 +67,15 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         
         self.view.addSubview(topPanel)
         self.view.addSubview(bottomPanel)
+        self.view.addSubview(tableView)
+        self.view.addSubview(previewView)
         
         //setup tableview
         tableView.delegate = self
-        self.view.addSubview(tableView)
         tableView.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.35)
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.register(UINib(nibName: "RopeCell", bundle: nil), forCellReuseIdentifier: "ropeCell")
+        tableView.register(UINib(nibName: "RopeIPCell", bundle: nil), forCellReuseIdentifier: "ropeIPCell")
         tableView.register(UINib(nibName: "AddRopeCell", bundle: nil), forCellReuseIdentifier: "addRopeCell")
         let constraints = [
             topPanel.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -79,7 +89,11 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
             tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: UIApplication.shared.statusBarFrame.height),
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            previewView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            previewView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            previewView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            previewView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
         setupLongPressforVideo()
@@ -87,18 +101,19 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
         guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
         statusBar.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.35)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        tableView.isHidden = false
-        self.tabBarController?.tabBar.isHidden = false
         
         guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
         statusBar.backgroundColor = .clear
+        
     }
     
     func setupLongPressforVideo() {
@@ -108,16 +123,20 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
     
     @objc func longPressed(sender: UILongPressGestureRecognizer){
         if sender.state == .ended {
-            print("UIGestureRecognizerStateEnded")
-            stopVideoRecording()
-            pause(shapeLayer!)
-            self.buttonTimer?.invalidate()
+            if isRecording == true {
+                print("UIGestureRecognizerStateEnded")
+                stopVideoRecording()
+                pause(shapeLayer!)
+                self.buttonTimer?.invalidate()
+            }
+            isRecording = false
             //Do Whatever You want on End of Gesture
         }
         else if sender.state == .began {
             print("UIGestureRecognizerStateBegan.")
             tableView.isHidden = true
             self.tabBarController?.tabBar.isHidden = true
+            isRecording = true
             startVideoRecording()
             buttonTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(cancel(_:)), userInfo: nil, repeats: false)
             animateRecordingLine()
@@ -126,8 +145,11 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
     
     @objc func cancel(_ timerObject: Timer) {
         print("cancel")
-        stopVideoRecording()
-        pause(shapeLayer!)
+        if isRecording == true {
+            stopVideoRecording()
+            pause(shapeLayer!)
+        }
+        isRecording = false
     }
     
     func animateRecordingLine() {
@@ -229,36 +251,14 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
         return outputPath
     }
     
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didBeginRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
-        // Called when startVideoRecording() is called
-        // Called if a SwiftyCamButton begins a long press gesture
-    }
-    
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
-        // Called when stopVideoRecording() is called
-        // Called if a SwiftyCamButton ends a long press gesture
-    }
-    
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
-        print("crop")
-        squareCropVideo(inputURL: url as NSURL, completion: { (outputURL) -> () in
-            // Save video to photo library
-            //            PHPhotoLibrary.shared().performChanges({
-            //                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL:outputURL! as URL)
-            //            }) { saved, error in
-            //                if saved {
-            //                    print ("save successful")
-            //                }
-            //                else {
-            //                    print ("save failed")
-            //                }
-            //            }
-            self.capturedURL = outputURL! as URL
-            self.performSegue(withIdentifier: "showPreview", sender: self)
-            
-        })
-        
-        
+    @IBAction func dismissPreview(_ sender: Any) {
+        previewView.isHidden = true
+        previewView.removeExistingContent()
+        cancelButton.isHidden = true
+        self.capturedURL = nil
+        tableView.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        self.view.bringSubview(toFront: tableView)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -285,6 +285,50 @@ class CameraViewController: SwiftyCamViewController, SwiftyCamViewControllerDele
     
 }
 
+extension CameraViewController:SwiftyCamViewControllerDelegate {
+    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didBeginRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
+        // Called when startVideoRecording() is called
+        // Called if a SwiftyCamButton begins a long press gesture
+    }
+    
+    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
+        // Called when stopVideoRecording() is called
+        // Called if a SwiftyCamButton ends a long press gesture
+    }
+    
+    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
+        //        print("crop")
+        //        squareCropVideo(inputURL: url as NSURL, completion: { (outputURL) -> () in
+        //            // Save video to photo library
+        //            //            PHPhotoLibrary.shared().performChanges({
+        //            //                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL:outputURL! as URL)
+        //            //            }) { saved, error in
+        //            //                if saved {
+        //            //                    print ("save successful")
+        //            //                }
+        //            //                else {
+        //            //                    print ("save failed")
+        //            //                }
+        //            //            }
+        //            self.capturedURL = outputURL! as URL
+        //            self.performSegue(withIdentifier: "showPreview", sender: self)
+        //
+        //        })
+        self.shapeLayer?.removeFromSuperlayer()
+        
+        let player = AVPlayer(url: url)
+        previewView.displayVideo(player)
+        previewView.isHidden = false
+        self.cancelButton.isHidden = false
+        
+        self.view.bringSubview(toFront: topPanel)
+        self.view.bringSubview(toFront: bottomPanel)
+        self.view.bringSubview(toFront: cancelButton)
+        //self.performSegue(withIdentifier: "showPreview", sender: self)
+        
+    }
+}
+
 extension CameraViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -299,6 +343,12 @@ extension CameraViewController: UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            performSegue(withIdentifier: "createNewRopeSegue", sender: self)
+        }
+    }
+    
 }
 
 extension CameraViewController: UITableViewDataSource {
@@ -308,7 +358,7 @@ extension CameraViewController: UITableViewDataSource {
             cell.backgroundColor = .clear
             return cell
         } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ropeCell", for: indexPath) as! RopeCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ropeIPCell", for: indexPath) as! RopeIPCell
             cell.backgroundColor = .clear
             return cell
         }
@@ -323,7 +373,7 @@ extension CameraViewController: UITableViewDataSource {
         if section == 0 {
             return 1
         } else {
-            return 0
+            return 5
         }
     }
     

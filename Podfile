@@ -8,6 +8,7 @@ target 'Rope' do
   pod 'Firebase/Core'
   pod 'PhoneNumberKit'
   pod 'SwiftyCam'
+  pod 'KSTokenView', '~> 4.0'
 
   
   # Pods for Rope

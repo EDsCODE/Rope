@@ -21,7 +21,7 @@ class PreviewViewController: UIViewController {
         if let url = videoURL {
             let player = AVPlayer(url: url)
             playerLayer = AVPlayerLayer(player: player)
-            playerLayer!.frame = CGRect(x: 0, y: self.view.bounds.height / 2 - self.view.bounds.width / 2, width: self.view.bounds.width, height: self.view.bounds.width)
+            playerLayer!.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
             playerLayer!.videoGravity = .resize
             self.view.layer.addSublayer(playerLayer!)
             playOnRepeat(player)

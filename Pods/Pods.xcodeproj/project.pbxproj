@@ -7,75 +7,89 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0104830478F68244D9627F6DC205D940 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37406D7E2DC024D6325F1AB7B386B4B /* MetadataManager.swift */; };
-		0A0E4409D9DAE435A35BAD353F02E60A /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B464BA10FB141A25A6ED28D63BBE5 /* Formatter.swift */; };
-		0B3B954DFEA6150A0DDD11C99D289C1B /* SwiftyCam-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9BB8A7BAA2D79EC2E77AEF7F246948 /* SwiftyCam-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1AB5FF8C1FAD691000EC8780 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF8A1FAD690A00EC8780 /* Orientation.swift */; };
-		29FEADDF2086FDEA7D5BA87DD23B08C6 /* pb_decode.h in Headers */ = {isa = PBXBuildFile; fileRef = 70A6A4EB9C8FB941D62ADDF093A7564C /* pb_decode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0104830478F68244D9627F6DC205D940 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350F24479A1C43281307287CB4F9D198 /* MetadataManager.swift */; };
+		0A0E4409D9DAE435A35BAD353F02E60A /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D9495E5E1E3ACF7CA3EA69E55D07F5 /* Formatter.swift */; };
+		0DD7CBD50F16DE6F0CFA182110C09AAD /* KSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788ED3ED3AE935C0755A609EFBE271E1 /* KSUtils.swift */; };
+		114509AC81C2712022D7A9918B69CD1D /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E770D4D4B52CFEF8707D9D8334296D /* PreviewView.swift */; };
+		126B1A4D8E8458EFC29D8887D5D454BC /* KSTokenView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 871FEA0717ECDBC5469C1599A857AACA /* KSTokenView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1AB5FF9F1FAFAC2100EC8780 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF9D1FAFAC1000EC8780 /* Orientation.swift */; };
+		21ACA144FEEE39BF9F97F3766376B867 /* KSToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F994BA4092391F76D45F651614F13E /* KSToken.swift */; };
+		29FEADDF2086FDEA7D5BA87DD23B08C6 /* pb_decode.h in Headers */ = {isa = PBXBuildFile; fileRef = 70BBF7BE1E5B15F467B85E4C4079998D /* pb_decode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3159D7CAFD56B809F40CA3330DA10889 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */; };
-		345550ECBA5ABA4FF86DCB480D4A3A58 /* PhoneNumberParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D98824B4920CA297A86324DDF73F6C /* PhoneNumberParser.swift */; };
-		392F2CF142BAA751AC1BB61D8B757D98 /* pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C04028F3298737DAF342B8F429E2E51 /* pb.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A50F5C8ECED9627F2EBD97F61BD376D /* pb_common.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD3489C1BC0439E40873741E8B241FB /* pb_common.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc -fno-objc-arc -fno-objc-arc"; }; };
-		441F3551B9AFC456A9B699BB67BF9DA5 /* Pods-Rope-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 623EA4F00D6945C0B917D9DAB89FE985 /* Pods-Rope-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		468DFD90B6C4DA2F7CFA0C1C89F1B615 /* nanopb-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0030C8E23B144A11B1BBA62CED7DD709 /* nanopb-dummy.m */; };
-		470F6547A8FA794CC3CA08B5504EAB90 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7397EFBF2F9E7691E2BC738436324B8F /* PreviewView.swift */; };
-		49ABE1020C3121A3E0420AB96B09681F /* Pods-Rope-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2694D6C045C765F9E959DE3875D659F9 /* Pods-Rope-dummy.m */; };
-		4AB25BD43F1CB5557A9B75DF3DF25766 /* SwiftyCamViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34E769B08E56F8098147A75CE08DB4A /* SwiftyCamViewControllerDelegate.swift */; };
-		4F9F1A87FA2940B18DBD32B0180D50FA /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 71E2F093483B883366CA8DDD6D587B65 /* PhoneNumberMetadata.json */; };
-		541C5362289CC44D4F067D097F231250 /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E3928E4A4BBDC050992416A5E64BC6E /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		54F580BF4588159D6A61F21D15591805 /* pb_decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2E496B264AF339C04DC7256F7A736 /* pb_decode.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc -fno-objc-arc"; }; };
-		55D8D5D912CFD2F3584E4553C2EAD734 /* pb_encode.c in Sources */ = {isa = PBXBuildFile; fileRef = DF2FB79169AE260088A59BE66AA63F36 /* pb_encode.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc -fno-objc-arc"; }; };
-		5F74DB5E632AB8F370CADB9A57A62905 /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7201F1879EBA30E1CF33DCA4BBD5346 /* ParseManager.swift */; };
-		6065982768F9C7F20CB4537F62B47004 /* SwiftyCamButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39D8B6B711A2F47AE266A0C5E5D39AF /* SwiftyCamButton.swift */; };
+		345550ECBA5ABA4FF86DCB480D4A3A58 /* PhoneNumberParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8753090D895B3FBD838B6EF73CB3943A /* PhoneNumberParser.swift */; };
+		392F2CF142BAA751AC1BB61D8B757D98 /* pb.h in Headers */ = {isa = PBXBuildFile; fileRef = BBB69F01DDBB558036BFDF5F79A85CA0 /* pb.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A50F5C8ECED9627F2EBD97F61BD376D /* pb_common.c in Sources */ = {isa = PBXBuildFile; fileRef = AC6184A6ADF0134511CFC5E8C01B526F /* pb_common.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc -fno-objc-arc -fno-objc-arc"; }; };
+		40133987464C58210C0AD231CAF163D2 /* Pods-Rope-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 623EA4F00D6945C0B917D9DAB89FE985 /* Pods-Rope-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		468DFD90B6C4DA2F7CFA0C1C89F1B615 /* nanopb-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B60DA1D04AA1D0511675EED18A7F8F /* nanopb-dummy.m */; };
+		4F9F1A87FA2940B18DBD32B0180D50FA /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 69CE7143EB05F345A2BC5290AB36C325 /* PhoneNumberMetadata.json */; };
+		541C5362289CC44D4F067D097F231250 /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 031F81F26CCA87EDF50EB503592FC1F2 /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54F580BF4588159D6A61F21D15591805 /* pb_decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C20433676BC07C8967A698C771B91 /* pb_decode.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc -fno-objc-arc"; }; };
+		55D8D5D912CFD2F3584E4553C2EAD734 /* pb_encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 3C77A38E25298302ECFFAB0FFA7C9C12 /* pb_encode.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc -fno-objc-arc"; }; };
+		5F74DB5E632AB8F370CADB9A57A62905 /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C923538BABCBC3425BA49D78FD4D47E /* ParseManager.swift */; };
 		62DD7C7EB75A2EFAF26C2F7AAF1A83D6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */; };
 		7358A93C9FC5598A4E68C8A74B916747 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */; };
-		806BAA4E00218D70995697C4400BE7A0 /* pb_common.h in Headers */ = {isa = PBXBuildFile; fileRef = D11B0D8F138FBD33992EC6508B42DEFB /* pb_common.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		81E4B6988FF26F9249B79C6C8CC667B4 /* GoogleToolboxForMac-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ED4660E4856B7F412AFC878DD33CA5E3 /* GoogleToolboxForMac-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8FC58F8105780F3C776797D0C8816C2E /* SwiftyCam-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A46504E2196699497CA7D7900F5AA /* SwiftyCam-dummy.m */; };
-		903AAEF0F14FEC3EC413198C65D3A48D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */; };
-		9BF0B3132715704E433B205423D73740 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71FD185178E47CEA62AC1F0BC98C3B0 /* Constants.swift */; };
-		9C8BF7D4C243818BF3FBF03E54F44295 /* PhoneNumberKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E38F8B257AB305D17A1E5A4AC38E6F /* PhoneNumberKit-dummy.m */; };
-		AECF93568D922159B76A632196FCA6E9 /* NSRegularExpression+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989C75F96C09459A989CD44DFA1BC75 /* NSRegularExpression+Swift.swift */; };
-		B6EADA01029546ADA5D4718F1471799C /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBA645A4513FA241FFF28C96AE1CDFA /* PhoneNumber.swift */; };
+		7C10C7AB69C899CC669F14B4ADBFC2CB /* SwiftyCamViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4ED3E0DD420608746199C392E44EEBE /* SwiftyCamViewControllerDelegate.swift */; };
+		806BAA4E00218D70995697C4400BE7A0 /* pb_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E467D42106C31A4EF405F330613D6CF /* pb_common.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81E4B6988FF26F9249B79C6C8CC667B4 /* GoogleToolboxForMac-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E6F14576B7CFBB7F0BAD2DD9153A0213 /* GoogleToolboxForMac-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BF0B3132715704E433B205423D73740 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201CC778BD98B01BA8D9320EFF0E9DC /* Constants.swift */; };
+		9C8BF7D4C243818BF3FBF03E54F44295 /* PhoneNumberKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB64F5737D349BDAE0E8BEF399E531AC /* PhoneNumberKit-dummy.m */; };
+		AD29DF246300DF53C475C25042DEE76F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */; };
+		AECF93568D922159B76A632196FCA6E9 /* NSRegularExpression+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E75388208A66CBCAF03BA5B8CD0B7A6 /* NSRegularExpression+Swift.swift */; };
+		AF2E6DBB9E78340D5C90DDBD4D88CA48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */; };
+		B6EADA01029546ADA5D4718F1471799C /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E51B36D02151658ABD621EBA03709F /* PhoneNumber.swift */; };
+		B9BF7B5CEF4EB1B003E04F11BB32BFB7 /* SwiftyCamButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0673C148662E62A95676129EB95AA0 /* SwiftyCamButton.swift */; };
 		B9F18EA9601FBE8D39E0EC20AAC68532 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44A123CFEB0D34C2698C3DBF81105863 /* CoreTelephony.framework */; };
-		D4D11238776F6517BE1E5BF70ABBF452 /* PhoneNumberKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C79E8C7DE7FF0963E2D68BE248AB27C /* PhoneNumberKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D83522A96EB0E8AC32E66D149A4C7D13 /* MetadataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748052A6FB0A03C41A3125BF45DC0884 /* MetadataTypes.swift */; };
-		DBFECCB0BBE3F11CC41A3C1A8C4879D3 /* GTMNSData+zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EF26DD84C1A93727FAD6EAA8E25D44A /* GTMNSData+zlib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E181395E73163EB702FCE9A21403D67B /* pb_encode.h in Headers */ = {isa = PBXBuildFile; fileRef = 519F1EF36BD1AEEBF15DE1C37D92A78C /* pb_encode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E2CDF70ADCB177E5A75995E34BF537A1 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0F30D871EEE6253D13AAE1E61B5610 /* TextField.swift */; };
-		E2D0C9A732B171AF2D721161620C82A0 /* SwiftyCamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77113EB7BAC214FF73DC53673115F4E3 /* SwiftyCamViewController.swift */; };
-		E8CF88E9297815F6681758E6AC22451A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */; };
-		F0AAC8C0A171F5D16D5CC4EDFCFD3AA1 /* RegexManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EE9036DBE4EFFF40919D52432154B3 /* RegexManager.swift */; };
-		F3471ADCD4C3F3995D27362A2DA5054A /* PhoneNumberKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2C32C85B572BBD6F6A963F34F2645B /* PhoneNumberKit.swift */; };
-		F7D889906DECB078EAAECB9D4A320E9C /* GTMNSData+zlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E1373EF8E6268367B343FD131DBA01 /* GTMNSData+zlib.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		F9D92BA503505CB48EF4ECF0DDF57686 /* nanopb-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9580C41D198C08398DA08FFA3DE827A5 /* nanopb-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FAC3F3CAABA60EF76069431C5BB5032A /* GoogleToolboxForMac-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D75A18D5FA7C00777715F67D65F17B /* GoogleToolboxForMac-dummy.m */; };
-		FD2E20B69C2E19818E62F6570D93917C /* PartialFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894491357B116DDE18F9049A574A3F30 /* PartialFormatter.swift */; };
+		C57E93A50ADD5692DA7E644B289FCEE9 /* SwiftyCam-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B505F8DFF55A9A5171D90D5E5DBF300 /* SwiftyCam-dummy.m */; };
+		D4D11238776F6517BE1E5BF70ABBF452 /* PhoneNumberKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EFF4E0E487065C8BDBA6FBD1467D9841 /* PhoneNumberKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D83522A96EB0E8AC32E66D149A4C7D13 /* MetadataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FB46C655EF36A3A045D7509D9F07 /* MetadataTypes.swift */; };
+		DBFECCB0BBE3F11CC41A3C1A8C4879D3 /* GTMNSData+zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EA29B637D51331A6A24B1B73EBC79EA /* GTMNSData+zlib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DDA42DFB239A22F2A1BEF0C05E754712 /* KSTokenView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1336595AA991A7AC41DB9B41FE0709 /* KSTokenView-dummy.m */; };
+		E181395E73163EB702FCE9A21403D67B /* pb_encode.h in Headers */ = {isa = PBXBuildFile; fileRef = C15E167404F6FDFEFDEB0273BEA13E55 /* pb_encode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2CDF70ADCB177E5A75995E34BF537A1 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C80B13209162BA8AB96784C57C6997 /* TextField.swift */; };
+		E99382705D46C0E307ABC42787323E79 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */; };
+		F0AAC8C0A171F5D16D5CC4EDFCFD3AA1 /* RegexManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515A660FB0B789641C1E7CECC7E783C6 /* RegexManager.swift */; };
+		F2C19663D4DA366036E70F0704FDDD37 /* SwiftyCamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3456ACB24FEE79C0CDFA16134C0C3ED /* SwiftyCamViewController.swift */; };
+		F3471ADCD4C3F3995D27362A2DA5054A /* PhoneNumberKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6DC92274E4233096CE21699CD6273F /* PhoneNumberKit.swift */; };
+		F6521C216D386602D5F5A31BD86F6106 /* SwiftyCam-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 66037F43BAAC189AFB92D3CA4E4F00CE /* SwiftyCam-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F7D889906DECB078EAAECB9D4A320E9C /* GTMNSData+zlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BF670E33CAECAAC8862F371D99C5DD /* GTMNSData+zlib.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		F9D92BA503505CB48EF4ECF0DDF57686 /* nanopb-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AAFEC4E063DE99D90DD78437D85F0D1 /* nanopb-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FAC3F3CAABA60EF76069431C5BB5032A /* GoogleToolboxForMac-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F4365E1FBE353999FFDF32A3738D34 /* GoogleToolboxForMac-dummy.m */; };
+		FCE0417B88BCB15DC4DF93E710DCD2CA /* Pods-Rope-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2694D6C045C765F9E959DE3875D659F9 /* Pods-Rope-dummy.m */; };
+		FCF6F23E5CF16C22EA6F92B49CF43753 /* KSTokenField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376FF06A150F9D0214383AA14C34911 /* KSTokenField.swift */; };
+		FD2E20B69C2E19818E62F6570D93917C /* PartialFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A52BC2631CA7F8B1429E82AE5BF394 /* PartialFormatter.swift */; };
+		FF6111DFB476986862DAE3FFBD19FE96 /* KSTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079A8AE6A26C6C4E17E59FBE5F34312F /* KSTokenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8015DAFE1B132D382CF9826EDD0F464D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8C5BD10883BD185426DD737247F56DEC;
-			remoteInfo = PhoneNumberKit;
-		};
-		A75F42AB81F435E74DAD6DC3AAF57289 /* PBXContainerItemProxy */ = {
+		119E3FF1BBF250FE2513E82DECB320C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 00103D6C821BE85971C563025527BA5D;
 			remoteInfo = GoogleToolboxForMac;
 		};
-		CC5E6E9F674901ACCFADE45A53DF8E7F /* PBXContainerItemProxy */ = {
+		193C006C311EBEDF06E2AFEE0B0B1C71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 6CFB6EBDAB8DA7F7D81976920F649516;
+			remoteGlobalIDString = 8C5BD10883BD185426DD737247F56DEC;
+			remoteInfo = PhoneNumberKit;
+		};
+		54C43C533F74FE575E17A198A694A4F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E91EFCA18C1AC0117B2DA7A21EAA8BC0;
+			remoteInfo = KSTokenView;
+		};
+		8119D84E50F181D75D5317DE4FCCB112 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7C1C85E5F2AC67A5D14838BEE951740F;
 			remoteInfo = SwiftyCam;
 		};
-		EE6444FB23ACE597A87444780893E7AE /* PBXContainerItemProxy */ = {
+		A49A4F9E31E81AD8ACC5F35449F807EA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -85,90 +99,117 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0030C8E23B144A11B1BBA62CED7DD709 /* nanopb-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "nanopb-dummy.m"; sourceTree = "<group>"; };
-		05D98824B4920CA297A86324DDF73F6C /* PhoneNumberParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumberParser.swift; path = PhoneNumberKit/PhoneNumberParser.swift; sourceTree = "<group>"; };
-		0989C75F96C09459A989CD44DFA1BC75 /* NSRegularExpression+Swift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSRegularExpression+Swift.swift"; path = "PhoneNumberKit/NSRegularExpression+Swift.swift"; sourceTree = "<group>"; };
-		0D0F30D871EEE6253D13AAE1E61B5610 /* TextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = PhoneNumberKit/UI/TextField.swift; sourceTree = "<group>"; };
-		0D26434BDE6CA2BA51674E32B5F83D56 /* nanopb.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = nanopb.xcconfig; sourceTree = "<group>"; };
-		1A9BB8A7BAA2D79EC2E77AEF7F246948 /* SwiftyCam-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyCam-umbrella.h"; sourceTree = "<group>"; };
-		1AB5FF8A1FAD690A00EC8780 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
-		1E3928E4A4BBDC050992416A5E64BC6E /* GTMDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
-		21A78D7DFF5B202A575ED4426D846431 /* nanopb-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-prefix.pch"; sourceTree = "<group>"; };
+		031F81F26CCA87EDF50EB503592FC1F2 /* GTMDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		05D9495E5E1E3ACF7CA3EA69E55D07F5 /* Formatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Formatter.swift; path = PhoneNumberKit/Formatter.swift; sourceTree = "<group>"; };
+		079A8AE6A26C6C4E17E59FBE5F34312F /* KSTokenView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KSTokenView.swift; path = KSTokenView/KSTokenView.swift; sourceTree = "<group>"; };
+		0C1336595AA991A7AC41DB9B41FE0709 /* KSTokenView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KSTokenView-dummy.m"; sourceTree = "<group>"; };
+		0DC55DF8BE9E0F17FE0A4B8E76E18946 /* FirebaseNanoPB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseNanoPB.framework; path = Frameworks/FirebaseNanoPB.framework; sourceTree = "<group>"; };
+		0F1C20433676BC07C8967A698C771B91 /* pb_decode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_decode.c; sourceTree = "<group>"; };
+		0F6DC92274E4233096CE21699CD6273F /* PhoneNumberKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumberKit.swift; path = PhoneNumberKit/PhoneNumberKit.swift; sourceTree = "<group>"; };
+		1AB5FF9D1FAFAC1000EC8780 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		1B505F8DFF55A9A5171D90D5E5DBF300 /* SwiftyCam-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyCam-dummy.m"; sourceTree = "<group>"; };
+		1BF39AA4FAA75505A8D016790A60332B /* GoogleToolboxForMac.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleToolboxForMac.xcconfig; sourceTree = "<group>"; };
+		1C923538BABCBC3425BA49D78FD4D47E /* ParseManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParseManager.swift; path = PhoneNumberKit/ParseManager.swift; sourceTree = "<group>"; };
+		2376FF06A150F9D0214383AA14C34911 /* KSTokenField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KSTokenField.swift; path = KSTokenView/KSTokenField.swift; sourceTree = "<group>"; };
 		249EF5FE1716B882E99CEB1F9F2C14AE /* Pods-Rope.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Rope.release.xcconfig"; sourceTree = "<group>"; };
-		2506CEF45C0D725E9DFD9E679F9913BC /* nanopb.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = nanopb.modulemap; sourceTree = "<group>"; };
+		251A3AF3BC1034A10EBA2874772A692E /* nanopb.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = nanopb.modulemap; sourceTree = "<group>"; };
 		2694D6C045C765F9E959DE3875D659F9 /* Pods-Rope-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Rope-dummy.m"; sourceTree = "<group>"; };
-		2C20E4B285A9C4924641A335C6DFB4C8 /* SwiftyCam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyCam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		30EE9036DBE4EFFF40919D52432154B3 /* RegexManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RegexManager.swift; path = PhoneNumberKit/RegexManager.swift; sourceTree = "<group>"; };
-		31E38F8B257AB305D17A1E5A4AC38E6F /* PhoneNumberKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PhoneNumberKit-dummy.m"; sourceTree = "<group>"; };
-		380779FA84C7AC2369ECE4D942F47315 /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleToolboxForMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C04082438D0518DF2933474BD475559 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
-		3C79E8C7DE7FF0963E2D68BE248AB27C /* PhoneNumberKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PhoneNumberKit-umbrella.h"; sourceTree = "<group>"; };
+		26CD072EEDBF30B3F8EB09586081803E /* SwiftyCam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyCam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A262168E66E1F89950B9F7342DF328A /* PhoneNumberKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PhoneNumberKit-prefix.pch"; sourceTree = "<group>"; };
+		2E467D42106C31A4EF405F330613D6CF /* pb_common.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb_common.h; sourceTree = "<group>"; };
+		33D342472F0E4840F9DB909E0BB0162C /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
+		350F24479A1C43281307287CB4F9D198 /* MetadataManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MetadataManager.swift; path = PhoneNumberKit/MetadataManager.swift; sourceTree = "<group>"; };
+		35D8894AA76ED13AD6453E8BFC9BA76E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37E51B36D02151658ABD621EBA03709F /* PhoneNumber.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumber.swift; path = PhoneNumberKit/PhoneNumber.swift; sourceTree = "<group>"; };
+		3C77A38E25298302ECFFAB0FFA7C9C12 /* pb_encode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_encode.c; sourceTree = "<group>"; };
+		4135BD3362601862E9DD918D4AE11D80 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44A123CFEB0D34C2698C3DBF81105863 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
-		45DFEAF8B337B251F4E4741061A2D8DA /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45A2EA36FD31DA63C2D8139A33C036AC /* KSTokenView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KSTokenView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B64927D93CA5C12013AC337584803E3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C4036CE9D68F0EEE6F9970E70D55BC7 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		4F0673C148662E62A95676129EB95AA0 /* SwiftyCamButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyCamButton.swift; path = Source/SwiftyCamButton.swift; sourceTree = "<group>"; };
+		4FF9F3BCAA0E6E29F98732E4C85DA1BE /* FirebaseCoreDiagnostics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCoreDiagnostics.framework; path = Frameworks/FirebaseCoreDiagnostics.framework; sourceTree = "<group>"; };
+		504FFA23502D24D7B304D52D517181F9 /* GoogleToolboxForMac-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleToolboxForMac-prefix.pch"; sourceTree = "<group>"; };
 		50A69310706BB8F6B43B2F52697CDE2F /* Pods-Rope-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Rope-acknowledgements.markdown"; sourceTree = "<group>"; };
-		5138532ADF25CE911B0F99D8EAD75C54 /* PhoneNumberKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = PhoneNumberKit.modulemap; sourceTree = "<group>"; };
-		519F1EF36BD1AEEBF15DE1C37D92A78C /* pb_encode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb_encode.h; sourceTree = "<group>"; };
-		5C4A46504E2196699497CA7D7900F5AA /* SwiftyCam-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyCam-dummy.m"; sourceTree = "<group>"; };
-		5CF2E496B264AF339C04DC7256F7A736 /* pb_decode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_decode.c; sourceTree = "<group>"; };
-		6197F8E1FD0CE1BB2EDC178D99743E29 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50E891192F5D81B8C09E98441208D5AD /* KSTokenView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KSTokenView-prefix.pch"; sourceTree = "<group>"; };
+		515A660FB0B789641C1E7CECC7E783C6 /* RegexManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RegexManager.swift; path = PhoneNumberKit/RegexManager.swift; sourceTree = "<group>"; };
+		51A52BC2631CA7F8B1429E82AE5BF394 /* PartialFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PartialFormatter.swift; path = PhoneNumberKit/PartialFormatter.swift; sourceTree = "<group>"; };
+		54BF670E33CAECAAC8862F371D99C5DD /* GTMNSData+zlib.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "GTMNSData+zlib.m"; path = "Foundation/GTMNSData+zlib.m"; sourceTree = "<group>"; };
+		57C9D490C39DE0877F9643CD96AC3A65 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		623EA4F00D6945C0B917D9DAB89FE985 /* Pods-Rope-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Rope-umbrella.h"; sourceTree = "<group>"; };
+		66037F43BAAC189AFB92D3CA4E4F00CE /* SwiftyCam-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyCam-umbrella.h"; sourceTree = "<group>"; };
+		67B60DA1D04AA1D0511675EED18A7F8F /* nanopb-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "nanopb-dummy.m"; sourceTree = "<group>"; };
+		69CE7143EB05F345A2BC5290AB36C325 /* PhoneNumberMetadata.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = PhoneNumberMetadata.json; path = PhoneNumberKit/Resources/PhoneNumberMetadata.json; sourceTree = "<group>"; };
 		6BB89EE6BAAE5DE6F3738E5A6DE3119A /* Pods-Rope-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Rope-acknowledgements.plist"; sourceTree = "<group>"; };
 		6CCF3C2B316BC657CF890AC4A1F11C37 /* Pods-Rope-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Rope-resources.sh"; sourceTree = "<group>"; };
-		6EF26DD84C1A93727FAD6EAA8E25D44A /* GTMNSData+zlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "GTMNSData+zlib.h"; path = "Foundation/GTMNSData+zlib.h"; sourceTree = "<group>"; };
-		70A6A4EB9C8FB941D62ADDF093A7564C /* pb_decode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb_decode.h; sourceTree = "<group>"; };
-		71E2F093483B883366CA8DDD6D587B65 /* PhoneNumberMetadata.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = PhoneNumberMetadata.json; path = PhoneNumberKit/Resources/PhoneNumberMetadata.json; sourceTree = "<group>"; };
-		7397EFBF2F9E7691E2BC738436324B8F /* PreviewView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PreviewView.swift; path = Source/PreviewView.swift; sourceTree = "<group>"; };
-		748052A6FB0A03C41A3125BF45DC0884 /* MetadataTypes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MetadataTypes.swift; path = PhoneNumberKit/MetadataTypes.swift; sourceTree = "<group>"; };
-		75CABF120EE53B47BD67008FBA97CB21 /* PhoneNumberKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PhoneNumberKit-prefix.pch"; sourceTree = "<group>"; };
-		77113EB7BAC214FF73DC53673115F4E3 /* SwiftyCamViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyCamViewController.swift; path = Source/SwiftyCamViewController.swift; sourceTree = "<group>"; };
-		789AE424B823396663E601FA3C74EB7E /* PhoneNumberKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PhoneNumberKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		79E1373EF8E6268367B343FD131DBA01 /* GTMNSData+zlib.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "GTMNSData+zlib.m"; path = "Foundation/GTMNSData+zlib.m"; sourceTree = "<group>"; };
-		7A5B464BA10FB141A25A6ED28D63BBE5 /* Formatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Formatter.swift; path = PhoneNumberKit/Formatter.swift; sourceTree = "<group>"; };
-		7C04028F3298737DAF342B8F429E2E51 /* pb.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb.h; sourceTree = "<group>"; };
-		7FEDE9C69005EDD99DDD038411F0C45E /* SwiftyCam-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyCam-prefix.pch"; sourceTree = "<group>"; };
-		842BCED3AF7034DB93E9208CA3183F05 /* nanopb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nanopb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84A64AD93A9D29B9E55417935D9ADD92 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
-		84AB3291B447B132478F341D4E47FFEB /* GoogleToolboxForMac.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleToolboxForMac.xcconfig; sourceTree = "<group>"; };
-		894491357B116DDE18F9049A574A3F30 /* PartialFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PartialFormatter.swift; path = PhoneNumberKit/PartialFormatter.swift; sourceTree = "<group>"; };
+		6E3A0E6F09CF31D12E5FBACEBCFA8533 /* Pods_Rope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		70BBF7BE1E5B15F467B85E4C4079998D /* pb_decode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb_decode.h; sourceTree = "<group>"; };
+		728C0E787C8D7674FD0A650B8B25FACF /* GoogleToolboxForMac.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = GoogleToolboxForMac.modulemap; sourceTree = "<group>"; };
+		73E6C46279DE99CC274CA716A08B49D3 /* nanopb-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-prefix.pch"; sourceTree = "<group>"; };
+		788ED3ED3AE935C0755A609EFBE271E1 /* KSUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KSUtils.swift; path = KSTokenView/KSUtils.swift; sourceTree = "<group>"; };
+		79DDB30FA096EAB398CC0EAE32574DB9 /* PhoneNumberKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PhoneNumberKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E199EDEF854CAAA858CF9A0DDD80E89 /* KSTokenView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KSTokenView.xcconfig; sourceTree = "<group>"; };
+		7EA29B637D51331A6A24B1B73EBC79EA /* GTMNSData+zlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "GTMNSData+zlib.h"; path = "Foundation/GTMNSData+zlib.h"; sourceTree = "<group>"; };
+		871FEA0717ECDBC5469C1599A857AACA /* KSTokenView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KSTokenView-umbrella.h"; sourceTree = "<group>"; };
+		8753090D895B3FBD838B6EF73CB3943A /* PhoneNumberParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumberParser.swift; path = PhoneNumberKit/PhoneNumberParser.swift; sourceTree = "<group>"; };
+		8A5EBF3FF06E607DB4F5833B45226624 /* SwiftyCam.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyCam.modulemap; sourceTree = "<group>"; };
 		8BEB035B6B5330896C4EE2C0F087E1A6 /* Pods-Rope.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Rope.debug.xcconfig"; sourceTree = "<group>"; };
+		8E75388208A66CBCAF03BA5B8CD0B7A6 /* NSRegularExpression+Swift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSRegularExpression+Swift.swift"; path = "PhoneNumberKit/NSRegularExpression+Swift.swift"; sourceTree = "<group>"; };
+		92BE147D9A3D61BA56CAB229D13C410A /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleToolboxForMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		95668A6065612C022AA4915428D0BDD2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		9580C41D198C08398DA08FFA3DE827A5 /* nanopb-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-umbrella.h"; sourceTree = "<group>"; };
-		A2152557A6417BDE2BC7FFC738E08C9C /* PhoneNumberKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PhoneNumberKit.xcconfig; sourceTree = "<group>"; };
-		A26979788DAD05F8BF62825483CB8713 /* FirebaseNanoPB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseNanoPB.framework; path = Frameworks/FirebaseNanoPB.framework; sourceTree = "<group>"; };
+		9639A382144DF63CB4A95BFD51AF96DC /* SwiftyCam-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyCam-prefix.pch"; sourceTree = "<group>"; };
+		9AAFEC4E063DE99D90DD78437D85F0D1 /* nanopb-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-umbrella.h"; sourceTree = "<group>"; };
+		9D5B7D2BF107D6D0D571BC2E5B85AB22 /* Firebase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = Core/Sources/Firebase.h; sourceTree = "<group>"; };
+		A0A1B4E60B987A71BFAE21F03B2F257E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A3456ACB24FEE79C0CDFA16134C0C3ED /* SwiftyCamViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyCamViewController.swift; path = Source/SwiftyCamViewController.swift; sourceTree = "<group>"; };
 		A4B9AA4843298A28E6118E1EC943C958 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AC2C32C85B572BBD6F6A963F34F2645B /* PhoneNumberKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumberKit.swift; path = PhoneNumberKit/PhoneNumberKit.swift; sourceTree = "<group>"; };
-		AC38964BC61343028F40B25ECA64BE72 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		A4ED3E0DD420608746199C392E44EEBE /* SwiftyCamViewControllerDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyCamViewControllerDelegate.swift; path = Source/SwiftyCamViewControllerDelegate.swift; sourceTree = "<group>"; };
+		A5937EA083E30A544DCE0843288B6801 /* PhoneNumberKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = PhoneNumberKit.modulemap; sourceTree = "<group>"; };
+		A83E3ABC405AE69B7131A052C67AC93B /* nanopb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nanopb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8F4365E1FBE353999FFDF32A3738D34 /* GoogleToolboxForMac-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoogleToolboxForMac-dummy.m"; sourceTree = "<group>"; };
+		AC6184A6ADF0134511CFC5E8C01B526F /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_common.c; sourceTree = "<group>"; };
 		AF9DE6B6962D5E797E59E491EB6FAC6A /* Pods-Rope-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Rope-frameworks.sh"; sourceTree = "<group>"; };
-		B34E769B08E56F8098147A75CE08DB4A /* SwiftyCamViewControllerDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyCamViewControllerDelegate.swift; path = Source/SwiftyCamViewControllerDelegate.swift; sourceTree = "<group>"; };
-		B39D8B6B711A2F47AE266A0C5E5D39AF /* SwiftyCamButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyCamButton.swift; path = Source/SwiftyCamButton.swift; sourceTree = "<group>"; };
-		B64D3F3AB16B18C499AA4288BF075C2A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B71FD185178E47CEA62AC1F0BC98C3B0 /* Constants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = PhoneNumberKit/Constants.swift; sourceTree = "<group>"; };
+		B201CC778BD98B01BA8D9320EFF0E9DC /* Constants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = PhoneNumberKit/Constants.swift; sourceTree = "<group>"; };
+		B299FB46C655EF36A3A045D7509D9F07 /* MetadataTypes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MetadataTypes.swift; path = PhoneNumberKit/MetadataTypes.swift; sourceTree = "<group>"; };
+		B6F994BA4092391F76D45F651614F13E /* KSToken.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KSToken.swift; path = KSTokenView/KSToken.swift; sourceTree = "<group>"; };
 		B879E28A24E237DB973EB7CE8798A5B4 /* Pods-Rope.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Rope.modulemap"; sourceTree = "<group>"; };
-		BA1A964D286851CFF92CBC8AD2DDBC4F /* Firebase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = Core/Sources/Firebase.h; sourceTree = "<group>"; };
-		C6AF076D3CAAD326F9DE3AF1A2F33668 /* SwiftyCam.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyCam.xcconfig; sourceTree = "<group>"; };
-		CF114AC385793645933E2AB763AC81BA /* Pods_Rope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D11B0D8F138FBD33992EC6508B42DEFB /* pb_common.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb_common.h; sourceTree = "<group>"; };
-		D2F773114EBF4D9AA51EF3F76CC6936B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D37406D7E2DC024D6325F1AB7B386B4B /* MetadataManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MetadataManager.swift; path = PhoneNumberKit/MetadataManager.swift; sourceTree = "<group>"; };
-		D4C9F533A921D15243E363F670F57DF0 /* FirebaseCoreDiagnostics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCoreDiagnostics.framework; path = Frameworks/FirebaseCoreDiagnostics.framework; sourceTree = "<group>"; };
-		D7201F1879EBA30E1CF33DCA4BBD5346 /* ParseManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParseManager.swift; path = PhoneNumberKit/ParseManager.swift; sourceTree = "<group>"; };
-		D73DB9100D9F8B46DC8015CED97CB97B /* GoogleToolboxForMac-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleToolboxForMac-prefix.pch"; sourceTree = "<group>"; };
-		DAD3489C1BC0439E40873741E8B241FB /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_common.c; sourceTree = "<group>"; };
-		DC508E639CF57D0EE1BB3C760B9F3993 /* GoogleToolboxForMac.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = GoogleToolboxForMac.modulemap; sourceTree = "<group>"; };
-		DF2FB79169AE260088A59BE66AA63F36 /* pb_encode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_encode.c; sourceTree = "<group>"; };
-		DF3E77ABCB928C6A47053AEBDA6B50B3 /* SwiftyCam.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyCam.modulemap; sourceTree = "<group>"; };
-		E5D75A18D5FA7C00777715F67D65F17B /* GoogleToolboxForMac-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoogleToolboxForMac-dummy.m"; sourceTree = "<group>"; };
-		ED4660E4856B7F412AFC878DD33CA5E3 /* GoogleToolboxForMac-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleToolboxForMac-umbrella.h"; sourceTree = "<group>"; };
-		FFBA645A4513FA241FFF28C96AE1CDFA /* PhoneNumber.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumber.swift; path = PhoneNumberKit/PhoneNumber.swift; sourceTree = "<group>"; };
+		BBB69F01DDBB558036BFDF5F79A85CA0 /* pb.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb.h; sourceTree = "<group>"; };
+		C15E167404F6FDFEFDEB0273BEA13E55 /* pb_encode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb_encode.h; sourceTree = "<group>"; };
+		CB64F5737D349BDAE0E8BEF399E531AC /* PhoneNumberKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PhoneNumberKit-dummy.m"; sourceTree = "<group>"; };
+		D57C531954F7B91FB05B31AC6BA3BFBE /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		D6C80B13209162BA8AB96784C57C6997 /* TextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = PhoneNumberKit/UI/TextField.swift; sourceTree = "<group>"; };
+		D6E770D4D4B52CFEF8707D9D8334296D /* PreviewView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PreviewView.swift; path = Source/PreviewView.swift; sourceTree = "<group>"; };
+		DCFD84AE5087349135F5D4414280BAEF /* PhoneNumberKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PhoneNumberKit.xcconfig; sourceTree = "<group>"; };
+		E6F14576B7CFBB7F0BAD2DD9153A0213 /* GoogleToolboxForMac-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleToolboxForMac-umbrella.h"; sourceTree = "<group>"; };
+		E83427DD806889AF8082C5C850B1CE27 /* nanopb.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = nanopb.xcconfig; sourceTree = "<group>"; };
+		ED57A3D18933866C6BDD911ADE95A4C5 /* KSTokenView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = KSTokenView.modulemap; sourceTree = "<group>"; };
+		EFF4E0E487065C8BDBA6FBD1467D9841 /* PhoneNumberKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PhoneNumberKit-umbrella.h"; sourceTree = "<group>"; };
+		F53582ED498C2BBE086748ABC1A85984 /* SwiftyCam.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyCam.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		73E720EB5D71BA62350D54322AFD0A46 /* Frameworks */ = {
+		02AF42B638BBE64E416699390AFA4942 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				903AAEF0F14FEC3EC413198C65D3A48D /* Foundation.framework in Frameworks */,
+				AD29DF246300DF53C475C25042DEE76F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		12AECFE65241DEB5BCBCA131BB657A99 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF2E6DBB9E78340D5C90DDBD4D88CA48 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		715C805D1499CBA3A538BB459652E527 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E99382705D46C0E307ABC42787323E79 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,14 +230,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A94573EBE285079BCFA21D87CD778E41 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E8CF88E9297815F6681758E6AC22451A /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F9BC43EEAF05BCB201B3D28C244AA7E1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -208,85 +241,115 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0173F8C244272EBE5431B620C77A56FF /* Defines */ = {
+		0A6C3F4D092AA42505AF33975F322A13 /* PhoneNumberKit */ = {
 			isa = PBXGroup;
 			children = (
-				1E3928E4A4BBDC050992416A5E64BC6E /* GTMDefines.h */,
-			);
-			name = Defines;
-			sourceTree = "<group>";
-		};
-		11109336403E74C34E27E4EB342551C3 /* FirebaseCore */ = {
-			isa = PBXGroup;
-			children = (
-				AB2F224C99AA822A0E365DD932DBB892 /* Frameworks */,
-			);
-			path = FirebaseCore;
-			sourceTree = "<group>";
-		};
-		13C08E236EA1EC16C14765210F989DEF /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				DC508E639CF57D0EE1BB3C760B9F3993 /* GoogleToolboxForMac.modulemap */,
-				84AB3291B447B132478F341D4E47FFEB /* GoogleToolboxForMac.xcconfig */,
-				E5D75A18D5FA7C00777715F67D65F17B /* GoogleToolboxForMac-dummy.m */,
-				D73DB9100D9F8B46DC8015CED97CB97B /* GoogleToolboxForMac-prefix.pch */,
-				ED4660E4856B7F412AFC878DD33CA5E3 /* GoogleToolboxForMac-umbrella.h */,
-				D2F773114EBF4D9AA51EF3F76CC6936B /* Info.plist */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/GoogleToolboxForMac";
-			sourceTree = "<group>";
-		};
-		14379308D458202E61A1507E67380F4B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AC38964BC61343028F40B25ECA64BE72 /* FirebaseInstanceID.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		1CA017BFFCF28A85530DBA7CD6A96C54 /* PhoneNumberKit */ = {
-			isa = PBXGroup;
-			children = (
-				AA871FF02F384FF27AA24674C1F17298 /* PhoneNumberKitCore */,
-				A05CD7EF3AE2FEB9B3AED83A3AEA42CD /* Support Files */,
-				F4A388F39A88848D540D59B1AC7B93FB /* UIKit */,
+				DA82EE893B07D930003F9C6F40A15619 /* PhoneNumberKitCore */,
+				D5238AB05B0856D41DAA0E14CB836B9E /* Support Files */,
+				275579FF8FDDC1D12FF8601F4F96C954 /* UIKit */,
 			);
 			path = PhoneNumberKit;
 			sourceTree = "<group>";
 		};
-		20D8206D5E274840000DF78615137518 /* Core */ = {
+		0D0BA2B55EAC963270BC6898091D4276 /* FirebaseAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				BA1A964D286851CFF92CBC8AD2DDBC4F /* Firebase.h */,
+				927D1A49E185A8D9721F90EC951EED2A /* Frameworks */,
+			);
+			path = FirebaseAnalytics;
+			sourceTree = "<group>";
+		};
+		0F6CF6048380899E435A8F559369A6D0 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				2BAD1392D95AC50E0D189CB45FA58DB5 /* Core */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		0FE5766AE68B7F56DA75B4E0D45538EA /* FirebaseCore */ = {
+			isa = PBXGroup;
+			children = (
+				30356746D846D31CB5C10D8DA9F8EB21 /* Frameworks */,
+			);
+			path = FirebaseCore;
+			sourceTree = "<group>";
+		};
+		12F5FCA06C089BCD4D6925F0F1581702 /* decode */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = decode;
+			sourceTree = "<group>";
+		};
+		1CE99FA3661C181FF1ECD2A27BDDF902 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				92BE147D9A3D61BA56CAB229D13C410A /* GoogleToolboxForMac.framework */,
+				45A2EA36FD31DA63C2D8139A33C036AC /* KSTokenView.framework */,
+				A83E3ABC405AE69B7131A052C67AC93B /* nanopb.framework */,
+				79DDB30FA096EAB398CC0EAE32574DB9 /* PhoneNumberKit.framework */,
+				6E3A0E6F09CF31D12E5FBACEBCFA8533 /* Pods_Rope.framework */,
+				26CD072EEDBF30B3F8EB09586081803E /* SwiftyCam.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		275579FF8FDDC1D12FF8601F4F96C954 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				D6C80B13209162BA8AB96784C57C6997 /* TextField.swift */,
+			);
+			name = UIKit;
+			sourceTree = "<group>";
+		};
+		2844A9820F4D05FC34CAAB3C41E8031B /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4B64927D93CA5C12013AC337584803E3 /* Info.plist */,
+				ED57A3D18933866C6BDD911ADE95A4C5 /* KSTokenView.modulemap */,
+				7E199EDEF854CAAA858CF9A0DDD80E89 /* KSTokenView.xcconfig */,
+				0C1336595AA991A7AC41DB9B41FE0709 /* KSTokenView-dummy.m */,
+				50E891192F5D81B8C09E98441208D5AD /* KSTokenView-prefix.pch */,
+				871FEA0717ECDBC5469C1599A857AACA /* KSTokenView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/KSTokenView";
+			sourceTree = "<group>";
+		};
+		2ADC388F7B54BF658A6AF14646060F5F /* nanopb */ = {
+			isa = PBXGroup;
+			children = (
+				BBB69F01DDBB558036BFDF5F79A85CA0 /* pb.h */,
+				AC6184A6ADF0134511CFC5E8C01B526F /* pb_common.c */,
+				2E467D42106C31A4EF405F330613D6CF /* pb_common.h */,
+				0F1C20433676BC07C8967A698C771B91 /* pb_decode.c */,
+				70BBF7BE1E5B15F467B85E4C4079998D /* pb_decode.h */,
+				3C77A38E25298302ECFFAB0FFA7C9C12 /* pb_encode.c */,
+				C15E167404F6FDFEFDEB0273BEA13E55 /* pb_encode.h */,
+				12F5FCA06C089BCD4D6925F0F1581702 /* decode */,
+				4AA194DA93FDDB48F27433AB33CE3FA0 /* encode */,
+				6E80203783752093E67992AE757D865A /* Support Files */,
+			);
+			path = nanopb;
+			sourceTree = "<group>";
+		};
+		2BAD1392D95AC50E0D189CB45FA58DB5 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9D5B7D2BF107D6D0D571BC2E5B85AB22 /* Firebase.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
 		};
-		3485ED9884A825A985D013F1F7AA7306 /* GoogleToolboxForMac */ = {
+		30356746D846D31CB5C10D8DA9F8EB21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0173F8C244272EBE5431B620C77A56FF /* Defines */,
-				E50BCA8E9D62F535CF3EEC67E15DDD53 /* NSData+zlib */,
-				13C08E236EA1EC16C14765210F989DEF /* Support Files */,
-			);
-			path = GoogleToolboxForMac;
-			sourceTree = "<group>";
-		};
-		3B48FD9BE58EE21620D2D914A5635D9F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				84A64AD93A9D29B9E55417935D9ADD92 /* FirebaseAnalytics.framework */,
+				33D342472F0E4840F9DB909E0BB0162C /* FirebaseCore.framework */,
+				4FF9F3BCAA0E6E29F98732E4C85DA1BE /* FirebaseCoreDiagnostics.framework */,
+				0DC55DF8BE9E0F17FE0A4B8E76E18946 /* FirebaseNanoPB.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3C5BDECDCF2DA46DFF600FE9973985C9 /* encode */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = encode;
 			sourceTree = "<group>";
 		};
 		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
@@ -297,32 +360,41 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		47A2A326D853E844FBE4C1317FF9F1F4 /* Firebase */ = {
+		4AA194DA93FDDB48F27433AB33CE3FA0 /* encode */ = {
 			isa = PBXGroup;
 			children = (
-				20D8206D5E274840000DF78615137518 /* Core */,
 			);
-			path = Firebase;
+			name = encode;
 			sourceTree = "<group>";
 		};
-		6C685FAA17388437EFD153B6D74AA578 /* FirebaseAnalytics */ = {
+		610FA4822F835F1F6EB19DD976F71966 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B48FD9BE58EE21620D2D914A5635D9F /* Frameworks */,
+				0F6CF6048380899E435A8F559369A6D0 /* Firebase */,
+				0D0BA2B55EAC963270BC6898091D4276 /* FirebaseAnalytics */,
+				0FE5766AE68B7F56DA75B4E0D45538EA /* FirebaseCore */,
+				82EDE28D51AB2C38321B4C4AB97862B1 /* FirebaseInstanceID */,
+				984E71335372C0E371F9F05DE5CE0918 /* GoogleToolboxForMac */,
+				A8131D97C0D591E03E72DA22F677338C /* KSTokenView */,
+				2ADC388F7B54BF658A6AF14646060F5F /* nanopb */,
+				0A6C3F4D092AA42505AF33975F322A13 /* PhoneNumberKit */,
+				C9A667408ADAD81C4D41118F4DC214B0 /* SwiftyCam */,
 			);
-			path = FirebaseAnalytics;
+			name = Pods;
 			sourceTree = "<group>";
 		};
-		6F41E259DB47078A59DDD05C3CB15BBC /* Products */ = {
+		6E80203783752093E67992AE757D865A /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				380779FA84C7AC2369ECE4D942F47315 /* GoogleToolboxForMac.framework */,
-				842BCED3AF7034DB93E9208CA3183F05 /* nanopb.framework */,
-				789AE424B823396663E601FA3C74EB7E /* PhoneNumberKit.framework */,
-				CF114AC385793645933E2AB763AC81BA /* Pods_Rope.framework */,
-				2C20E4B285A9C4924641A335C6DFB4C8 /* SwiftyCam.framework */,
+				57C9D490C39DE0877F9643CD96AC3A65 /* Info.plist */,
+				251A3AF3BC1034A10EBA2874772A692E /* nanopb.modulemap */,
+				E83427DD806889AF8082C5C850B1CE27 /* nanopb.xcconfig */,
+				67B60DA1D04AA1D0511675EED18A7F8F /* nanopb-dummy.m */,
+				73E6C46279DE99CC274CA716A08B49D3 /* nanopb-prefix.pch */,
+				9AAFEC4E063DE99D90DD78437D85F0D1 /* nanopb-umbrella.h */,
 			);
-			name = Products;
+			name = "Support Files";
+			path = "../Target Support Files/nanopb";
 			sourceTree = "<group>";
 		};
 		70C28E720F716CD6E624350D06854124 /* Targets Support Files */ = {
@@ -331,6 +403,14 @@
 				75ADF4B1F5455BCB543E3397277E8B39 /* Pods-Rope */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		748751C28EA147D7788E6A93F665B64B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D57C531954F7B91FB05B31AC6BA3BFBE /* FirebaseInstanceID.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		75ADF4B1F5455BCB543E3397277E8B39 /* Pods-Rope */ = {
@@ -356,93 +436,89 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
-				9D9C6E848E0901A144F4973E3FB4BAE0 /* Pods */,
-				6F41E259DB47078A59DDD05C3CB15BBC /* Products */,
+				610FA4822F835F1F6EB19DD976F71966 /* Pods */,
+				1CE99FA3661C181FF1ECD2A27BDDF902 /* Products */,
 				70C28E720F716CD6E624350D06854124 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		9D9C6E848E0901A144F4973E3FB4BAE0 /* Pods */ = {
+		82EDE28D51AB2C38321B4C4AB97862B1 /* FirebaseInstanceID */ = {
 			isa = PBXGroup;
 			children = (
-				47A2A326D853E844FBE4C1317FF9F1F4 /* Firebase */,
-				6C685FAA17388437EFD153B6D74AA578 /* FirebaseAnalytics */,
-				11109336403E74C34E27E4EB342551C3 /* FirebaseCore */,
-				D12D9AC6243905ECD69C423022D53CE8 /* FirebaseInstanceID */,
-				3485ED9884A825A985D013F1F7AA7306 /* GoogleToolboxForMac */,
-				E39B632457C360DD9B9CBC05AEBA4B6D /* nanopb */,
-				1CA017BFFCF28A85530DBA7CD6A96C54 /* PhoneNumberKit */,
-				B935272B074952DE44885A1849B6F13E /* SwiftyCam */,
+				748751C28EA147D7788E6A93F665B64B /* Frameworks */,
 			);
-			name = Pods;
+			path = FirebaseInstanceID;
 			sourceTree = "<group>";
 		};
-		A05CD7EF3AE2FEB9B3AED83A3AEA42CD /* Support Files */ = {
+		8788495E9F5D587E9A97D6CB85A32940 /* Defines */ = {
 			isa = PBXGroup;
 			children = (
-				B64D3F3AB16B18C499AA4288BF075C2A /* Info.plist */,
-				5138532ADF25CE911B0F99D8EAD75C54 /* PhoneNumberKit.modulemap */,
-				A2152557A6417BDE2BC7FFC738E08C9C /* PhoneNumberKit.xcconfig */,
-				31E38F8B257AB305D17A1E5A4AC38E6F /* PhoneNumberKit-dummy.m */,
-				75CABF120EE53B47BD67008FBA97CB21 /* PhoneNumberKit-prefix.pch */,
-				3C79E8C7DE7FF0963E2D68BE248AB27C /* PhoneNumberKit-umbrella.h */,
+				031F81F26CCA87EDF50EB503592FC1F2 /* GTMDefines.h */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/PhoneNumberKit";
+			name = Defines;
 			sourceTree = "<group>";
 		};
-		AA871FF02F384FF27AA24674C1F17298 /* PhoneNumberKitCore */ = {
+		8B4469A3688EF332D54429DB95F6A8E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B71FD185178E47CEA62AC1F0BC98C3B0 /* Constants.swift */,
-				7A5B464BA10FB141A25A6ED28D63BBE5 /* Formatter.swift */,
-				D37406D7E2DC024D6325F1AB7B386B4B /* MetadataManager.swift */,
-				748052A6FB0A03C41A3125BF45DC0884 /* MetadataTypes.swift */,
-				0989C75F96C09459A989CD44DFA1BC75 /* NSRegularExpression+Swift.swift */,
-				D7201F1879EBA30E1CF33DCA4BBD5346 /* ParseManager.swift */,
-				894491357B116DDE18F9049A574A3F30 /* PartialFormatter.swift */,
-				FFBA645A4513FA241FFF28C96AE1CDFA /* PhoneNumber.swift */,
-				AC2C32C85B572BBD6F6A963F34F2645B /* PhoneNumberKit.swift */,
-				05D98824B4920CA297A86324DDF73F6C /* PhoneNumberParser.swift */,
-				30EE9036DBE4EFFF40919D52432154B3 /* RegexManager.swift */,
-				E49A042ACE6E03AA5DAF3CAF0F92CE4F /* Resources */,
+				69CE7143EB05F345A2BC5290AB36C325 /* PhoneNumberMetadata.json */,
 			);
-			name = PhoneNumberKitCore;
+			name = Resources;
 			sourceTree = "<group>";
 		};
-		AB2F224C99AA822A0E365DD932DBB892 /* Frameworks */ = {
+		927D1A49E185A8D9721F90EC951EED2A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3C04082438D0518DF2933474BD475559 /* FirebaseCore.framework */,
-				D4C9F533A921D15243E363F670F57DF0 /* FirebaseCoreDiagnostics.framework */,
-				A26979788DAD05F8BF62825483CB8713 /* FirebaseNanoPB.framework */,
+				4C4036CE9D68F0EEE6F9970E70D55BC7 /* FirebaseAnalytics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		AFF0489F5AAF85E1FD03CE767702B31F /* Support Files */ = {
+		984E71335372C0E371F9F05DE5CE0918 /* GoogleToolboxForMac */ = {
 			isa = PBXGroup;
 			children = (
-				45DFEAF8B337B251F4E4741061A2D8DA /* Info.plist */,
-				DF3E77ABCB928C6A47053AEBDA6B50B3 /* SwiftyCam.modulemap */,
-				C6AF076D3CAAD326F9DE3AF1A2F33668 /* SwiftyCam.xcconfig */,
-				5C4A46504E2196699497CA7D7900F5AA /* SwiftyCam-dummy.m */,
-				7FEDE9C69005EDD99DDD038411F0C45E /* SwiftyCam-prefix.pch */,
-				1A9BB8A7BAA2D79EC2E77AEF7F246948 /* SwiftyCam-umbrella.h */,
+				8788495E9F5D587E9A97D6CB85A32940 /* Defines */,
+				EB65C46B0FA8D7C0BBBE26CD7C50F667 /* NSData+zlib */,
+				D19EA9003F2AFDD02E93FDC9E9436479 /* Support Files */,
+			);
+			path = GoogleToolboxForMac;
+			sourceTree = "<group>";
+		};
+		A5C16DE6EF5415CCDBFB358BDB93E765 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4135BD3362601862E9DD918D4AE11D80 /* Info.plist */,
+				8A5EBF3FF06E607DB4F5833B45226624 /* SwiftyCam.modulemap */,
+				F53582ED498C2BBE086748ABC1A85984 /* SwiftyCam.xcconfig */,
+				1B505F8DFF55A9A5171D90D5E5DBF300 /* SwiftyCam-dummy.m */,
+				9639A382144DF63CB4A95BFD51AF96DC /* SwiftyCam-prefix.pch */,
+				66037F43BAAC189AFB92D3CA4E4F00CE /* SwiftyCam-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SwiftyCam";
 			sourceTree = "<group>";
 		};
-		B935272B074952DE44885A1849B6F13E /* SwiftyCam */ = {
+		A8131D97C0D591E03E72DA22F677338C /* KSTokenView */ = {
 			isa = PBXGroup;
 			children = (
-				1AB5FF8A1FAD690A00EC8780 /* Orientation.swift */,
-				7397EFBF2F9E7691E2BC738436324B8F /* PreviewView.swift */,
-				B39D8B6B711A2F47AE266A0C5E5D39AF /* SwiftyCamButton.swift */,
-				77113EB7BAC214FF73DC53673115F4E3 /* SwiftyCamViewController.swift */,
-				B34E769B08E56F8098147A75CE08DB4A /* SwiftyCamViewControllerDelegate.swift */,
-				AFF0489F5AAF85E1FD03CE767702B31F /* Support Files */,
+				B6F994BA4092391F76D45F651614F13E /* KSToken.swift */,
+				2376FF06A150F9D0214383AA14C34911 /* KSTokenField.swift */,
+				079A8AE6A26C6C4E17E59FBE5F34312F /* KSTokenView.swift */,
+				788ED3ED3AE935C0755A609EFBE271E1 /* KSUtils.swift */,
+				2844A9820F4D05FC34CAAB3C41E8031B /* Support Files */,
+			);
+			path = KSTokenView;
+			sourceTree = "<group>";
+		};
+		C9A667408ADAD81C4D41118F4DC214B0 /* SwiftyCam */ = {
+			isa = PBXGroup;
+			children = (
+				1AB5FF9D1FAFAC1000EC8780 /* Orientation.swift */,
+				D6E770D4D4B52CFEF8707D9D8334296D /* PreviewView.swift */,
+				4F0673C148662E62A95676129EB95AA0 /* SwiftyCamButton.swift */,
+				A3456ACB24FEE79C0CDFA16134C0C3ED /* SwiftyCamViewController.swift */,
+				A4ED3E0DD420608746199C392E44EEBE /* SwiftyCamViewControllerDelegate.swift */,
+				A5C16DE6EF5415CCDBFB358BDB93E765 /* Support Files */,
 			);
 			path = SwiftyCam;
 			sourceTree = "<group>";
@@ -456,93 +532,78 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		D12D9AC6243905ECD69C423022D53CE8 /* FirebaseInstanceID */ = {
+		D19EA9003F2AFDD02E93FDC9E9436479 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				14379308D458202E61A1507E67380F4B /* Frameworks */,
-			);
-			path = FirebaseInstanceID;
-			sourceTree = "<group>";
-		};
-		E39B632457C360DD9B9CBC05AEBA4B6D /* nanopb */ = {
-			isa = PBXGroup;
-			children = (
-				7C04028F3298737DAF342B8F429E2E51 /* pb.h */,
-				DAD3489C1BC0439E40873741E8B241FB /* pb_common.c */,
-				D11B0D8F138FBD33992EC6508B42DEFB /* pb_common.h */,
-				5CF2E496B264AF339C04DC7256F7A736 /* pb_decode.c */,
-				70A6A4EB9C8FB941D62ADDF093A7564C /* pb_decode.h */,
-				DF2FB79169AE260088A59BE66AA63F36 /* pb_encode.c */,
-				519F1EF36BD1AEEBF15DE1C37D92A78C /* pb_encode.h */,
-				EFD0BF803D07475E0511C1366FC60E3F /* decode */,
-				3C5BDECDCF2DA46DFF600FE9973985C9 /* encode */,
-				F372E62F65ED5312F6BB9F2CC3185DFA /* Support Files */,
-			);
-			path = nanopb;
-			sourceTree = "<group>";
-		};
-		E49A042ACE6E03AA5DAF3CAF0F92CE4F /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				71E2F093483B883366CA8DDD6D587B65 /* PhoneNumberMetadata.json */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		E50BCA8E9D62F535CF3EEC67E15DDD53 /* NSData+zlib */ = {
-			isa = PBXGroup;
-			children = (
-				6EF26DD84C1A93727FAD6EAA8E25D44A /* GTMNSData+zlib.h */,
-				79E1373EF8E6268367B343FD131DBA01 /* GTMNSData+zlib.m */,
-			);
-			name = "NSData+zlib";
-			sourceTree = "<group>";
-		};
-		EFD0BF803D07475E0511C1366FC60E3F /* decode */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = decode;
-			sourceTree = "<group>";
-		};
-		F372E62F65ED5312F6BB9F2CC3185DFA /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				6197F8E1FD0CE1BB2EDC178D99743E29 /* Info.plist */,
-				2506CEF45C0D725E9DFD9E679F9913BC /* nanopb.modulemap */,
-				0D26434BDE6CA2BA51674E32B5F83D56 /* nanopb.xcconfig */,
-				0030C8E23B144A11B1BBA62CED7DD709 /* nanopb-dummy.m */,
-				21A78D7DFF5B202A575ED4426D846431 /* nanopb-prefix.pch */,
-				9580C41D198C08398DA08FFA3DE827A5 /* nanopb-umbrella.h */,
+				728C0E787C8D7674FD0A650B8B25FACF /* GoogleToolboxForMac.modulemap */,
+				1BF39AA4FAA75505A8D016790A60332B /* GoogleToolboxForMac.xcconfig */,
+				A8F4365E1FBE353999FFDF32A3738D34 /* GoogleToolboxForMac-dummy.m */,
+				504FFA23502D24D7B304D52D517181F9 /* GoogleToolboxForMac-prefix.pch */,
+				E6F14576B7CFBB7F0BAD2DD9153A0213 /* GoogleToolboxForMac-umbrella.h */,
+				35D8894AA76ED13AD6453E8BFC9BA76E /* Info.plist */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/nanopb";
+			path = "../Target Support Files/GoogleToolboxForMac";
 			sourceTree = "<group>";
 		};
-		F4A388F39A88848D540D59B1AC7B93FB /* UIKit */ = {
+		D5238AB05B0856D41DAA0E14CB836B9E /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				0D0F30D871EEE6253D13AAE1E61B5610 /* TextField.swift */,
+				A0A1B4E60B987A71BFAE21F03B2F257E /* Info.plist */,
+				A5937EA083E30A544DCE0843288B6801 /* PhoneNumberKit.modulemap */,
+				DCFD84AE5087349135F5D4414280BAEF /* PhoneNumberKit.xcconfig */,
+				CB64F5737D349BDAE0E8BEF399E531AC /* PhoneNumberKit-dummy.m */,
+				2A262168E66E1F89950B9F7342DF328A /* PhoneNumberKit-prefix.pch */,
+				EFF4E0E487065C8BDBA6FBD1467D9841 /* PhoneNumberKit-umbrella.h */,
 			);
-			name = UIKit;
+			name = "Support Files";
+			path = "../Target Support Files/PhoneNumberKit";
+			sourceTree = "<group>";
+		};
+		DA82EE893B07D930003F9C6F40A15619 /* PhoneNumberKitCore */ = {
+			isa = PBXGroup;
+			children = (
+				B201CC778BD98B01BA8D9320EFF0E9DC /* Constants.swift */,
+				05D9495E5E1E3ACF7CA3EA69E55D07F5 /* Formatter.swift */,
+				350F24479A1C43281307287CB4F9D198 /* MetadataManager.swift */,
+				B299FB46C655EF36A3A045D7509D9F07 /* MetadataTypes.swift */,
+				8E75388208A66CBCAF03BA5B8CD0B7A6 /* NSRegularExpression+Swift.swift */,
+				1C923538BABCBC3425BA49D78FD4D47E /* ParseManager.swift */,
+				51A52BC2631CA7F8B1429E82AE5BF394 /* PartialFormatter.swift */,
+				37E51B36D02151658ABD621EBA03709F /* PhoneNumber.swift */,
+				0F6DC92274E4233096CE21699CD6273F /* PhoneNumberKit.swift */,
+				8753090D895B3FBD838B6EF73CB3943A /* PhoneNumberParser.swift */,
+				515A660FB0B789641C1E7CECC7E783C6 /* RegexManager.swift */,
+				8B4469A3688EF332D54429DB95F6A8E8 /* Resources */,
+			);
+			name = PhoneNumberKitCore;
+			sourceTree = "<group>";
+		};
+		EB65C46B0FA8D7C0BBBE26CD7C50F667 /* NSData+zlib */ = {
+			isa = PBXGroup;
+			children = (
+				7EA29B637D51331A6A24B1B73EBC79EA /* GTMNSData+zlib.h */,
+				54BF670E33CAECAAC8862F371D99C5DD /* GTMNSData+zlib.m */,
+			);
+			name = "NSData+zlib";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		08D94782B0ED560A4372C9426A66EB52 /* Headers */ = {
+		24A144FE40C3444BCB40439AF7D7BD33 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				441F3551B9AFC456A9B699BB67BF9DA5 /* Pods-Rope-umbrella.h in Headers */,
+				40133987464C58210C0AD231CAF163D2 /* Pods-Rope-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		394D6EA3025AECE66320176E6D7B7645 /* Headers */ = {
+		2EDE8F75BF16BC3BC646502C1BA19CD9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B3B954DFEA6150A0DDD11C99D289C1B /* SwiftyCam-umbrella.h in Headers */,
+				126B1A4D8E8458EFC29D8887D5D454BC /* KSTokenView-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +624,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4D11238776F6517BE1E5BF70ABBF452 /* PhoneNumberKit-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		801ACE92C9F804528397273DC8BC4CCB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6521C216D386602D5F5A31BD86F6106 /* SwiftyCam-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,37 +662,16 @@
 			);
 			name = GoogleToolboxForMac;
 			productName = GoogleToolboxForMac;
-			productReference = 380779FA84C7AC2369ECE4D942F47315 /* GoogleToolboxForMac.framework */;
+			productReference = 92BE147D9A3D61BA56CAB229D13C410A /* GoogleToolboxForMac.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		631E96A109EFC4657A067A807E722FD0 /* Pods-Rope */ = {
+		7C1C85E5F2AC67A5D14838BEE951740F /* SwiftyCam */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D168F336D89B79B79F83465E4075AA44 /* Build configuration list for PBXNativeTarget "Pods-Rope" */;
+			buildConfigurationList = 63710B388CBA6BC8FE3AEC38A0B23472 /* Build configuration list for PBXNativeTarget "SwiftyCam" */;
 			buildPhases = (
-				F87AAB160640EFFD42834D55149CA5A5 /* Sources */,
-				73E720EB5D71BA62350D54322AFD0A46 /* Frameworks */,
-				08D94782B0ED560A4372C9426A66EB52 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				26C72BA6C86918099C888E90CB4536DA /* PBXTargetDependency */,
-				B2DB86EFDF4B9B6FCC331471BA41DB61 /* PBXTargetDependency */,
-				ECA6FB9DDDBB67C9BDB772797AFD5397 /* PBXTargetDependency */,
-				5E34C967968432409DBBCBE1E12B07F1 /* PBXTargetDependency */,
-			);
-			name = "Pods-Rope";
-			productName = "Pods-Rope";
-			productReference = CF114AC385793645933E2AB763AC81BA /* Pods_Rope.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		6CFB6EBDAB8DA7F7D81976920F649516 /* SwiftyCam */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8084DB099CA87DAF9CDAE69E80B0963D /* Build configuration list for PBXNativeTarget "SwiftyCam" */;
-			buildPhases = (
-				6D0310EBA2A2A853CAC884BA5B603474 /* Sources */,
-				A94573EBE285079BCFA21D87CD778E41 /* Frameworks */,
-				394D6EA3025AECE66320176E6D7B7645 /* Headers */,
+				83E285EB3F9F9FA1651F305205AF8D2F /* Sources */,
+				715C805D1499CBA3A538BB459652E527 /* Frameworks */,
+				801ACE92C9F804528397273DC8BC4CCB /* Headers */,
 			);
 			buildRules = (
 			);
@@ -631,7 +679,7 @@
 			);
 			name = SwiftyCam;
 			productName = SwiftyCam;
-			productReference = 2C20E4B285A9C4924641A335C6DFB4C8 /* SwiftyCam.framework */;
+			productReference = 26CD072EEDBF30B3F8EB09586081803E /* SwiftyCam.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8C5BD10883BD185426DD737247F56DEC /* PhoneNumberKit */ = {
@@ -649,7 +697,7 @@
 			);
 			name = PhoneNumberKit;
 			productName = PhoneNumberKit;
-			productReference = 789AE424B823396663E601FA3C74EB7E /* PhoneNumberKit.framework */;
+			productReference = 79DDB30FA096EAB398CC0EAE32574DB9 /* PhoneNumberKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		E4DD95323C54A78F879DAB0F1508B8E7 /* nanopb */ = {
@@ -666,7 +714,46 @@
 			);
 			name = nanopb;
 			productName = nanopb;
-			productReference = 842BCED3AF7034DB93E9208CA3183F05 /* nanopb.framework */;
+			productReference = A83E3ABC405AE69B7131A052C67AC93B /* nanopb.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E91EFCA18C1AC0117B2DA7A21EAA8BC0 /* KSTokenView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D40C14EB6C5D3585DA105C48A07631A8 /* Build configuration list for PBXNativeTarget "KSTokenView" */;
+			buildPhases = (
+				622E7A2FAC11B0B419DCEA40239C9AD9 /* Sources */,
+				12AECFE65241DEB5BCBCA131BB657A99 /* Frameworks */,
+				2EDE8F75BF16BC3BC646502C1BA19CD9 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KSTokenView;
+			productName = KSTokenView;
+			productReference = 45A2EA36FD31DA63C2D8139A33C036AC /* KSTokenView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EB4005C0346D801BF206AEAEF8FCF080 /* Pods-Rope */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A4FFB1310EBD2F3B14829B17A29D334D /* Build configuration list for PBXNativeTarget "Pods-Rope" */;
+			buildPhases = (
+				EBBA7C05D5DF01E81E7A371D5FF43635 /* Sources */,
+				02AF42B638BBE64E416699390AFA4942 /* Frameworks */,
+				24A144FE40C3444BCB40439AF7D7BD33 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DE1433ACA375052FAD36CDE6ED3B2395 /* PBXTargetDependency */,
+				D3ABD1101B87337D689B5EF303270433 /* PBXTargetDependency */,
+				6E9CD1D8EF9D8643EF5FC60FA7BFB9CC /* PBXTargetDependency */,
+				856F04DCF9471B7DCB6261F8B5130541 /* PBXTargetDependency */,
+				BDEDE7CE9CD91340F325A65BA180D7B4 /* PBXTargetDependency */,
+			);
+			name = "Pods-Rope";
+			productName = "Pods-Rope";
+			productReference = 6E3A0E6F09CF31D12E5FBACEBCFA8533 /* Pods_Rope.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -676,7 +763,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0900;
 				TargetAttributes = {
 					00103D6C821BE85971C563025527BA5D = {
 						LastSwiftMigration = 0900;
@@ -691,15 +778,16 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 6F41E259DB47078A59DDD05C3CB15BBC /* Products */;
+			productRefGroup = 1CE99FA3661C181FF1ECD2A27BDDF902 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				00103D6C821BE85971C563025527BA5D /* GoogleToolboxForMac */,
+				E91EFCA18C1AC0117B2DA7A21EAA8BC0 /* KSTokenView */,
 				E4DD95323C54A78F879DAB0F1508B8E7 /* nanopb */,
 				8C5BD10883BD185426DD737247F56DEC /* PhoneNumberKit */,
-				631E96A109EFC4657A067A807E722FD0 /* Pods-Rope */,
-				6CFB6EBDAB8DA7F7D81976920F649516 /* SwiftyCam */,
+				EB4005C0346D801BF206AEAEF8FCF080 /* Pods-Rope */,
+				7C1C85E5F2AC67A5D14838BEE951740F /* SwiftyCam */,
 			);
 		};
 /* End PBXProject section */
@@ -747,6 +835,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		622E7A2FAC11B0B419DCEA40239C9AD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21ACA144FEEE39BF9F97F3766376B867 /* KSToken.swift in Sources */,
+				FCF6F23E5CF16C22EA6F92B49CF43753 /* KSTokenField.swift in Sources */,
+				DDA42DFB239A22F2A1BEF0C05E754712 /* KSTokenView-dummy.m in Sources */,
+				FF6111DFB476986862DAE3FFBD19FE96 /* KSTokenView.swift in Sources */,
+				0DD7CBD50F16DE6F0CFA182110C09AAD /* KSUtils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63D7DA997053F6B5D01DE8CB5817CB51 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -756,53 +856,59 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6D0310EBA2A2A853CAC884BA5B603474 /* Sources */ = {
+		83E285EB3F9F9FA1651F305205AF8D2F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				470F6547A8FA794CC3CA08B5504EAB90 /* PreviewView.swift in Sources */,
-				8FC58F8105780F3C776797D0C8816C2E /* SwiftyCam-dummy.m in Sources */,
-				6065982768F9C7F20CB4537F62B47004 /* SwiftyCamButton.swift in Sources */,
-				E2D0C9A732B171AF2D721161620C82A0 /* SwiftyCamViewController.swift in Sources */,
-				1AB5FF8C1FAD691000EC8780 /* Orientation.swift in Sources */,
-				4AB25BD43F1CB5557A9B75DF3DF25766 /* SwiftyCamViewControllerDelegate.swift in Sources */,
+				114509AC81C2712022D7A9918B69CD1D /* PreviewView.swift in Sources */,
+				C57E93A50ADD5692DA7E644B289FCEE9 /* SwiftyCam-dummy.m in Sources */,
+				B9BF7B5CEF4EB1B003E04F11BB32BFB7 /* SwiftyCamButton.swift in Sources */,
+				F2C19663D4DA366036E70F0704FDDD37 /* SwiftyCamViewController.swift in Sources */,
+				1AB5FF9F1FAFAC2100EC8780 /* Orientation.swift in Sources */,
+				7C10C7AB69C899CC669F14B4ADBFC2CB /* SwiftyCamViewControllerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F87AAB160640EFFD42834D55149CA5A5 /* Sources */ = {
+		EBBA7C05D5DF01E81E7A371D5FF43635 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49ABE1020C3121A3E0420AB96B09681F /* Pods-Rope-dummy.m in Sources */,
+				FCE0417B88BCB15DC4DF93E710DCD2CA /* Pods-Rope-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		26C72BA6C86918099C888E90CB4536DA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GoogleToolboxForMac;
-			target = 00103D6C821BE85971C563025527BA5D /* GoogleToolboxForMac */;
-			targetProxy = A75F42AB81F435E74DAD6DC3AAF57289 /* PBXContainerItemProxy */;
-		};
-		5E34C967968432409DBBCBE1E12B07F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = nanopb;
-			target = E4DD95323C54A78F879DAB0F1508B8E7 /* nanopb */;
-			targetProxy = EE6444FB23ACE597A87444780893E7AE /* PBXContainerItemProxy */;
-		};
-		B2DB86EFDF4B9B6FCC331471BA41DB61 /* PBXTargetDependency */ = {
+		6E9CD1D8EF9D8643EF5FC60FA7BFB9CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PhoneNumberKit;
 			target = 8C5BD10883BD185426DD737247F56DEC /* PhoneNumberKit */;
-			targetProxy = 8015DAFE1B132D382CF9826EDD0F464D /* PBXContainerItemProxy */;
+			targetProxy = 193C006C311EBEDF06E2AFEE0B0B1C71 /* PBXContainerItemProxy */;
 		};
-		ECA6FB9DDDBB67C9BDB772797AFD5397 /* PBXTargetDependency */ = {
+		856F04DCF9471B7DCB6261F8B5130541 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftyCam;
-			target = 6CFB6EBDAB8DA7F7D81976920F649516 /* SwiftyCam */;
-			targetProxy = CC5E6E9F674901ACCFADE45A53DF8E7F /* PBXContainerItemProxy */;
+			target = 7C1C85E5F2AC67A5D14838BEE951740F /* SwiftyCam */;
+			targetProxy = 8119D84E50F181D75D5317DE4FCCB112 /* PBXContainerItemProxy */;
+		};
+		BDEDE7CE9CD91340F325A65BA180D7B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nanopb;
+			target = E4DD95323C54A78F879DAB0F1508B8E7 /* nanopb */;
+			targetProxy = A49A4F9E31E81AD8ACC5F35449F807EA /* PBXContainerItemProxy */;
+		};
+		D3ABD1101B87337D689B5EF303270433 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KSTokenView;
+			target = E91EFCA18C1AC0117B2DA7A21EAA8BC0 /* KSTokenView */;
+			targetProxy = 54C43C533F74FE575E17A198A694A4F5 /* PBXContainerItemProxy */;
+		};
+		DE1433ACA375052FAD36CDE6ED3B2395 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoogleToolboxForMac;
+			target = 00103D6C821BE85971C563025527BA5D /* GoogleToolboxForMac */;
+			targetProxy = 119E3FF1BBF250FE2513E82DECB320C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -816,19 +922,29 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
@@ -842,6 +958,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -849,7 +966,7 @@
 		};
 		1911C3E034CD5F041D3FD6062ADFCD52 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D26434BDE6CA2BA51674E32B5F83D56 /* nanopb.xcconfig */;
+			baseConfigurationReference = E83427DD806889AF8082C5C850B1CE27 /* nanopb.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -879,44 +996,9 @@
 			};
 			name = Release;
 		};
-		22AF1B9AD9EBEB48651B9AC70871A08D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 249EF5FE1716B882E99CEB1F9F2C14AE /* Pods-Rope.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Rope/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Rope/Pods-Rope.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Rope;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		31EA5BBFECF9253E1F517BAF93538D0F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 84AB3291B447B132478F341D4E47FFEB /* GoogleToolboxForMac.xcconfig */;
+			baseConfigurationReference = 1BF39AA4FAA75505A8D016790A60332B /* GoogleToolboxForMac.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -948,9 +1030,42 @@
 			};
 			name = Debug;
 		};
+		3D56D6761F7A734873F2F76771A4F963 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F53582ED498C2BBE086748ABC1A85984 /* SwiftyCam.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftyCam/SwiftyCam-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftyCam/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftyCam/SwiftyCam.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = SwiftyCam;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		60712737B2BE8007AD46630769082332 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2152557A6417BDE2BC7FFC738E08C9C /* PhoneNumberKit.xcconfig */;
+			baseConfigurationReference = DCFD84AE5087349135F5D4414280BAEF /* PhoneNumberKit.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -981,9 +1096,9 @@
 			};
 			name = Debug;
 		};
-		74AE2C4BD2CA0B8F52BFC680EF8D3BCC /* Release */ = {
+		8AA5BEC05AE581530881AECFC6B8A22A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C6AF076D3CAAD326F9DE3AF1A2F33668 /* SwiftyCam.xcconfig */;
+			baseConfigurationReference = 7E199EDEF854CAAA858CF9A0DDD80E89 /* KSTokenView.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -996,14 +1111,14 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SwiftyCam/SwiftyCam-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SwiftyCam/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/KSTokenView/KSTokenView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/KSTokenView/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SwiftyCam/SwiftyCam.modulemap";
+				MODULEMAP_FILE = "Target Support Files/KSTokenView/KSTokenView.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = SwiftyCam;
+				PRODUCT_NAME = KSTokenView;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -1013,9 +1128,9 @@
 			};
 			name = Release;
 		};
-		85A8F5B2645EB00C728E6D19E0D46D66 /* Debug */ = {
+		905D6910F496F955691D8B9106937E57 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C6AF076D3CAAD326F9DE3AF1A2F33668 /* SwiftyCam.xcconfig */;
+			baseConfigurationReference = 7E199EDEF854CAAA858CF9A0DDD80E89 /* KSTokenView.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1028,14 +1143,14 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SwiftyCam/SwiftyCam-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SwiftyCam/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/KSTokenView/KSTokenView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/KSTokenView/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SwiftyCam/SwiftyCam.modulemap";
+				MODULEMAP_FILE = "Target Support Files/KSTokenView/KSTokenView.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = SwiftyCam;
+				PRODUCT_NAME = KSTokenView;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1048,7 +1163,7 @@
 		};
 		A01D870F497334175A7927F8897D5875 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 84AB3291B447B132478F341D4E47FFEB /* GoogleToolboxForMac.xcconfig */;
+			baseConfigurationReference = 1BF39AA4FAA75505A8D016790A60332B /* GoogleToolboxForMac.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1081,7 +1196,7 @@
 		};
 		A475335BF9C28A2C1E1624453D59B527 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D26434BDE6CA2BA51674E32B5F83D56 /* nanopb.xcconfig */;
+			baseConfigurationReference = E83427DD806889AF8082C5C850B1CE27 /* nanopb.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1111,54 +1226,47 @@
 			};
 			name = Debug;
 		};
-		C382132BB6BF8CA1A911872A2062FD0D /* Debug */ = {
+		A4E5B1598E4159F6DB359777ECEC417A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 249EF5FE1716B882E99CEB1F9F2C14AE /* Pods-Rope.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_DEBUG=1",
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Rope/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Rope/Pods-Rope.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Rope;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
-		CB41C3AB322511AF837D9E046B686A07 /* Debug */ = {
+		B721FF9C67157DFDE74129C784CF54CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8BEB035B6B5330896C4EE2C0F087E1A6 /* Pods-Rope.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -1191,9 +1299,63 @@
 			};
 			name = Debug;
 		};
+		C382132BB6BF8CA1A911872A2062FD0D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
 		D3BFB4CF683422048FC322F6D52F6209 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2152557A6417BDE2BC7FFC738E08C9C /* PhoneNumberKit.xcconfig */;
+			baseConfigurationReference = DCFD84AE5087349135F5D4414280BAEF /* PhoneNumberKit.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1214,6 +1376,38 @@
 				MODULEMAP_FILE = "Target Support Files/PhoneNumberKit/PhoneNumberKit.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = PhoneNumberKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D4A2D3997C1B8ECEF3363BD8C5767D26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F53582ED498C2BBE086748ABC1A85984 /* SwiftyCam.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftyCam/SwiftyCam-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftyCam/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftyCam/SwiftyCam.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SwiftyCam;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -1244,11 +1438,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8084DB099CA87DAF9CDAE69E80B0963D /* Build configuration list for PBXNativeTarget "SwiftyCam" */ = {
+		63710B388CBA6BC8FE3AEC38A0B23472 /* Build configuration list for PBXNativeTarget "SwiftyCam" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				85A8F5B2645EB00C728E6D19E0D46D66 /* Debug */,
-				74AE2C4BD2CA0B8F52BFC680EF8D3BCC /* Release */,
+				3D56D6761F7A734873F2F76771A4F963 /* Debug */,
+				D4A2D3997C1B8ECEF3363BD8C5767D26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A4FFB1310EBD2F3B14829B17A29D334D /* Build configuration list for PBXNativeTarget "Pods-Rope" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B721FF9C67157DFDE74129C784CF54CD /* Debug */,
+				A4E5B1598E4159F6DB359777ECEC417A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1262,11 +1465,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D168F336D89B79B79F83465E4075AA44 /* Build configuration list for PBXNativeTarget "Pods-Rope" */ = {
+		D40C14EB6C5D3585DA105C48A07631A8 /* Build configuration list for PBXNativeTarget "KSTokenView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CB41C3AB322511AF837D9E046B686A07 /* Debug */,
-				22AF1B9AD9EBEB48651B9AC70871A08D /* Release */,
+				905D6910F496F955691D8B9106937E57 /* Debug */,
+				8AA5BEC05AE581530881AECFC6B8A22A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

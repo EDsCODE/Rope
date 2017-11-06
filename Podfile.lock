@@ -14,6 +14,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - KSTokenView (4.0.0)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -29,6 +30,7 @@ PODS:
 
 DEPENDENCIES:
   - Firebase/Core
+  - KSTokenView (~> 4.0)
   - PhoneNumberKit
   - SwiftyCam
 
@@ -38,10 +40,11 @@ SPEC CHECKSUMS:
   FirebaseCore: 9a6cc1e3eaf75905390f9220596ad4fd8f92faee
   FirebaseInstanceID: a4fc702b5a026f7322964376047f1a3f1f7cc6ff
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  KSTokenView: 6516bc275ad0edbd3fec86cb7cfac5a9326d5b5c
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   PhoneNumberKit: 073b3cef30c2a64ddcd623ea5953bc84bb5b3fc4
   SwiftyCam: 86c114177a1b1f5dc2c82384577d0c20b922a31b
 
-PODFILE CHECKSUM: 3e3cedc70fe2911d99fc69f33210d710d241dc95
+PODFILE CHECKSUM: 5f9ad13fb25642380a50c77e04e7318d117aea69
 
 COCOAPODS: 1.1.1

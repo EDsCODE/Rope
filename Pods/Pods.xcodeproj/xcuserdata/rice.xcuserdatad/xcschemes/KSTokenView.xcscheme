@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EB4005C0346D801BF206AEAEF8FCF080"
-               BuildableName = "Pods_Rope.framework"
-               BlueprintName = "Pods-Rope"
+               BlueprintIdentifier = "E91EFCA18C1AC0117B2DA7A21EAA8BC0"
+               BuildableName = "KSTokenView.framework"
+               BlueprintName = "KSTokenView"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EB4005C0346D801BF206AEAEF8FCF080"
-            BuildableName = "Pods_Rope.framework"
-            BlueprintName = "Pods-Rope"
+            BlueprintIdentifier = "E91EFCA18C1AC0117B2DA7A21EAA8BC0"
+            BuildableName = "KSTokenView.framework"
+            BlueprintName = "KSTokenView"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

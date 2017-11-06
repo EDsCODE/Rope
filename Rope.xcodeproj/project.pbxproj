@@ -14,7 +14,7 @@
 		1A1785301FA0C85C00427741 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A17852F1FA0C85C00427741 /* Assets.xcassets */; };
 		1A1785331FA0C85C00427741 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A1785311FA0C85C00427741 /* LaunchScreen.storyboard */; };
 		1A17853B1FA0C8DC00427741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A17853A1FA0C8DC00427741 /* GoogleService-Info.plist */; };
-		1A4BE17A1FAA2199001EEB15 /* RopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4BE1791FAA2199001EEB15 /* RopeCell.swift */; };
+		1A4BE17A1FAA2199001EEB15 /* RopeIPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4BE1791FAA2199001EEB15 /* RopeIPCell.swift */; };
 		1A5576251FA0DD93001D404D /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5576241FA0DD93001D404D /* Auth.storyboard */; };
 		1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */; };
 		1A5576291FA0EB64001D404D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576281FA0EB64001D404D /* User.swift */; };
@@ -25,9 +25,11 @@
 		1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF861FAB697600EC8780 /* CustomSegues.swift */; };
 		1AB5FF901FAD73AD00EC8780 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */; };
 		1AB5FF921FAD747B00EC8780 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */; };
-		1AB5FF961FAE237100EC8780 /* RopeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AB5FF951FAE237100EC8780 /* RopeCell.xib */; };
+		1AB5FF961FAE237100EC8780 /* RopeIPCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AB5FF951FAE237100EC8780 /* RopeIPCell.xib */; };
 		1AB5FF981FAF631600EC8780 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF971FAF631600EC8780 /* TabBarViewController.swift */; };
 		1AB5FF9C1FAF6DE400EC8780 /* AddRopeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AB5FF9B1FAF6DE400EC8780 /* AddRopeCell.xib */; };
+		1AB5FFA11FAFAFEB00EC8780 /* NewRopeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FFA01FAFAFEB00EC8780 /* NewRopeViewController.swift */; };
+		1AB5FFA31FB014C000EC8780 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FFA21FB014C000EC8780 /* PreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +41,7 @@
 		1A1785321FA0C85C00427741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1A1785341FA0C85C00427741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A17853A1FA0C8DC00427741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		1A4BE1791FAA2199001EEB15 /* RopeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeCell.swift; sourceTree = "<group>"; };
+		1A4BE1791FAA2199001EEB15 /* RopeIPCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeIPCell.swift; sourceTree = "<group>"; };
 		1A5576241FA0DD93001D404D /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		1A5576281FA0EB64001D404D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -50,9 +52,11 @@
 		1AB5FF861FAB697600EC8780 /* CustomSegues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegues.swift; sourceTree = "<group>"; };
 		1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
-		1AB5FF951FAE237100EC8780 /* RopeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RopeCell.xib; sourceTree = "<group>"; };
+		1AB5FF951FAE237100EC8780 /* RopeIPCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RopeIPCell.xib; sourceTree = "<group>"; };
 		1AB5FF971FAF631600EC8780 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		1AB5FF9B1FAF6DE400EC8780 /* AddRopeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddRopeCell.xib; sourceTree = "<group>"; };
+		1AB5FFA01FAFAFEB00EC8780 /* NewRopeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRopeViewController.swift; sourceTree = "<group>"; };
+		1AB5FFA21FB014C000EC8780 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		50F5BFEBB349A5F357FAD6B3 /* Pods-Rope.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rope.release.xcconfig"; path = "Pods/Target Support Files/Pods-Rope/Pods-Rope.release.xcconfig"; sourceTree = "<group>"; };
 		7D3E04C1E7D03CE3F5A08044 /* Pods_Rope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA65B7248470CE8810E8062 /* Pods-Rope.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rope.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Rope/Pods-Rope.debug.xcconfig"; sourceTree = "<group>"; };
@@ -117,9 +121,10 @@
 		1A5576221FA0DD59001D404D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1A4BE1791FAA2199001EEB15 /* RopeCell.swift */,
-				1AB5FF951FAE237100EC8780 /* RopeCell.xib */,
+				1A4BE1791FAA2199001EEB15 /* RopeIPCell.swift */,
+				1AB5FF951FAE237100EC8780 /* RopeIPCell.xib */,
 				1AB5FF9B1FAF6DE400EC8780 /* AddRopeCell.xib */,
+				1AB5FFA21FB014C000EC8780 /* PreviewView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -131,6 +136,7 @@
 				1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */,
 				1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */,
 				1A72EE191FA22B810048A45F /* Auth */,
+				1AB5FFA01FAFAFEB00EC8780 /* NewRopeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -235,7 +241,7 @@
 				1AB5FF9C1FAF6DE400EC8780 /* AddRopeCell.xib in Resources */,
 				1A5576251FA0DD93001D404D /* Auth.storyboard in Resources */,
 				1A17852E1FA0C85C00427741 /* Main.storyboard in Resources */,
-				1AB5FF961FAE237100EC8780 /* RopeCell.xib in Resources */,
+				1AB5FF961FAE237100EC8780 /* RopeIPCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,13 +305,15 @@
 				1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */,
 				1A17852B1FA0C85C00427741 /* LoginViewController.swift in Sources */,
 				1A5576311FA12A9D001D404D /* AgeViewController.swift in Sources */,
+				1AB5FFA31FB014C000EC8780 /* PreviewView.swift in Sources */,
 				1A55762D1FA116F0001D404D /* FirstNameViewController.swift in Sources */,
 				1A55762F1FA11DC4001D404D /* LastNameViewController.swift in Sources */,
 				1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */,
 				1A1785291FA0C85C00427741 /* AppDelegate.swift in Sources */,
+				1AB5FFA11FAFAFEB00EC8780 /* NewRopeViewController.swift in Sources */,
 				1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */,
 				1AB5FF981FAF631600EC8780 /* TabBarViewController.swift in Sources */,
-				1A4BE17A1FAA2199001EEB15 /* RopeCell.swift in Sources */,
+				1A4BE17A1FAA2199001EEB15 /* RopeIPCell.swift in Sources */,
 				1AB5FF921FAD747B00EC8780 /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
