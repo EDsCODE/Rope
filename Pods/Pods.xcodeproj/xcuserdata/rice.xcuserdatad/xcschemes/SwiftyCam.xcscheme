@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0900"
+   LastUpgradeVersion = "0910"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7C1C85E5F2AC67A5D14838BEE951740F"
+               BlueprintIdentifier = "EF6F843C1CC1CE4FF33C9D9A0DCA0F7A"
                BuildableName = "SwiftyCam.framework"
                BlueprintName = "SwiftyCam"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7C1C85E5F2AC67A5D14838BEE951740F"
+            BlueprintIdentifier = "EF6F843C1CC1CE4FF33C9D9A0DCA0F7A"
             BuildableName = "SwiftyCam.framework"
             BlueprintName = "SwiftyCam"
             ReferencedContainer = "container:Pods.xcodeproj">

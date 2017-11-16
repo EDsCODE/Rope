@@ -50,8 +50,10 @@ class LastNameViewController: UIViewController {
     }
     
     @objc func segueToNext(_ sender: UIButton){
+        CurrentUser.lastname = textField.text!
         self.performSegue(withIdentifier: "ageViewSegue", sender: self)
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

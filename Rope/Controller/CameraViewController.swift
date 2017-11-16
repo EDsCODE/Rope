@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyCam
 import AVFoundation
+import Firebase
 import Photos
 
 class CameraViewController: SwiftyCamViewController {
@@ -18,6 +19,7 @@ class CameraViewController: SwiftyCamViewController {
     var capturedURL: URL?
     var isRecording = false
     @IBOutlet weak var cancelButton: UIButton!
+    var ropes = [RopeIP]()
     
     var topPanel: UIView = {
         let view = UIView()
@@ -41,13 +43,6 @@ class CameraViewController: SwiftyCamViewController {
         return view
     }()
     
-    var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.bounces = false
-        return tableView
-    }()
-    
     var previewView: PreviewView = {
         let preview = PreviewView()
         preview.translatesAutoresizingMaskIntoConstraints = false
@@ -55,29 +50,59 @@ class CameraViewController: SwiftyCamViewController {
         return preview
     }()
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    var cameraView: UIView = {
+        let camera = UIView()
+        camera.translatesAutoresizingMaskIntoConstraints = false
+        camera.isHidden = false
+        return camera
+    }()
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraDelegate = self
         
+        
         self.videoQuality = .resolution1920x1080
         
+        self.view.addSubview(cameraView)
         self.view.addSubview(topPanel)
         self.view.addSubview(bottomPanel)
-        self.view.addSubview(tableView)
         self.view.addSubview(previewView)
+        self.view.bringSubview(toFront: tableView)
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage.imageWithColor(color: UIColor(displayP3Red: 100.0, green: 100.0, blue: 100.0, alpha: 0.5))
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [
+                NSAttributedStringKey.font: UIFont(name: "extravaganzza", size: 28)!,
+                NSAttributedStringKey.foregroundColor: UIColor.white
+            ]
+    
+//        let button: UIButton = UIButton(type: .custom)
+//        button.setImage(#imageLiteral(resourceName: "plus-symbol"), for: .normal)
+//        button.imageView?.contentMode = .scaleAspectFit
+//        button.frame = CGRect(x: 40.0, y: 0.0, width: 20.0, height: 20.0)
+//        button.addTarget(self, action: #selector(segueToCreateRope(_:)), for: .touchUpInside)
+//        let barButton = UIBarButtonItem(customView: button)
+//
+        self.navigationItem.rightBarButtonItem?.tintColor = .white
         //setup tableview
         tableView.delegate = self
-        tableView.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.35)
+        tableView.backgroundColor = .clear
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: "RopeIPCell", bundle: nil), forCellReuseIdentifier: "ropeIPCell")
         tableView.register(UINib(nibName: "AddRopeCell", bundle: nil), forCellReuseIdentifier: "addRopeCell")
+        
         let constraints = [
+//            cameraView.topAnchor.constraint(equalTo: self.view.topAnchor),
+//            cameraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+//            cameraView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+//            cameraView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             topPanel.topAnchor.constraint(equalTo: self.view.topAnchor),
             topPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             topPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -86,10 +111,6 @@ class CameraViewController: SwiftyCamViewController {
             bottomPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             bottomPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             bottomPanel.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - self.view.bounds.width) / 2),
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: UIApplication.shared.statusBarFrame.height),
-            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             previewView.topAnchor.constraint(equalTo: self.view.topAnchor),
             previewView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             previewView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -97,28 +118,33 @@ class CameraViewController: SwiftyCamViewController {
         ]
         NSLayoutConstraint.activate(constraints)
         setupLongPressforVideo()
-        
-        // Do any additional setup after loading the view.
+        DataService.instance.initialFetchRopesIP(){ (ropeIP) in
+            self.ropes.append(ropeIP)
+            self.tableView.reloadData()
+        }
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView.reloadData()
-        guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-        statusBar.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.35)
+        UIApplication.shared.statusBarStyle = .lightContent
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-        statusBar.backgroundColor = .clear
-        
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     func setupLongPressforVideo() {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
-        self.view.addGestureRecognizer(longPressGestureRecognizer)
+        longPressGestureRecognizer.minimumPressDuration = 0.2
+        tableView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     @objc func longPressed(sender: UILongPressGestureRecognizer){
@@ -131,8 +157,7 @@ class CameraViewController: SwiftyCamViewController {
             }
             isRecording = false
             //Do Whatever You want on End of Gesture
-        }
-        else if sender.state == .began {
+        } else if sender.state == .began {
             print("UIGestureRecognizerStateBegan.")
             tableView.isHidden = true
             self.tabBarController?.tabBar.isHidden = true
@@ -141,6 +166,7 @@ class CameraViewController: SwiftyCamViewController {
             buttonTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(cancel(_:)), userInfo: nil, repeats: false)
             animateRecordingLine()
         }
+        
     }
     
     @objc func cancel(_ timerObject: Timer) {
@@ -182,6 +208,7 @@ class CameraViewController: SwiftyCamViewController {
         self.shapeLayer = shapeLayer
     }
     
+    //pause animation
     func pause(_ theLayer: CALayer) {
         let mediaTime: CFTimeInterval = CACurrentMediaTime()
         let pausedTime: CFTimeInterval = theLayer.convertTime(mediaTime, from: nil)
@@ -190,10 +217,8 @@ class CameraViewController: SwiftyCamViewController {
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
+    
     
     func squareCropVideo(inputURL: NSURL, completion: @escaping (_ outputURL : NSURL?) -> ()){
         let asset = AVAsset.init(url: inputURL as URL)
@@ -258,20 +283,9 @@ class CameraViewController: SwiftyCamViewController {
         self.capturedURL = nil
         tableView.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
+        self.tableView.reloadData()
         self.view.bringSubview(toFront: tableView)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        self.shapeLayer?.removeFromSuperlayer()
-        if segue.identifier == "showPreview" {
-            let destination = segue.destination as? PreviewViewController
-            if let url = capturedURL {
-                destination?.videoURL = url
-                self.capturedURL = nil
-            }
-        }
-    }
-    
     
     /*
      // MARK: - Navigation
@@ -297,23 +311,6 @@ extension CameraViewController:SwiftyCamViewControllerDelegate {
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
-        //        print("crop")
-        //        squareCropVideo(inputURL: url as NSURL, completion: { (outputURL) -> () in
-        //            // Save video to photo library
-        //            //            PHPhotoLibrary.shared().performChanges({
-        //            //                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL:outputURL! as URL)
-        //            //            }) { saved, error in
-        //            //                if saved {
-        //            //                    print ("save successful")
-        //            //                }
-        //            //                else {
-        //            //                    print ("save failed")
-        //            //                }
-        //            //            }
-        //            self.capturedURL = outputURL! as URL
-        //            self.performSegue(withIdentifier: "showPreview", sender: self)
-        //
-        //        })
         self.shapeLayer?.removeFromSuperlayer()
         
         let player = AVPlayer(url: url)
@@ -324,8 +321,6 @@ extension CameraViewController:SwiftyCamViewControllerDelegate {
         self.view.bringSubview(toFront: topPanel)
         self.view.bringSubview(toFront: bottomPanel)
         self.view.bringSubview(toFront: cancelButton)
-        //self.performSegue(withIdentifier: "showPreview", sender: self)
-        
     }
 }
 
@@ -333,48 +328,58 @@ extension CameraViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.contentView.backgroundColor = UIColor.clear
+        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIView.animate(withDuration: 0.3, animations: {
+            cell.layer.transform = CATransform3DMakeScale(1,1,1)
+        })
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 50.0
-        } else {
-            return 100.0
-        }
+//        if indexPath.section == 0 {
+//            return 50.0
+//        } else {
+            return 85.0
+//        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            performSegue(withIdentifier: "createNewRopeSegue", sender: self)
-        }
+//        if indexPath.section == 0 {
+//            performSegue(withIdentifier: "createNewRopeSegue", sender: self)
+//        } else {
+            tableView.deselectRow(at: indexPath, animated: false)
+//        }
     }
+
     
 }
 
 extension CameraViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "addRopeCell", for: indexPath)
-            cell.backgroundColor = .clear
-            return cell
-        } else if indexPath.section == 1 {
+//        if indexPath.section == 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "addRopeCell", for: indexPath)
+//            cell.backgroundColor = .clear
+//            return cell
+//        } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ropeIPCell", for: indexPath) as! RopeIPCell
+            cell.selectionStyle = .none
+            cell.titleLabel.text = ropes[indexPath.row].title!
+            cell.timeLabel.text = "\(ropes[indexPath.row].expirationDate!)"
+            cell.knotLabel.text = "\(ropes[indexPath.row].knotCount!) knots"
             cell.backgroundColor = .clear
             return cell
-        }
-        return UITableViewCell()
+//        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            return 5
-        }
+//        if section == 0 {
+//            return 1
+//        } else {
+            return ropes.count
+//        }
     }
     
 //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -396,3 +401,16 @@ extension CameraViewController: UITableViewDataSource {
 //        return 50.0
 //    }
 }
+
+extension UIImage {
+    class func imageWithColor(color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 0.5)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+        color.setFill()
+        UIRectFill(rect)
+        let image : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
+

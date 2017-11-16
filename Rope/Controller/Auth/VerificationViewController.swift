@@ -40,6 +40,8 @@ class VerificationViewController: UIViewController {
         return label
     }()
     
+    var currentUser: User!
+    
     @objc func showButton(_ sender: UITextField){
         
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
@@ -53,9 +55,37 @@ class VerificationViewController: UIViewController {
     }
     
     @objc func segueToNext(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "firstNameSegue", sender: self)
+
+        //Start spinner and disable user input
+        view.isUserInteractionEnabled = false
+
+        //Retrieve saved verification ID and attempt to create login credentials.
+        let verificationID = UserDefaults.standard.string(forKey: "authVerificationID") ?? ""
+        let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: codeField.text!)
+
+        //Use credentials to attempt to sign in.
+        Auth.auth().signIn(with: credential) {
+            user, error in
+            //When response received, stop spinner and re-enable user input
+            //If response is an error, display error message.
+            if let error = error {
+                print("Verification Error: \(error)")
+                return
+            } else {
+                let uid = Auth.auth().currentUser!.uid
+                DataService.instance.doesUserExist(uid: uid) {(exists) in
+                    if exists {
+                        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainView")
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.window?.rootViewController = mainViewController
+                    } else {
+                        self.performSegue(withIdentifier: "usernameSegue", sender: self)
+                    }
+                }
+            }
+        }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

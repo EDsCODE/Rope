@@ -14,12 +14,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var storyboard: UIStoryboard!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        Database.database().isPersistenceEnabled = true
         
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        if Auth.auth().currentUser != nil {
+            storyboard = UIStoryboard(name: "Main", bundle: .main)
+        } else {
+            storyboard = UIStoryboard(name: "Auth", bundle: .main)
+        }
+        
         // 2
         if let initialViewController = storyboard.instantiateInitialViewController() {
             // 3

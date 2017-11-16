@@ -8,6 +8,7 @@
 
 import UIKit
 import KSTokenView
+import Firebase
 
 class NewRopeViewController: UIViewController {
 
@@ -39,19 +40,23 @@ class NewRopeViewController: UIViewController {
         return button
     }()
     
-    let names: Array<String> = ["hello", "Goodbye"]
+    var friends = Dictionary<String,User>()
+    var friendNames = [String]()
+    var participants = [User]()
     var keyboardIsActive = false
+    var tokenView: KSTokenView!
+    var titleView: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tokenView = KSTokenView(frame: CGRect(x: 15, y: UIApplication.shared.statusBarFrame.height + 50, width: self.view.bounds.width, height: 40.0))
+        tokenView = KSTokenView(frame: CGRect(x: 15, y: UIApplication.shared.statusBarFrame.height + 50, width: self.view.bounds.width, height: 40.0))
         tokenView.delegate = self
         tokenView.promptText = "With: "
         tokenView.placeholder = "Type to search for friends"
-        tokenView.descriptionText = "Languages"
+        tokenView.descriptionText = "Friends"
         tokenView.style = .squared
         
-        let titleView = UITextField(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height, width: self.view.bounds.width, height: 50.0))
+        titleView = UITextField(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height, width: self.view.bounds.width, height: 50.0))
         titleView.textAlignment = .center
         titleView.placeholder = "Title of Rope"
         titleView.font = UIFont.systemFont(ofSize: 30.0)
@@ -75,15 +80,44 @@ class NewRopeViewController: UIViewController {
         
         setupKeyboardObserver()
         setupCancelButton()
+        setupCreateButton()
+        fetchFriends()
         // Do any additional setup after loading the view.
     }
     
     func setupCancelButton() {
-        let cancelGesture = UITapGestureRecognizer(target: self, action: #selector(cancelRopeSetup(gesture:)))
+        let cancelGesture = UITapGestureRecognizer(target: self, action: #selector(cancelRopeAction(gesture:)))
         cancelButton.addGestureRecognizer(cancelGesture)
     }
     
-    @objc func cancelRopeSetup(gesture: UITapGestureRecognizer){
+    func setupCreateButton() {
+        let createGesture = UITapGestureRecognizer(target: self, action: #selector(createRopeAction(gesture:)))
+        createButton.addGestureRecognizer(createGesture)
+    }
+    
+    @objc func cancelRopeAction(gesture: UITapGestureRecognizer){
+        dismiss(animated: false, completion: nil)
+    }
+    
+    @objc func createRopeAction(gesture: UITapGestureRecognizer) {
+        let tokens = tokenView.tokens()
+        if tokens?.count != 0 {
+            for token in tokens! {
+                let object = token.object as! String
+                if !participants.contains(friends[object]!) {
+                    participants.append(friends[object]!)
+                }
+            }
+        }
+        
+        if let title = titleView.text {
+            DataService.instance.createRope(title: title, participants: participants)
+        }
+        
+        
+//        for friend in friends {
+//            friend.printDetail()
+//        }
         dismiss(animated: false, completion: nil)
     }
     
@@ -126,6 +160,26 @@ class NewRopeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func fetchFriends() {
+        if let myID = Auth.auth().currentUser?.uid {
+            DataService.instance.mainRef.child("users").child(myID).child("friends").observeSingleEvent(of: .value) {
+                (snapshot) in
+                for friend in snapshot.children.allObjects as! [DataSnapshot] {
+                    let user = User()
+                    user.username = friend.key
+                    user.firstname = friend.childSnapshot(forPath: "firstname").value as? String
+                    user.lastname = friend.childSnapshot(forPath: "lastname").value as? String
+                    user.uid = friend.childSnapshot(forPath: "uid").value as? String
+//
+                    self.friendNames.append(user.firstname! + " " + user.lastname!)
+                    self.friends[user.firstname! + " " + user.lastname!] = user
+//
+                }
+                
+            }
+        }
+    }
+    
     
     
 
@@ -143,13 +197,13 @@ class NewRopeViewController: UIViewController {
 
 extension NewRopeViewController: KSTokenViewDelegate {
     func tokenView(_ tokenView: KSTokenView, performSearchWithString string: String, completion: ((_ results: Array<AnyObject>) -> Void)?) {
-        if (string.characters.isEmpty){
-            completion!(names as Array<AnyObject>)
+        if (string.isEmpty){
+            completion!(friendNames as Array<AnyObject>)
             return
         }
         
         var data: Array<String> = []
-        for value: String in names {
+        for value in friendNames {
             if value.lowercased().range(of: string.lowercased()) != nil {
                 data.append(value)
             }
@@ -158,6 +212,7 @@ extension NewRopeViewController: KSTokenViewDelegate {
     }
     
     func tokenView(_ tokenView: KSTokenView, displayTitleForObject object: AnyObject) -> String {
+
         return object as! String
     }
     

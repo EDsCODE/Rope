@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AgeViewController: UIViewController {
     
@@ -38,6 +39,7 @@ class AgeViewController: UIViewController {
         return button
     }()
     
+    
     @objc func showButton(_ sender: UITextField){
         
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
@@ -51,6 +53,13 @@ class AgeViewController: UIViewController {
     }
 
     @objc func segueToNext(_ sender: UIButton){
+        CurrentUser.age = textField.text!
+        
+        //make instance in firebase database
+        if let user = Auth.auth().currentUser?.uid {
+            DataService.instance.saveUser(uid: user)
+        }
+        
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainView")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

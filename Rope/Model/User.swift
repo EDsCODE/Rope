@@ -8,64 +8,24 @@
 
 import Foundation
 
-class User {
-    private var _firstName: String!
-    private var _lastName: String!
-    private var _age: Int!
-    private var _phoneNumber: String!
+struct CurrentUser {
+    static var username = ""
+    static var firstname = ""
+    static var lastname = ""
+    static var age = ""
+    static var phoneNumber = ""
+}
+
+class User: NSObject {
+    var username: String?
+    var uid: String?
+    var firstname: String?
+    var lastname: String?
     
-    init(firstName: String? = nil, lastName: String? = nil, age: Int? = nil, phoneNumber: String? = nil){
-        if let firstName = firstName {
-             _firstName = firstName
-        }
-        if let lastName = lastName {
-            _lastName = lastName
-        }
-        if let age = age {
-            _age = age
-        }
-        if let phoneNumber = phoneNumber {
-            _phoneNumber = phoneNumber
-        }
+    func printDetail() {
+        print(username!)
+        print(uid!)
+        print(firstname!)
+        print(lastname!)
     }
-    
-    var firstName: String {
-        get{
-            return _firstName
-        }
-        set {
-            _firstName = newValue
-        }
-    }
-    
-    var lastName: String {
-        get{
-            return _lastName
-        }
-        set {
-            _lastName = newValue
-        }
-    }
-    
-    var age: Int {
-        get{
-            return _age
-        }
-        set {
-            _age = newValue
-        }
-    }
-    
-    var phoneNumber: String {
-        get{
-            return _phoneNumber
-        }
-        set {
-            _phoneNumber = newValue
-        }
-    }
-    
-    
-    
-    
 }

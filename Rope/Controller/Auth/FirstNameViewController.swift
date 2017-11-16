@@ -37,6 +37,7 @@ class FirstNameViewController: UIViewController {
         return button
     }()
     
+    
     @objc func showButton(_ sender: UITextField){
         
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
@@ -50,9 +51,9 @@ class FirstNameViewController: UIViewController {
     }
     
     @objc func segueToNext(_ sender: UIButton){
+        CurrentUser.firstname = textField.text!
         self.performSegue(withIdentifier: "lastNameSegue", sender: self)
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

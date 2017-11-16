@@ -54,7 +54,34 @@ class PhoneNumberViewController: UIViewController {
     }
     
     @objc func segueToNext(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "verificationSegue", sender: self)
+        view.isUserInteractionEnabled = false
+
+        //Attempt to parse phone number.
+        let phoneNumberKit = PhoneNumberKit()
+        do {
+            let phoneNumber = try phoneNumberKit.parse(numberField.text!)
+            let parsedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
+
+            //If parse successful, connect to firebase and attempt to verify.
+            PhoneAuthProvider.provider().verifyPhoneNumber(parsedNumber, uiDelegate: nil) { (verificationID, error) in
+                //When response received, stop spinner and re-enable user input
+                self.view.isUserInteractionEnabled = true
+                //If response received is an error, print the error.
+                if let error = error {
+                    print("error authentication: \(error)")
+                    return
+                }
+                //Otherwise, send to verification page.
+                UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+                CurrentUser.phoneNumber = parsedNumber
+                self.performSegue(withIdentifier: "verificationSegue", sender: nil)
+
+            }
+            //If phone number parsing fails, print error.
+        } catch {
+            self.view.isUserInteractionEnabled = true
+            print("parsing phonenumber failed")
+        }
     }
     
     override func viewDidLoad() {

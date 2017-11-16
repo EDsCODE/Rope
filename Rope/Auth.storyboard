@@ -22,12 +22,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="yvK-5p-6Nh"/>
                     <connections>
-                        <segue destination="qrJ-Yg-Xkl" kind="show" identifier="phoneNumberSegue" id="8Zu-Mb-93d"/>
+                        <segue destination="qrJ-Yg-Xkl" kind="show" identifier="phoneNumberSegue" id="fqV-fi-Lme"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hsh-Rt-kwA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="388" y="-10.344827586206897"/>
+            <point key="canvasLocation" x="-734" y="-21"/>
         </scene>
         <!--Verification View Controller-->
         <scene sceneID="sd2-gF-Ljz">
@@ -40,12 +40,12 @@
                         <viewLayoutGuide key="safeArea" id="AuI-OS-Ukb"/>
                     </view>
                     <connections>
-                        <segue destination="UQb-7s-C2n" kind="show" identifier="firstNameSegue" id="EY2-bV-x9S"/>
+                        <segue destination="5Q2-Yz-64v" kind="show" identifier="usernameSegue" id="Rvi-VY-bxf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GJm-sA-iZs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2210" y="-306"/>
+            <point key="canvasLocation" x="1262" y="-21"/>
         </scene>
         <!--First Name View Controller-->
         <scene sceneID="3Eo-v7-CBM">
@@ -98,6 +98,24 @@
             </objects>
             <point key="canvasLocation" x="5026" y="-306"/>
         </scene>
+        <!--User Name View Controller-->
+        <scene sceneID="d9g-Ee-FKh">
+            <objects>
+                <viewController id="5Q2-Yz-64v" customClass="UserNameViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="B6Q-d0-QcO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="ld3-Uv-Nme"/>
+                    </view>
+                    <connections>
+                        <segue destination="UQb-7s-C2n" kind="show" identifier="firstNameSegue" id="AkI-vg-VrO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wOi-Ff-8Yz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2302" y="-306"/>
+        </scene>
         <!--Phone Number View Controller-->
         <scene sceneID="BsR-cg-bNQ">
             <objects>
@@ -114,7 +132,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WBD-WU-54K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1341.5999999999999" y="-306.29685157421289"/>
+            <point key="canvasLocation" x="369" y="-21"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PSH-RJ-kF5">
@@ -132,7 +150,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cPh-R2-bF6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-482" y="-10"/>
+            <point key="canvasLocation" x="-1604" y="-21"/>
         </scene>
     </scenes>
 </document>

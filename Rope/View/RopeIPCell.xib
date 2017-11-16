@@ -9,6 +9,11 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="extravaganzza.ttf">
+            <string>extravaganzza</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -23,33 +28,33 @@
                         <rect key="frame" x="10" y="8" width="355" height="97.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trip to the Store" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dka-ma-G3S">
-                                <rect key="frame" x="8" y="8" width="248.5" height="58.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <rect key="frame" x="8" y="8" width="248.5" height="49"/>
+                                <fontDescription key="fontDescription" name="extravaganzza" family="extravaganzza" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 hours left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dol-xe-8eh">
-                                <rect key="frame" x="8" y="66.5" width="248.5" height="31"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="8" y="57" width="248.5" height="30.5"/>
+                                <fontDescription key="fontDescription" name="extravaganzza" family="extravaganzza" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28          knots" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wjs-Rv-2To">
                                 <rect key="frame" x="256.5" y="0.0" width="98.5" height="97.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="extravaganzza" family="extravaganzza" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="dka-ma-G3S" firstAttribute="height" secondItem="kae-K7-g7b" secondAttribute="height" multiplier="0.6" id="A1F-aB-6lH"/>
+                            <constraint firstItem="dka-ma-G3S" firstAttribute="height" secondItem="kae-K7-g7b" secondAttribute="height" multiplier="0.5" id="A1F-aB-6lH"/>
                             <constraint firstAttribute="bottom" secondItem="Wjs-Rv-2To" secondAttribute="bottom" id="IWC-Cc-pM0"/>
                             <constraint firstItem="dka-ma-G3S" firstAttribute="top" secondItem="kae-K7-g7b" secondAttribute="top" constant="8" id="KTK-6f-ebD"/>
                             <constraint firstItem="Dol-xe-8eh" firstAttribute="leading" secondItem="kae-K7-g7b" secondAttribute="leading" constant="8" id="LED-Np-xer"/>
                             <constraint firstItem="Wjs-Rv-2To" firstAttribute="top" secondItem="kae-K7-g7b" secondAttribute="top" id="Mya-mD-P8i"/>
                             <constraint firstItem="Dol-xe-8eh" firstAttribute="top" secondItem="dka-ma-G3S" secondAttribute="bottom" id="WYa-cn-1vF"/>
                             <constraint firstItem="Dol-xe-8eh" firstAttribute="width" secondItem="dka-ma-G3S" secondAttribute="width" id="Z5f-ij-aKQ"/>
-                            <constraint firstAttribute="bottom" secondItem="Dol-xe-8eh" secondAttribute="bottom" id="l3c-QD-f8I"/>
+                            <constraint firstAttribute="bottom" secondItem="Dol-xe-8eh" secondAttribute="bottom" constant="10" id="l3c-QD-f8I"/>
                             <constraint firstAttribute="trailing" secondItem="Wjs-Rv-2To" secondAttribute="trailing" id="lVL-j8-Dmo"/>
                             <constraint firstItem="dka-ma-G3S" firstAttribute="width" secondItem="kae-K7-g7b" secondAttribute="width" multiplier="0.7" id="uRu-vf-tTH"/>
                             <constraint firstItem="Wjs-Rv-2To" firstAttribute="leading" secondItem="dka-ma-G3S" secondAttribute="trailing" id="wmF-Jj-wzk"/>

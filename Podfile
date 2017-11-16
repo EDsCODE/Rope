@@ -4,11 +4,14 @@
 target 'Rope' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-
-  pod 'Firebase/Core'
-  pod 'PhoneNumberKit'
-  pod 'SwiftyCam'
-  pod 'KSTokenView', '~> 4.0'
+	pod 'Firebase/Auth'
+	pod 'Firebase/Core'
+	pod 'Firebase/Database'
+	pod 'Firebase/Storage'
+	pod 'Firebase/Messaging'
+	pod 'PhoneNumberKit'
+	pod 'SwiftyCam'
+	pod 'KSTokenView', '~> 4.0'
 
   
   # Pods for Rope
