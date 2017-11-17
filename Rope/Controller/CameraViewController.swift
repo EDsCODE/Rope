@@ -10,9 +10,8 @@ import UIKit
 import SwiftyCam
 import AVFoundation
 import Firebase
-import Photos
 
-class CameraViewController: SwiftyCamViewController {
+class CameraViewController: UIViewController {
     
     weak var buttonTimer: Timer?
     weak var shapeLayer: CAShapeLayer?
@@ -20,6 +19,15 @@ class CameraViewController: SwiftyCamViewController {
     var isRecording = false
     @IBOutlet weak var cancelButton: UIButton!
     var ropes = [RopeIP]()
+    
+    //Camera stuff
+    var captureSession: AVCaptureSession?
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    var photoOutput: AVCapturePhotoOutput!
+    var videoOutput: AVCaptureMovieFileOutput!
+    var backCameraInput: AVCaptureDeviceInput!
+    var frontCameraInput: AVCaptureDeviceInput!
+    var microphoneInput: AVCaptureDeviceInput!
     
     var topPanel: UIView = {
         let view = UIView()
@@ -54,6 +62,7 @@ class CameraViewController: SwiftyCamViewController {
         let camera = UIView()
         camera.translatesAutoresizingMaskIntoConstraints = false
         camera.isHidden = false
+        camera.backgroundColor = .green
         return camera
     }()
     
@@ -62,11 +71,7 @@ class CameraViewController: SwiftyCamViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cameraDelegate = self
-        
-        
-        self.videoQuality = .resolution1920x1080
-        
+        setupCamera()
         self.view.addSubview(cameraView)
         self.view.addSubview(topPanel)
         self.view.addSubview(bottomPanel)
@@ -81,14 +86,7 @@ class CameraViewController: SwiftyCamViewController {
                 NSAttributedStringKey.font: UIFont(name: "extravaganzza", size: 28)!,
                 NSAttributedStringKey.foregroundColor: UIColor.white
             ]
-    
-//        let button: UIButton = UIButton(type: .custom)
-//        button.setImage(#imageLiteral(resourceName: "plus-symbol"), for: .normal)
-//        button.imageView?.contentMode = .scaleAspectFit
-//        button.frame = CGRect(x: 40.0, y: 0.0, width: 20.0, height: 20.0)
-//        button.addTarget(self, action: #selector(segueToCreateRope(_:)), for: .touchUpInside)
-//        let barButton = UIBarButtonItem(customView: button)
-//
+        
         self.navigationItem.rightBarButtonItem?.tintColor = .white
         //setup tableview
         tableView.delegate = self
@@ -99,10 +97,10 @@ class CameraViewController: SwiftyCamViewController {
         tableView.register(UINib(nibName: "AddRopeCell", bundle: nil), forCellReuseIdentifier: "addRopeCell")
         
         let constraints = [
-//            cameraView.topAnchor.constraint(equalTo: self.view.topAnchor),
-//            cameraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-//            cameraView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-//            cameraView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            cameraView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            cameraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            cameraView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            cameraView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             topPanel.topAnchor.constraint(equalTo: self.view.topAnchor),
             topPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             topPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -121,6 +119,45 @@ class CameraViewController: SwiftyCamViewController {
         DataService.instance.initialFetchRopesIP(){ (ropeIP) in
             self.ropes.append(ropeIP)
             self.tableView.reloadData()
+        }
+    }
+    
+    func setupCamera() {
+        captureSession = AVCaptureSession()
+        photoOutput = AVCapturePhotoOutput()
+        videoOutput = AVCaptureMovieFileOutput()
+        captureSession?.addOutput(photoOutput)
+        captureSession?.addOutput(videoOutput)
+        
+        let backCamera: AVCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)!
+        let frontCamera: AVCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
+        let microphone: AVCaptureDevice = AVCaptureDevice.default(for: AVMediaType.audio)!
+        do {
+            backCameraInput = try AVCaptureDeviceInput(device: backCamera)
+            frontCameraInput = try AVCaptureDeviceInput(device: frontCamera)
+            microphoneInput = try AVCaptureDeviceInput(device: microphone)
+            captureSession?.addInput(backCameraInput)
+            captureSession?.addInput(microphoneInput)
+            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+            videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            videoPreviewLayer?.frame = view.layer.bounds
+            cameraView.layer.addSublayer(videoPreviewLayer!)
+            captureSession?.startRunning()
+        } catch {
+            print(error)
+        }
+    
+    }
+    
+    ///Returns the current camera type associated with the Capture Session
+    public func getCameraType() -> AVCaptureDeviceInput? {
+        let inputs = captureSession?.inputs as! [AVCaptureDeviceInput]
+        if inputs.contains(backCameraInput) {
+            return backCameraInput
+        } else if inputs.contains(frontCameraInput) {
+            return frontCameraInput
+        } else {
+            return nil
         }
     }
     
@@ -151,7 +188,7 @@ class CameraViewController: SwiftyCamViewController {
         if sender.state == .ended {
             if isRecording == true {
                 print("UIGestureRecognizerStateEnded")
-                stopVideoRecording()
+                videoOutput.stopRecording()
                 pause(shapeLayer!)
                 self.buttonTimer?.invalidate()
             }
@@ -159,10 +196,15 @@ class CameraViewController: SwiftyCamViewController {
             //Do Whatever You want on End of Gesture
         } else if sender.state == .began {
             print("UIGestureRecognizerStateBegan.")
+            
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let filePath = documentsURL.appendingPathComponent("temp.mp4")
+            videoOutput.startRecording(to: filePath, recordingDelegate: self)
+            
             tableView.isHidden = true
             self.tabBarController?.tabBar.isHidden = true
             isRecording = true
-            startVideoRecording()
+            
             buttonTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(cancel(_:)), userInfo: nil, repeats: false)
             animateRecordingLine()
         }
@@ -172,8 +214,9 @@ class CameraViewController: SwiftyCamViewController {
     @objc func cancel(_ timerObject: Timer) {
         print("cancel")
         if isRecording == true {
-            stopVideoRecording()
+            videoOutput.stopRecording()
             pause(shapeLayer!)
+            self.buttonTimer?.invalidate()
         }
         isRecording = false
     }
@@ -299,31 +342,6 @@ class CameraViewController: SwiftyCamViewController {
     
 }
 
-extension CameraViewController:SwiftyCamViewControllerDelegate {
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didBeginRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
-        // Called when startVideoRecording() is called
-        // Called if a SwiftyCamButton begins a long press gesture
-    }
-    
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
-        // Called when stopVideoRecording() is called
-        // Called if a SwiftyCamButton ends a long press gesture
-    }
-    
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
-        self.shapeLayer?.removeFromSuperlayer()
-        
-        let player = AVPlayer(url: url)
-        previewView.displayVideo(player)
-        previewView.isHidden = false
-        self.cancelButton.isHidden = false
-        
-        self.view.bringSubview(toFront: topPanel)
-        self.view.bringSubview(toFront: bottomPanel)
-        self.view.bringSubview(toFront: cancelButton)
-    }
-}
-
 extension CameraViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -401,6 +419,60 @@ extension CameraViewController: UITableViewDataSource {
 //        return 50.0
 //    }
 }
+
+///This class implements AVCapturePhotoCaptureDelegate so it can handle the photos that are taken.
+extension CameraViewController: AVCapturePhotoCaptureDelegate {
+    
+    ///Upon photo capture, renders the image in a UIImageView and submit it to the Camera View Delegate.
+    func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
+        
+        let imageData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer!, previewPhotoSampleBuffer: previewPhotoSampleBuffer)
+        
+        let dataProvider = CGDataProvider(data: imageData! as CFData)
+        
+        let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+        
+//        if getCameraType() == frontCameraInput {
+//            //Fixed mirrored videos for back camera.
+//            delegate.submit(image: UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .leftMirrored))
+//        } else {
+//            //Otherwise just submit regular image.
+//            delegate.submit(image: UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .right))
+//        }
+        
+    }
+}
+
+//This class implements AVCaptureFileOutputRecordingDelegate so it can handle the videos that are recorded.
+extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if error != nil {
+            print("Error Recording from CameraView:AVCaptureFileOutputRecordingDelegate#capture: \(String(describing: error?.localizedDescription))")
+            previewView.isHidden = true
+            previewView.removeExistingContent()
+            cancelButton.isHidden = true
+            self.capturedURL = nil
+            tableView.isHidden = false
+            self.tabBarController?.tabBar.isHidden = false
+            self.shapeLayer?.removeFromSuperlayer()
+            self.view.bringSubview(toFront: tableView)
+        } else {
+            
+            self.shapeLayer?.removeFromSuperlayer()
+            
+            let player = AVPlayer(url: outputFileURL)
+            previewView.displayVideo(player)
+            previewView.isHidden = false
+            self.cancelButton.isHidden = false
+            
+            self.view.bringSubview(toFront: topPanel)
+            self.view.bringSubview(toFront: bottomPanel)
+            self.view.bringSubview(toFront: cancelButton)
+            
+        }
+    }
+}
+
 
 extension UIImage {
     class func imageWithColor(color: UIColor) -> UIImage {
