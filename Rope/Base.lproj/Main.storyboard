@@ -281,10 +281,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sVq-W6-F0p">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SnV-fb-aRp">
                                 <rect key="frame" x="16" y="72" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -295,24 +291,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="sVq-W6-F0p" firstAttribute="leading" secondItem="FGt-VM-oNM" secondAttribute="leading" id="7QC-VM-ZGI"/>
-                            <constraint firstItem="sVq-W6-F0p" firstAttribute="top" secondItem="pDS-fl-xFM" secondAttribute="bottom" id="ViE-XD-is1"/>
-                            <constraint firstAttribute="trailing" secondItem="sVq-W6-F0p" secondAttribute="trailing" id="dZV-hI-aUU"/>
-                            <constraint firstItem="R9d-iR-O7B" firstAttribute="top" secondItem="sVq-W6-F0p" secondAttribute="bottom" id="oay-Dl-Sdm"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Knot" id="2Ea-3y-AwN">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="Plus" id="NdZ-GB-30u">
-                            <connections>
-                                <segue destination="Eda-dp-xSo" kind="presentation" animates="NO" id="db7-zI-UFD"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Knot" id="2Ea-3y-AwN"/>
                     <connections>
                         <outlet property="cancelButton" destination="SnV-fb-aRp" id="DbZ-59-mYb"/>
-                        <outlet property="tableView" destination="sVq-W6-F0p" id="O8k-ZN-put"/>
                         <segue destination="Iy5-K2-bbZ" kind="show" identifier="showPreview" customClass="SegueFromLeft" customModule="Rope" customModuleProvider="target" id="xb6-7n-t8H"/>
+                        <segue destination="Eda-dp-xSo" kind="presentation" identifier="toNewRope" animates="NO" id="Z1L-TJ-iW0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Wc-CV-eUZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -369,7 +353,6 @@
         <!--Knot-->
         <scene sceneID="L2A-S8-OE4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h8l-Z1-dqB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XPp-tG-Q75" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="1000" title="Knot" id="myQ-X4-PE9"/>
                     <toolbarItems/>
@@ -382,12 +365,12 @@
                         <segue destination="u5y-B4-MY0" kind="relationship" relationship="rootViewController" id="sBv-RL-G0L"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h8l-Z1-dqB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="868" y="510"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Plus" width="26" height="25"/>
         <image name="add-user" width="128" height="128"/>
         <image name="settings" width="128" height="128"/>
         <image name="square4" width="2500" height="2500"/>

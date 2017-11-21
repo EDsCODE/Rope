@@ -23,6 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if Auth.auth().currentUser != nil {
             storyboard = UIStoryboard(name: "Main", bundle: .main)
+            let tabBar = UITabBar.appearance()
+            tabBar.barTintColor = UIColor.clear
+            tabBar.backgroundImage = UIImage()
+            tabBar.shadowImage = UIImage()
+            DataService.instance.fetchCurrentUser(uid: (Auth.auth().currentUser?.uid)!)
         } else {
             storyboard = UIStoryboard(name: "Auth", bundle: .main)
         }

@@ -111,7 +111,7 @@ class NewRopeViewController: UIViewController {
         }
         
         if let title = titleView.text {
-            DataService.instance.createRope(title: title, participants: participants)
+            DataService.instance.createRope(title: title, participants: &participants)
         }
         
         
@@ -162,7 +162,7 @@ class NewRopeViewController: UIViewController {
     
     func fetchFriends() {
         if let myID = Auth.auth().currentUser?.uid {
-            DataService.instance.mainRef.child("users").child(myID).child("friends").observeSingleEvent(of: .value) {
+            DataService.instance.mainRef.child("users").child(myID).child("friends").observe(.value) {
                 (snapshot) in
                 for friend in snapshot.children.allObjects as! [DataSnapshot] {
                     let user = User()
@@ -177,6 +177,7 @@ class NewRopeViewController: UIViewController {
                 }
                 
             }
+            
         }
     }
     

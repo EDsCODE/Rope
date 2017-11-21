@@ -33,7 +33,9 @@ class DataService {
         let userData: Dictionary<String, AnyObject> = ["phoneNumber": CurrentUser.phoneNumber as AnyObject,
                                                  "firstName" : CurrentUser.firstname as AnyObject,
                                                  "lastName": CurrentUser.lastname as AnyObject,
-                                                 "age": CurrentUser.age as AnyObject]
+                                                 "age": CurrentUser.age as AnyObject,
+                                                 "ropeIP": false as AnyObject,
+                                                 "username": CurrentUser.username as AnyObject]
         mainRef.child("users").child(uid).child("profile").setValue(userData){
             error, databaseReference in
             if let error = error  {
@@ -73,27 +75,35 @@ class DataService {
 //        }
 //    }
     
-    func createRope(title: String, participants: [User]) {
+    func createRope(title: String, participants: inout [User]) {
         let key = mainRef.child("ropes").childByAutoId().key
-        mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").updateChildValues([key: 0])
         
-        let ropeData: Dictionary<String, AnyObject> = ["title": title as AnyObject,
+        var ropeData: Dictionary<String, AnyObject> = ["title": title as AnyObject,
                                                        "createdBy" : (Auth.auth().currentUser?.uid)! as AnyObject,
                                                        "knotCount": 0 as AnyObject,
                                                        "expirationDate": Date().millisecondsSince1970 + 43200000 as AnyObject]
+        
+        var participantsDictionary = Dictionary<String,Int>()
+        
+        let currentUser = User()
+        currentUser.firstname = CurrentUser.firstname
+        currentUser.lastname = CurrentUser.lastname
+        currentUser.uid = Auth.auth().currentUser?.uid
+        currentUser.username = CurrentUser.username
+
+        participants.append(currentUser)
+        var random = Int(arc4random_uniform(4) + 1)
+        
+        for participant in participants {
+            participantsDictionary[participant.uid!] = random % 4
+            random += 1
+        }
+        
         mainRef.child("ropesIP").child(key).setValue(ropeData){
             error, databaseReference in
             if let error = error  {
                 print("error saving Rope: \(error.localizedDescription)")
-            } else {
-                self.mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").updateChildValues([key: true])
             }
-            
-        }
-        
-        var participantsDictionary = Dictionary<String,String>()
-        for participant in participants {
-            participantsDictionary[participant.username!] = participant.uid
         }
         
         mainRef.child("ropesIP").child(key).child("participants").setValue(participantsDictionary){
@@ -102,6 +112,11 @@ class DataService {
                 print("error saving Rope participants: \(error.localizedDescription)")
             }
         }
+        
+        ropeData["role"] = participantsDictionary[(Auth.auth().currentUser?.uid)!] as AnyObject
+        
+        mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").child(key).setValue(ropeData)
+        
     }
     
     func doesUserExist(uid: String, completion: @escaping (_ result: Bool) -> Void) {
@@ -112,6 +127,20 @@ class DataService {
                 completion(false)
             }
         })
+    }
+    
+    func fetchCurrentUser(uid: String) {
+        usersRef.child(uid).child("profile").observeSingleEvent(of: .value) { (snapshot) in
+            CurrentUser.username = snapshot.childSnapshot(forPath: "username").value as! String
+            CurrentUser.firstname = snapshot.childSnapshot(forPath: "firstName").value as! String
+            CurrentUser.lastname = snapshot.childSnapshot(forPath: "lastName").value as! String
+            CurrentUser.age = snapshot.childSnapshot(forPath: "age").value as! String
+            CurrentUser.phoneNumber = snapshot.childSnapshot(forPath: "phoneNumber").value as! String
+        }
+    }
+    
+    func leaveCurrentRope() {
+         mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").setValue(false)
     }
 }
 

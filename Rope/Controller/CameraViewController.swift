@@ -18,7 +18,7 @@ class CameraViewController: UIViewController {
     var capturedURL: URL?
     var isRecording = false
     @IBOutlet weak var cancelButton: UIButton!
-    var ropes = [RopeIP]()
+    var currentRope: RopeIP?
     
     //Camera stuff
     var captureSession: AVCaptureSession?
@@ -38,6 +38,17 @@ class CameraViewController: UIViewController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(blurEffectView)
         return view
+    }()
+    
+    var promptPanel: UIView = {
+        let textView = UIView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = textView.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        textView.addSubview(blurEffectView)
+        return textView
     }()
     
     var bottomPanel: UIView = {
@@ -66,17 +77,36 @@ class CameraViewController: UIViewController {
         return camera
     }()
     
-    @IBOutlet weak var tableView: UITableView!
+    var promptText: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont(name: "extravaganzza", size: 18.0)
+        label.text = "You are currently not in a Rope. Create or join one to get started!"
+        return label
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //perform necessary setup for camera view
         setupCamera()
+        
+        //determine if current user is in a Rope
+        determineRopeInProgress()
+        
         self.view.addSubview(cameraView)
         self.view.addSubview(topPanel)
         self.view.addSubview(bottomPanel)
         self.view.addSubview(previewView)
-        self.view.bringSubview(toFront: tableView)
+        self.view.addSubview(promptPanel)
+        promptPanel.addSubview(promptText)
+        
+
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage.imageWithColor(color: UIColor(displayP3Red: 100.0, green: 100.0, blue: 100.0, alpha: 0.5))
@@ -86,15 +116,6 @@ class CameraViewController: UIViewController {
                 NSAttributedStringKey.font: UIFont(name: "extravaganzza", size: 28)!,
                 NSAttributedStringKey.foregroundColor: UIColor.white
             ]
-        
-        self.navigationItem.rightBarButtonItem?.tintColor = .white
-        //setup tableview
-        tableView.delegate = self
-        tableView.backgroundColor = .clear
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.register(UINib(nibName: "RopeIPCell", bundle: nil), forCellReuseIdentifier: "ropeIPCell")
-        tableView.register(UINib(nibName: "AddRopeCell", bundle: nil), forCellReuseIdentifier: "addRopeCell")
         
         let constraints = [
             cameraView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -112,14 +133,16 @@ class CameraViewController: UIViewController {
             previewView.topAnchor.constraint(equalTo: self.view.topAnchor),
             previewView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             previewView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            previewView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            previewView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            promptPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            promptPanel.topAnchor.constraint(equalTo: self.view.topAnchor),
+            promptPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            promptPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            promptText.centerXAnchor.constraint(equalTo: promptPanel.centerXAnchor),
+            promptText.centerYAnchor.constraint(equalTo: promptPanel.centerYAnchor),
+            promptText.widthAnchor.constraint(equalTo: promptPanel.widthAnchor, multiplier: 0.8)
         ]
         NSLayoutConstraint.activate(constraints)
-        setupLongPressforVideo()
-        DataService.instance.initialFetchRopesIP(){ (ropeIP) in
-            self.ropes.append(ropeIP)
-            self.tableView.reloadData()
-        }
     }
     
     func setupCamera() {
@@ -149,41 +172,59 @@ class CameraViewController: UIViewController {
     
     }
     
-    ///Returns the current camera type associated with the Capture Session
-    public func getCameraType() -> AVCaptureDeviceInput? {
-        let inputs = captureSession?.inputs as! [AVCaptureDeviceInput]
-        if inputs.contains(backCameraInput) {
-            return backCameraInput
-        } else if inputs.contains(frontCameraInput) {
-            return frontCameraInput
-        } else {
-            return nil
-        }
+    func determineRopeInProgress() {
+        
+        let longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
+        
+        DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropeIP").observe(.value, with: { (snapshot) in
+            
+            //if no active rope then show default prompt
+            if let _ = snapshot.value as? Bool{
+                self.promptPanel.isHidden = false
+                self.view.bringSubview(toFront: self.promptPanel)
+                self.view.removeGestureRecognizer(longpress)
+                
+                let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "link"), style: .plain, target: self, action: nil) 
+                self.navigationItem.leftBarButtonItem  = leftbutton
+                
+                let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "Plus"), style: .plain, target: self, action: #selector(self.segueToNewRope(_:)))
+                self.navigationItem.rightBarButtonItem = rightbutton
+                self.navigationItem.rightBarButtonItem?.tintColor = .white
+                self.navigationItem.leftBarButtonItem?.tintColor = .white
+                
+            //if there is active rope allow user to user camera
+            } else {
+                print(snapshot.value!)
+                let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "leaveRope"), style: .plain, target: self, action: #selector(self.leaveRope(_:)))
+                self.navigationItem.leftBarButtonItem  = leftbutton
+                let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "edit"), style: .plain, target: self, action:nil)
+                self.navigationItem.rightBarButtonItem = rightbutton
+                
+                self.navigationItem.rightBarButtonItem?.tintColor = .white
+                self.navigationItem.leftBarButtonItem?.tintColor = .white
+                longpress.minimumPressDuration = 0.2
+                self.view.addGestureRecognizer(longpress)
+                self.promptPanel.isHidden = true
+                
+            }
+            
+        })
     }
     
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
+    @objc func leaveRope(_ sneder: UIBarButtonItem){
+        let alert = UIAlertController(title: "Leaving Rope", message: "Are you sure you want to leave this Rope?", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+            DataService.instance.leaveCurrentRope()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarStyle = .default
+    @objc func segueToNewRope(_ sender: UIBarButtonItem){
+        performSegue(withIdentifier: "toNewRope", sender: self)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func setupLongPressforVideo() {
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
-        longPressGestureRecognizer.minimumPressDuration = 0.2
-        tableView.addGestureRecognizer(longPressGestureRecognizer)
-    }
-    
+    //use for recording
     @objc func longPressed(sender: UILongPressGestureRecognizer){
         if sender.state == .ended {
             if isRecording == true {
@@ -201,8 +242,8 @@ class CameraViewController: UIViewController {
             let filePath = documentsURL.appendingPathComponent("temp.mp4")
             videoOutput.startRecording(to: filePath, recordingDelegate: self)
             
-            tableView.isHidden = true
             self.tabBarController?.tabBar.isHidden = true
+            self.navigationController?.navigationBar.isHidden = true
             isRecording = true
             
             buttonTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(cancel(_:)), userInfo: nil, repeats: false)
@@ -210,6 +251,35 @@ class CameraViewController: UIViewController {
         }
         
     }
+    
+    ///Returns the current camera type associated with the Capture Session
+    public func getCameraType() -> AVCaptureDeviceInput? {
+        let inputs = captureSession?.inputs as! [AVCaptureDeviceInput]
+        if inputs.contains(backCameraInput) {
+            return backCameraInput
+        } else if inputs.contains(frontCameraInput) {
+            return frontCameraInput
+        } else {
+            return nil
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     
     @objc func cancel(_ timerObject: Timer) {
         print("cancel")
@@ -219,6 +289,15 @@ class CameraViewController: UIViewController {
             self.buttonTimer?.invalidate()
         }
         isRecording = false
+    }
+    
+    @IBAction func dismissPreview(_ sender: Any) {
+        previewView.isHidden = true
+        previewView.removeExistingContent()
+        cancelButton.isHidden = true
+        self.capturedURL = nil
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     func animateRecordingLine() {
@@ -258,10 +337,6 @@ class CameraViewController: UIViewController {
         theLayer.speed = 0.0
         theLayer.timeOffset = pausedTime
     }
-    
-    
-    
-    
     
     func squareCropVideo(inputURL: NSURL, completion: @escaping (_ outputURL : NSURL?) -> ()){
         let asset = AVAsset.init(url: inputURL as URL)
@@ -312,112 +387,12 @@ class CameraViewController: UIViewController {
         
     }
     
-    func getOutputPath( _ name: String ) -> String
-    {
+    func getOutputPath( _ name: String ) -> String {
         let documentPath = NSSearchPathForDirectoriesInDomains( .documentDirectory, .userDomainMask, true )[ 0 ] as NSString
         let outputPath = "\(documentPath)/\(name).mov"
         return outputPath
     }
     
-    @IBAction func dismissPreview(_ sender: Any) {
-        previewView.isHidden = true
-        previewView.removeExistingContent()
-        cancelButton.isHidden = true
-        self.capturedURL = nil
-        tableView.isHidden = false
-        self.tabBarController?.tabBar.isHidden = false
-        self.tableView.reloadData()
-        self.view.bringSubview(toFront: tableView)
-    }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-}
-
-extension CameraViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.contentView.backgroundColor = UIColor.clear
-        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
-        UIView.animate(withDuration: 0.3, animations: {
-            cell.layer.transform = CATransform3DMakeScale(1,1,1)
-        })
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.section == 0 {
-//            return 50.0
-//        } else {
-            return 85.0
-//        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.section == 0 {
-//            performSegue(withIdentifier: "createNewRopeSegue", sender: self)
-//        } else {
-            tableView.deselectRow(at: indexPath, animated: false)
-//        }
-    }
-
-    
-}
-
-extension CameraViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if indexPath.section == 0 {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "addRopeCell", for: indexPath)
-//            cell.backgroundColor = .clear
-//            return cell
-//        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ropeIPCell", for: indexPath) as! RopeIPCell
-            cell.selectionStyle = .none
-            cell.titleLabel.text = ropes[indexPath.row].title!
-            cell.timeLabel.text = "\(ropes[indexPath.row].expirationDate!)"
-            cell.knotLabel.text = "\(ropes[indexPath.row].knotCount!) knots"
-            cell.backgroundColor = .clear
-            return cell
-//        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if section == 0 {
-//            return 1
-//        } else {
-            return ropes.count
-//        }
-    }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView(frame: CGRect(x: self.view.bounds.width - 25.0, y: 0, width: self.view.bounds.width, height: 50.0))
-//        view.backgroundColor = .black
-//        let button = UIButton()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.backgroundColor = .clear
-//        button.setImage(#imageLiteral(resourceName: "plus-symbol"), for: .normal)
-//        view.addSubview(button)
-//        view.addConstraint(NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0))
-//        view.addConstraint(NSLayoutConstraint(item: button, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: 0.0))
-//        view.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.6, constant: 0.0))
-//        view.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: button, attribute: .height, multiplier: 1.0, constant: 0.0))
-//        return view
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 50.0
-//    }
 }
 
 ///This class implements AVCapturePhotoCaptureDelegate so it can handle the photos that are taken.
@@ -452,10 +427,9 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
             previewView.removeExistingContent()
             cancelButton.isHidden = true
             self.capturedURL = nil
-            tableView.isHidden = false
+            self.navigationController?.navigationBar.isHidden = false
             self.tabBarController?.tabBar.isHidden = false
             self.shapeLayer?.removeFromSuperlayer()
-            self.view.bringSubview(toFront: tableView)
         } else {
             
             self.shapeLayer?.removeFromSuperlayer()
