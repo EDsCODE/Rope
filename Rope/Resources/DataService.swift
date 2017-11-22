@@ -77,11 +77,11 @@ class DataService {
     
     func createRope(title: String, participants: inout [User]) {
         let key = mainRef.child("ropes").childByAutoId().key
-        
+        let expirationDate = Date().millisecondsSince1970 + 43200000
         var ropeData: Dictionary<String, AnyObject> = ["title": title as AnyObject,
                                                        "createdBy" : (Auth.auth().currentUser?.uid)! as AnyObject,
                                                        "knotCount": 0 as AnyObject,
-                                                       "expirationDate": Date().millisecondsSince1970 + 43200000 as AnyObject]
+                                                       "expirationDate": expirationDate as AnyObject]
         
         var participantsDictionary = Dictionary<String,Int>()
         
@@ -114,9 +114,7 @@ class DataService {
         }
         
         ropeData["role"] = participantsDictionary[(Auth.auth().currentUser?.uid)!] as AnyObject
-        
         mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").child(key).setValue(ropeData)
-        
     }
     
     func doesUserExist(uid: String, completion: @escaping (_ result: Bool) -> Void) {
@@ -141,6 +139,29 @@ class DataService {
     
     func leaveCurrentRope() {
          mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").setValue(false)
+    }
+    
+    func sendMedia(senderID: String, mediaURL: URL, mediaType: String, ropeIP: RopeIP){
+        print("sending media!")
+        let key = mainRef.childByAutoId().key
+        let date = Date()
+        let pr: Dictionary<String, AnyObject> = ["mediaType": mediaType as AnyObject,
+                                                 "mediaURL" : mediaURL.absoluteString as AnyObject,
+                                                 "sentDate": Int(date.timeIntervalSince1970 * 1000) as AnyObject,
+                                                 "senderID": senderID as AnyObject]
+        
+        //update knotcount
+        mainRef.child("ropesIP").child(ropeIP.id!).child("knotCount").setValue(ropeIP.knotCount!)
+        
+        usersRef.child(Auth.auth().currentUser!.uid).child("ropeIP").child(ropeIP.id!).child("knotCount").setValue(ropeIP.knotCount!)
+        
+        mainRef.child("ropesIP").child(ropeIP.id!).child("media").child(key).updateChildValues(pr){
+            error, databaseReference in
+            if let error = error  {
+                print("error sending media DataService#sendMedia: \(error.localizedDescription)")
+            }
+        }
+        
     }
 }
 

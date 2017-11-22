@@ -483,6 +483,7 @@ open class SwiftyCamViewController: UIViewController {
                 let movieFileOutputConnection = self.movieFileOutput?.connection(with: AVMediaType.video)
                 
                 
+                
                 //flip video output if front facing camera is selected
                 if self.currentCamera == .front {
                     movieFileOutputConnection?.isVideoMirrored = true

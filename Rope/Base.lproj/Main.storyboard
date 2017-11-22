@@ -281,8 +281,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iSf-Kf-EV0">
+                                <rect key="frame" x="296" y="516" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendMedia:" destination="u5y-B4-MY0" eventType="touchUpInside" id="keb-kc-5Qa"/>
+                                </connections>
+                            </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SnV-fb-aRp">
-                                <rect key="frame" x="16" y="72" width="46" height="30"/>
+                                <rect key="frame" x="16" y="516" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
@@ -295,6 +303,7 @@
                     <navigationItem key="navigationItem" title="Knot" id="2Ea-3y-AwN"/>
                     <connections>
                         <outlet property="cancelButton" destination="SnV-fb-aRp" id="DbZ-59-mYb"/>
+                        <outlet property="sendButton" destination="iSf-Kf-EV0" id="IRP-EK-JoU"/>
                         <segue destination="Iy5-K2-bbZ" kind="show" identifier="showPreview" customClass="SegueFromLeft" customModule="Rope" customModuleProvider="target" id="xb6-7n-t8H"/>
                         <segue destination="Eda-dp-xSo" kind="presentation" identifier="toNewRope" animates="NO" id="Z1L-TJ-iW0"/>
                     </connections>

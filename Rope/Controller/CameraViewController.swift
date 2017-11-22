@@ -15,10 +15,15 @@ class CameraViewController: UIViewController {
     
     weak var buttonTimer: Timer?
     weak var shapeLayer: CAShapeLayer?
-    var capturedURL: URL?
     var isRecording = false
     @IBOutlet weak var cancelButton: UIButton!
-    var currentRope: RopeIP?
+    @IBOutlet weak var sendButton: UIButton!
+    var currentRope: RopeIP!
+    var imageData: Data?
+    var videoURL: URL?
+    
+    var longpress: UILongPressGestureRecognizer!
+    var tap: UITapGestureRecognizer!
     
     //Camera stuff
     var captureSession: AVCaptureSession?
@@ -73,7 +78,7 @@ class CameraViewController: UIViewController {
         let camera = UIView()
         camera.translatesAutoresizingMaskIntoConstraints = false
         camera.isHidden = false
-        camera.backgroundColor = .green
+        camera.backgroundColor = .black
         return camera
     }()
     
@@ -86,6 +91,15 @@ class CameraViewController: UIViewController {
         label.textAlignment = .center
         label.font = UIFont(name: "extravaganzza", size: 18.0)
         label.text = "You are currently not in a Rope. Create or join one to get started!"
+        return label
+    }()
+    
+    var ropeTitle: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont(name: "extravaganzza", size: 26.0)
         return label
     }()
     
@@ -104,6 +118,7 @@ class CameraViewController: UIViewController {
         self.view.addSubview(bottomPanel)
         self.view.addSubview(previewView)
         self.view.addSubview(promptPanel)
+        topPanel.addSubview(ropeTitle)
         promptPanel.addSubview(promptText)
         
 
@@ -117,6 +132,7 @@ class CameraViewController: UIViewController {
                 NSAttributedStringKey.foregroundColor: UIColor.white
             ]
         
+        
         let constraints = [
             cameraView.topAnchor.constraint(equalTo: self.view.topAnchor),
             cameraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -126,6 +142,10 @@ class CameraViewController: UIViewController {
             topPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             topPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             topPanel.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - self.view.bounds.width) / 2),
+            ropeTitle.leadingAnchor.constraint(equalTo: topPanel.leadingAnchor),
+            ropeTitle.trailingAnchor.constraint(equalTo: topPanel.trailingAnchor),
+            ropeTitle.bottomAnchor.constraint(equalTo: topPanel.bottomAnchor),
+            ropeTitle.heightAnchor.constraint(equalToConstant: 50.0),
             bottomPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             bottomPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             bottomPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -174,7 +194,7 @@ class CameraViewController: UIViewController {
     
     func determineRopeInProgress() {
         
-        let longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
+        currentRope = RopeIP()
         
         DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropeIP").observe(.value, with: { (snapshot) in
             
@@ -182,7 +202,7 @@ class CameraViewController: UIViewController {
             if let _ = snapshot.value as? Bool{
                 self.promptPanel.isHidden = false
                 self.view.bringSubview(toFront: self.promptPanel)
-                self.view.removeGestureRecognizer(longpress)
+                self.removeGestures()
                 
                 let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "link"), style: .plain, target: self, action: nil) 
                 self.navigationItem.leftBarButtonItem  = leftbutton
@@ -192,18 +212,26 @@ class CameraViewController: UIViewController {
                 self.navigationItem.rightBarButtonItem?.tintColor = .white
                 self.navigationItem.leftBarButtonItem?.tintColor = .white
                 
-            //if there is active rope allow user to user camera
+            //if there is active rope allow user to use camera
             } else {
-                print(snapshot.value!)
+                
                 let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "leaveRope"), style: .plain, target: self, action: #selector(self.leaveRope(_:)))
                 self.navigationItem.leftBarButtonItem  = leftbutton
                 let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "edit"), style: .plain, target: self, action:nil)
                 self.navigationItem.rightBarButtonItem = rightbutton
                 
+                //set currentRope details
+                if let dictionary = snapshot.value as? Dictionary<String, AnyObject> {
+                    self.currentRope.id = dictionary.keys.first!
+                    self.currentRope.knotCount = dictionary[dictionary.keys.first!]!["knotCount"] as? Int
+                    self.currentRope.expirationDate = dictionary[dictionary.keys.first!]!["expirationDate"] as? Int
+                    self.currentRope.title = dictionary[dictionary.keys.first!]!["title"] as? String
+                    self.currentRope.role = dictionary[dictionary.keys.first!]!["role"] as? Int
+                }
+                
+                self.showCamera()
                 self.navigationItem.rightBarButtonItem?.tintColor = .white
                 self.navigationItem.leftBarButtonItem?.tintColor = .white
-                longpress.minimumPressDuration = 0.2
-                self.view.addGestureRecognizer(longpress)
                 self.promptPanel.isHidden = true
                 
             }
@@ -240,6 +268,11 @@ class CameraViewController: UIViewController {
             
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let filePath = documentsURL.appendingPathComponent("temp.mp4")
+            
+            if getCameraType() == frontCameraInput {
+                videoOutput.connection(with: AVMediaType.video)?.isVideoMirrored = true
+            }
+            
             videoOutput.startRecording(to: filePath, recordingDelegate: self)
             
             self.tabBarController?.tabBar.isHidden = true
@@ -249,7 +282,13 @@ class CameraViewController: UIViewController {
             buttonTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(cancel(_:)), userInfo: nil, repeats: false)
             animateRecordingLine()
         }
-        
+    }
+    
+    @objc func screenTapped(sender: UITapGestureRecognizer){
+        if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
+            let settings = AVCapturePhotoSettings()
+            photoOutput.capturePhoto(with: settings, delegate: self)
+        }
     }
     
     ///Returns the current camera type associated with the Capture Session
@@ -292,13 +331,46 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func dismissPreview(_ sender: Any) {
-        previewView.isHidden = true
-        previewView.removeExistingContent()
-        cancelButton.isHidden = true
-        self.capturedURL = nil
-        self.tabBarController?.tabBar.isHidden = false
-        self.navigationController?.navigationBar.isHidden = false
+        showCamera()
     }
+    
+    @IBAction func sendMedia(_ sender: Any) {
+        showCamera()
+        if let videoURL = videoURL {
+            let videoName = "\(NSUUID().uuidString)\(videoURL)"
+            let ref = DataService.instance.storageRef.child(videoName)
+            
+            squareCropVideo(inputURL: videoURL, completion: { (videoURL) in
+                _ = ref.putFile(from: videoURL, metadata: nil, completion: { (metadata, error) in
+                    if let error = error {
+                        print("error: \(error.localizedDescription)")
+                    } else {
+                        let downloadURL = metadata?.downloadURL()
+                        self.currentRope.knotCount! += 1
+                        DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope)
+                        self.videoURL = nil
+                    }
+                })
+            })
+        } else if let image = imageData {
+            let uid = NSUUID().uuidString
+            let ref = DataService.instance.storageRef.child("\(uid).jpg")
+            
+            let squareimage = toSquare(image: UIImage(data: image)!)
+            
+            _ = ref.putData(UIImagePNGRepresentation(squareimage)!, metadata: nil, completion: {(metadata, error) in
+                if let error  = error {
+                    print("error: \(error.localizedDescription))")
+                } else {
+                    let downloadURL = metadata?.downloadURL()
+                    self.currentRope.knotCount! += 1
+                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "image", ropeIP: self.currentRope)
+                }
+            })
+            
+        }
+    }
+    
     
     func animateRecordingLine() {
         self.shapeLayer?.removeFromSuperlayer()
@@ -338,8 +410,92 @@ class CameraViewController: UIViewController {
         theLayer.timeOffset = pausedTime
     }
     
-    func squareCropVideo(inputURL: NSURL, completion: @escaping (_ outputURL : NSURL?) -> ()){
-        let asset = AVAsset.init(url: inputURL as URL)
+    //default setup for camera view
+    func showCamera() {
+        
+        ropeTitle.text = currentRope.title!
+        
+        longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
+        longpress.minimumPressDuration = 0.2
+        tap = UITapGestureRecognizer(target: self, action: #selector(screenTapped(sender:)))
+        
+        switch self.currentRope.role! {
+        case 0:
+            if !self.captureSession!.inputs.contains(self.frontCameraInput) {
+                self.captureSession?.removeInput(self.backCameraInput)
+                self.captureSession?.addInput(self.frontCameraInput)
+            }
+            if let gestures = self.view.gestureRecognizers, gestures.contains(longpress) {
+                self.view.removeGestureRecognizer(longpress)
+            }
+            self.view.addGestureRecognizer(tap)
+        case 1:
+            if !self.captureSession!.inputs.contains(self.frontCameraInput) {
+                self.captureSession?.removeInput(self.backCameraInput)
+                self.captureSession?.addInput(self.frontCameraInput)
+            }
+            if let gestures = self.view.gestureRecognizers, gestures.contains(tap) {
+                self.view.removeGestureRecognizer(tap)
+            }
+            self.view.addGestureRecognizer(longpress)
+        case 2:
+            if !self.captureSession!.inputs.contains(self.backCameraInput) {
+                self.captureSession?.removeInput(self.frontCameraInput)
+                self.captureSession?.addInput(self.backCameraInput)
+            }
+            if let gestures = self.view.gestureRecognizers, gestures.contains(longpress) {
+                self.view.removeGestureRecognizer(longpress)
+            }
+            self.view.addGestureRecognizer(tap)
+        case 3:
+            if !self.captureSession!.inputs.contains(self.backCameraInput) {
+                self.captureSession?.removeInput(self.frontCameraInput)
+                self.captureSession?.addInput(self.backCameraInput)
+            }
+            if let gestures = self.view.gestureRecognizers, gestures.contains(tap) {
+                self.view.removeGestureRecognizer(tap)
+            }
+            self.view.addGestureRecognizer(longpress)
+        default:
+            print("error setting up camera")
+        }
+        
+        previewView.isHidden = true
+        previewView.removeExistingContent()
+        cancelButton.isHidden = true
+        sendButton.isHidden = true
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        self.shapeLayer?.removeFromSuperlayer()
+    }
+    
+    func showMediaSetup() {
+        removeGestures()
+        previewView.isHidden = false
+        self.cancelButton.isHidden = false
+        self.sendButton.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
+        self.view.bringSubview(toFront: topPanel)
+        self.view.bringSubview(toFront: bottomPanel)
+        self.view.bringSubview(toFront: cancelButton)
+        self.view.bringSubview(toFront: sendButton)
+    }
+    
+    func removeGestures() {
+        if let gestures = self.view.gestureRecognizers{
+            if gestures.contains(longpress) {
+                self.view.removeGestureRecognizer(longpress)
+            } else if gestures.contains(tap) {
+                self.view.removeGestureRecognizer(tap)
+            }
+        }
+    }
+    
+    
+    //crop video to Square
+    func squareCropVideo(inputURL: URL, completion: @escaping (_ outputURL : URL) -> ()){
+        let asset = AVAsset.init(url: inputURL)
         print (asset)
         let composition = AVMutableComposition.init()
         composition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: kCMPersistentTrackID_Invalid)
@@ -373,18 +529,46 @@ class CameraViewController: UIViewController {
             
             if exportSession.status == .completed {
                 DispatchQueue.main.async(execute: {
-                    completion(croppedOutputFileUrl as NSURL)
+                    completion(croppedOutputFileUrl)
                 })
                 return
             } else if exportSession.status == .failed {
                 print("Export failed - \(String(describing: exportSession.error))")
             }
-            
-            completion(nil)
             return
             
         })
         
+    }
+    
+    //croptosquare
+    func toSquare(image: UIImage) -> UIImage {
+        let originalWidth  = image.size.width
+        let originalHeight = image.size.height
+        var x: CGFloat = 0.0
+        var y: CGFloat = 0.0
+        var edge: CGFloat = 0.0
+        
+        if (originalWidth > originalHeight) {
+            // landscape
+            edge = originalHeight
+            x = (originalWidth - edge) / 2.0
+            y = 0.0
+            
+        } else if (originalHeight > originalWidth) {
+            // portrait
+            edge = originalWidth
+            x = 0.0
+            y = (originalHeight - originalWidth) / 2.0
+        } else {
+            // square
+            edge = originalWidth
+        }
+        
+        let cropSquare = CGRect(x: x, y: y, width: edge, height: edge)
+        let imageRef = image.cgImage?.cropping(to: cropSquare)
+        
+        return UIImage(cgImage: imageRef!, scale: 1.0, orientation: image.imageOrientation)
     }
     
     func getOutputPath( _ name: String ) -> String {
@@ -407,13 +591,17 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         
         let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
         
-//        if getCameraType() == frontCameraInput {
-//            //Fixed mirrored videos for back camera.
-//            delegate.submit(image: UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .leftMirrored))
-//        } else {
-//            //Otherwise just submit regular image.
-//            delegate.submit(image: UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .right))
-//        }
+        if getCameraType() == frontCameraInput {
+            //Fixed mirrored videos for back camera.
+            self.imageData = UIImagePNGRepresentation(UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .leftMirrored))
+            previewView.displayImage(UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .leftMirrored))
+            showMediaSetup()
+        } else {
+            //Otherwise just submit regular image.
+            self.imageData = imageData
+            previewView.displayImage(UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .right))
+            showMediaSetup()
+        }
         
     }
 }
@@ -423,25 +611,14 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if error != nil {
             print("Error Recording from CameraView:AVCaptureFileOutputRecordingDelegate#capture: \(String(describing: error?.localizedDescription))")
-            previewView.isHidden = true
-            previewView.removeExistingContent()
-            cancelButton.isHidden = true
-            self.capturedURL = nil
-            self.navigationController?.navigationBar.isHidden = false
-            self.tabBarController?.tabBar.isHidden = false
-            self.shapeLayer?.removeFromSuperlayer()
+            showCamera()
+            
         } else {
-            
             self.shapeLayer?.removeFromSuperlayer()
-            
+            self.videoURL = outputFileURL
             let player = AVPlayer(url: outputFileURL)
             previewView.displayVideo(player)
-            previewView.isHidden = false
-            self.cancelButton.isHidden = false
-            
-            self.view.bringSubview(toFront: topPanel)
-            self.view.bringSubview(toFront: bottomPanel)
-            self.view.bringSubview(toFront: cancelButton)
+            showMediaSetup()
             
         }
     }

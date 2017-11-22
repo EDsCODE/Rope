@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
 class RopeViewController: UIViewController {
 
     @IBOutlet weak var ropeCollectionView: UICollectionView!
     @IBOutlet weak var headerView: UIView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +29,17 @@ class RopeViewController: UIViewController {
         layout.minimumLineSpacing = 6
         ropeCollectionView.collectionViewLayout = layout
         
-        
+        setupRopeObserver()
         
         // Do any additional setup after loading the view.
     }
+    
+    func setupRopeObserver() {
+        DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropes").observe(.value) { (snapshot) in
+            print(snapshot.childrenCount)
+        }
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

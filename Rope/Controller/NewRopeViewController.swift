@@ -46,6 +46,8 @@ class NewRopeViewController: UIViewController {
     var keyboardIsActive = false
     var tokenView: KSTokenView!
     var titleView: UITextField!
+    var createButtonBottomConstraint: NSLayoutConstraint!
+    var cancelButtonBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,21 +71,31 @@ class NewRopeViewController: UIViewController {
             createButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             createButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5),
             createButton.heightAnchor.constraint(equalToConstant: 40),
-            createButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             cancelButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5),
             cancelButton.heightAnchor.constraint(equalToConstant: 40),
             cancelButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            cancelButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ]
         
-        NSLayoutConstraint.activate(constraints)
+        //decalare bottom button constraints separately so they can be bound to keyboard
+        cancelButtonBottomConstraint = NSLayoutConstraint(item: cancelButton, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1.0, constant: 0)
+        cancelButtonBottomConstraint?.isActive = true
+        createButtonBottomConstraint = NSLayoutConstraint(item: createButton, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1.0, constant: 0)
+        createButtonBottomConstraint?.isActive = true
         
-        setupKeyboardObserver()
+        NSLayoutConstraint.activate(constraints)
         setupCancelButton()
         setupCreateButton()
+        setupKeyboardObserver()
         fetchFriends()
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        keyboardIsActive = false
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     
     func setupCancelButton() {
         let cancelGesture = UITapGestureRecognizer(target: self, action: #selector(cancelRopeAction(gesture:)))
@@ -114,10 +126,6 @@ class NewRopeViewController: UIViewController {
             DataService.instance.createRope(title: title, participants: &participants)
         }
         
-        
-//        for friend in friends {
-//            friend.printDetail()
-//        }
         dismiss(animated: false, completion: nil)
     }
     
@@ -130,10 +138,13 @@ class NewRopeViewController: UIViewController {
     @objc func handleKeyboardWillShow(notification: NSNotification) {
         
         let keyboardAnimationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
-        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        
         if !keyboardIsActive {
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
-                self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - (keyboardSize?.height)!)
+                
+                self.cancelButtonBottomConstraint.constant = -(keyboardSize?.height)!
+                self.createButtonBottomConstraint.constant = -(keyboardSize?.height)!
                 self.view.layoutIfNeeded()
                 self.keyboardIsActive = true
             })
@@ -144,11 +155,11 @@ class NewRopeViewController: UIViewController {
     ///Called when keyboard will be hidden.
     @objc func handleKeyboardWillHide(notification: NSNotification) {
         let keyboardAnimationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
-        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
         
         if keyboardIsActive {
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
-                self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height + (keyboardSize?.height)!)
+                self.cancelButtonBottomConstraint.constant = 0
+                self.createButtonBottomConstraint.constant = 0
                 self.view.layoutIfNeeded()
                 self.keyboardIsActive = false
             })

@@ -14,6 +14,7 @@ class RopeIP: NSObject {
     var title: String?
     var knotCount: Int?
     var id: String?
+    var role: Int?
     
     func printdetail() {
         if let expiration = expirationDate {
