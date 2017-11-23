@@ -39,6 +39,8 @@
 		1AD5CC321FB5599400A01C2E /* extravaganzza-extra-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AD5CC301FB5597C00A01C2E /* extravaganzza-extra-bold.ttf */; };
 		1AE1C13D1FB3AB3200A158ED /* Rope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1C13C1FB3AB3200A158ED /* Rope.swift */; };
 		1AE1C13F1FB3ABCB00A158ED /* RopeIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1C13E1FB3ABCB00A158ED /* RopeIP.swift */; };
+		1AF5D0D21FC5E05D00BDF886 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5D0D11FC5E05D00BDF886 /* Media.swift */; };
+		1AF5D0D81FC60F7700BDF886 /* RopeDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5D0D71FC60F7700BDF886 /* RopeDisplayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,8 @@
 		1AD5CC301FB5597C00A01C2E /* extravaganzza-extra-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "extravaganzza-extra-bold.ttf"; sourceTree = "<group>"; };
 		1AE1C13C1FB3AB3200A158ED /* Rope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rope.swift; sourceTree = "<group>"; };
 		1AE1C13E1FB3ABCB00A158ED /* RopeIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeIP.swift; sourceTree = "<group>"; };
+		1AF5D0D11FC5E05D00BDF886 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		1AF5D0D71FC60F7700BDF886 /* RopeDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeDisplayViewController.swift; sourceTree = "<group>"; };
 		50F5BFEBB349A5F357FAD6B3 /* Pods-Rope.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rope.release.xcconfig"; path = "Pods/Target Support Files/Pods-Rope/Pods-Rope.release.xcconfig"; sourceTree = "<group>"; };
 		7D3E04C1E7D03CE3F5A08044 /* Pods_Rope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA65B7248470CE8810E8062 /* Pods-Rope.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rope.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Rope/Pods-Rope.debug.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				1A5576281FA0EB64001D404D /* User.swift */,
 				1AE1C13C1FB3AB3200A158ED /* Rope.swift */,
 				1AE1C13E1FB3ABCB00A158ED /* RopeIP.swift */,
+				1AF5D0D11FC5E05D00BDF886 /* Media.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 				1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */,
 				1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */,
 				1AC03DF81FB0FEBC00158752 /* FriendTableViewController.swift */,
+				1AF5D0D71FC60F7700BDF886 /* RopeDisplayViewController.swift */,
 				1A72EE191FA22B810048A45F /* Auth */,
 			);
 			path = Controller;
@@ -350,7 +356,9 @@
 				1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */,
 				1A17852B1FA0C85C00427741 /* LoginViewController.swift in Sources */,
 				1A5576311FA12A9D001D404D /* AgeViewController.swift in Sources */,
+				1AF5D0D81FC60F7700BDF886 /* RopeDisplayViewController.swift in Sources */,
 				1AC03DFB1FB10C8E00158752 /* UserNameViewController.swift in Sources */,
+				1AF5D0D21FC5E05D00BDF886 /* Media.swift in Sources */,
 				1AB5FFA31FB014C000EC8780 /* PreviewView.swift in Sources */,
 				1A55762D1FA116F0001D404D /* FirstNameViewController.swift in Sources */,
 				1A55762F1FA11DC4001D404D /* LastNameViewController.swift in Sources */,

@@ -14,6 +14,7 @@ class RopeCell: UICollectionViewCell {
     @IBOutlet weak var ropeImage: UIImageView!
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    var rope: Rope!
     
     override func layoutSubviews() {
         super.layoutSubviews()

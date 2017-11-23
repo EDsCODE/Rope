@@ -356,9 +356,10 @@ class CameraViewController: UIViewController {
             let uid = NSUUID().uuidString
             let ref = DataService.instance.storageRef.child("\(uid).jpg")
             
-            let squareimage = toSquare(image: UIImage(data: image)!)
+            let image = UIImage(data: image)!
+            let square = squareCropImageToSideLength(sourceImage: image, sideLength: 1080.0)
             
-            _ = ref.putData(UIImagePNGRepresentation(squareimage)!, metadata: nil, completion: {(metadata, error) in
+            _ = ref.putData(UIImagePNGRepresentation(square)!, metadata: nil, completion: {(metadata, error) in
                 if let error  = error {
                     print("error: \(error.localizedDescription))")
                 } else {
@@ -541,35 +542,53 @@ class CameraViewController: UIViewController {
         
     }
     
-    //croptosquare
-    func toSquare(image: UIImage) -> UIImage {
-        let originalWidth  = image.size.width
-        let originalHeight = image.size.height
-        var x: CGFloat = 0.0
-        var y: CGFloat = 0.0
-        var edge: CGFloat = 0.0
+    private func squareCropImageToSideLength(sourceImage: UIImage, sideLength: CGFloat) -> UIImage {
+        // input size comes from image
+        let inputSize: CGSize = sourceImage.size
         
-        if (originalWidth > originalHeight) {
-            // landscape
-            edge = originalHeight
-            x = (originalWidth - edge) / 2.0
-            y = 0.0
-            
-        } else if (originalHeight > originalWidth) {
-            // portrait
-            edge = originalWidth
-            x = 0.0
-            y = (originalHeight - originalWidth) / 2.0
-        } else {
-            // square
-            edge = originalWidth
-        }
+        // round up side length to avoid fractional output size
+        let sideLength: CGFloat = ceil(sideLength)
         
-        let cropSquare = CGRect(x: x, y: y, width: edge, height: edge)
-        let imageRef = image.cgImage?.cropping(to: cropSquare)
+        // output size has sideLength for both dimensions
+        let outputSize: CGSize = CGSize(width: sideLength,height:  sideLength)
         
-        return UIImage(cgImage: imageRef!, scale: 1.0, orientation: image.imageOrientation)
+        // calculate scale so that smaller dimension fits sideLength
+        let scale: CGFloat = max(sideLength / inputSize.width,
+                                 sideLength / inputSize.height)
+        
+        // scaling the image with this scale results in this output size
+        let scaledInputSize: CGSize = CGSize(width: inputSize.width * scale, height: inputSize.height * scale)
+        
+        // determine point in center of "canvas"
+        let center: CGPoint = CGPoint(x: outputSize.width/2.0, y: outputSize.height/2.0)
+        
+        // calculate drawing rect relative to output Size
+        let outputRect: CGRect = CGRect(x: center.x - scaledInputSize.width/2.0,
+                                        y: center.y - scaledInputSize.height/2.0,
+                                        width: scaledInputSize.width,
+                                        height: scaledInputSize.height)
+        
+        // begin a new bitmap context, scale 0 takes display scale
+        UIGraphicsBeginImageContextWithOptions(outputSize, true, 0)
+        
+        // optional: set the interpolation quality.
+        // For this you need to grab the underlying CGContext
+        let ctx: CGContext = UIGraphicsGetCurrentContext()!
+        ctx.interpolationQuality = .high
+        
+        // draw the source image into the calculated rect
+        sourceImage.draw(in: outputRect)
+        
+        // create new image from bitmap context
+        let outImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        // clean up
+        UIGraphicsEndImageContext()
+        
+        // pass back new image
+        return outImage
     }
+    
     
     func getOutputPath( _ name: String ) -> String {
         let documentPath = NSSearchPathForDirectoriesInDomains( .documentDirectory, .userDomainMask, true )[ 0 ] as NSString
@@ -635,5 +654,7 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return image
     }
+    
+    
 }
 
