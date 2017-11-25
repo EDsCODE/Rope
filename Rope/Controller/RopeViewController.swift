@@ -107,7 +107,7 @@ class RopeViewController: UIViewController {
         //set navigation bar items visible but keep bar clear
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-
+        
     }
 
     override func didReceiveMemoryWarning() {

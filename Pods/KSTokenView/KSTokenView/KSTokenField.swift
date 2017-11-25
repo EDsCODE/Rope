@@ -584,7 +584,7 @@ open class KSTokenField: UITextField {
                title += "\(token.title)\(_separatorText!)"
             }
             
-            if (title.count > 0) {                
+            if (title.count > 0) {
                 title = String(title[..<title.index(title.endIndex, offsetBy: -_separatorText!.count)])
             }
             

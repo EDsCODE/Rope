@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="99" id="myo-Ef-GMv" customClass="FriendRequestCell" customModule="Rope" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="534" height="93"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="myo-Ef-GMv" id="T9g-j4-amC">
+                <rect key="frame" x="0.0" y="0.0" width="534" height="92.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fH5-nH-5lp">
+                        <rect key="frame" x="15" y="0.0" width="267" height="92.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C05-3z-Zsu">
+                        <rect key="frame" x="282" y="0.0" width="118.5" height="92.5"/>
+                        <state key="normal" title="Decline"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ARx-n7-2Au">
+                        <rect key="frame" x="400.5" y="0.0" width="133.5" height="92.5"/>
+                        <state key="normal" title="Accept"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ARx-n7-2Au" firstAttribute="leading" secondItem="C05-3z-Zsu" secondAttribute="trailing" id="2d0-hf-FXm"/>
+                    <constraint firstItem="fH5-nH-5lp" firstAttribute="leading" secondItem="T9g-j4-amC" secondAttribute="leading" constant="15" id="51B-vo-quh"/>
+                    <constraint firstItem="C05-3z-Zsu" firstAttribute="top" secondItem="T9g-j4-amC" secondAttribute="top" id="D7I-sU-IrC"/>
+                    <constraint firstItem="fH5-nH-5lp" firstAttribute="width" secondItem="T9g-j4-amC" secondAttribute="width" multiplier="0.5" id="H10-wq-mVF"/>
+                    <constraint firstItem="ARx-n7-2Au" firstAttribute="top" secondItem="T9g-j4-amC" secondAttribute="top" id="Pym-WD-bee"/>
+                    <constraint firstAttribute="bottom" secondItem="C05-3z-Zsu" secondAttribute="bottom" id="V8Y-o5-G8i"/>
+                    <constraint firstItem="C05-3z-Zsu" firstAttribute="leading" secondItem="fH5-nH-5lp" secondAttribute="trailing" id="dRU-7b-376"/>
+                    <constraint firstItem="fH5-nH-5lp" firstAttribute="top" secondItem="T9g-j4-amC" secondAttribute="top" id="iIN-vj-yLr"/>
+                    <constraint firstAttribute="trailing" secondItem="ARx-n7-2Au" secondAttribute="trailing" id="kuq-4l-h35"/>
+                    <constraint firstAttribute="bottom" secondItem="fH5-nH-5lp" secondAttribute="bottom" id="pfx-1V-TRO"/>
+                    <constraint firstAttribute="bottom" secondItem="ARx-n7-2Au" secondAttribute="bottom" id="vAU-ra-tiB"/>
+                    <constraint firstItem="ARx-n7-2Au" firstAttribute="width" secondItem="T9g-j4-amC" secondAttribute="width" multiplier="0.25" id="vFw-wS-bU0"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="acceptButton" destination="ARx-n7-2Au" id="sCb-Ay-Hgc"/>
+                <outlet property="declineButton" destination="C05-3z-Zsu" id="x5F-GC-i3N"/>
+                <outlet property="usernameLabel" destination="fH5-nH-5lp" id="nZp-Q2-K0z"/>
+            </connections>
+            <point key="canvasLocation" x="-224" y="-132.5"/>
+        </tableViewCell>
+    </objects>
+</document>

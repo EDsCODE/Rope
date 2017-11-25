@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		09D85CBE43E06E1B57DB6FA3 /* Pods_Rope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D3E04C1E7D03CE3F5A08044 /* Pods_Rope.framework */; };
+		1A06B0B71FC7BE37002ABFB3 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A06B0B61FC7BE37002ABFB3 /* AddFriendViewController.swift */; };
+		1A06B0BC1FC8BF62002ABFB3 /* FriendRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A06B0BB1FC8BF62002ABFB3 /* FriendRequestCell.swift */; };
+		1A06B0C01FC8BF9E002ABFB3 /* FriendRequestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A06B0BF1FC8BF9E002ABFB3 /* FriendRequestCell.xib */; };
 		1A1785291FA0C85C00427741 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1785281FA0C85C00427741 /* AppDelegate.swift */; };
 		1A17852B1FA0C85C00427741 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A17852A1FA0C85C00427741 /* LoginViewController.swift */; };
 		1A17852E1FA0C85C00427741 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A17852C1FA0C85C00427741 /* Main.storyboard */; };
@@ -27,12 +30,10 @@
 		1AB5FF921FAD747B00EC8780 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */; };
 		1AB5FF961FAE237100EC8780 /* RopeIPCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AB5FF951FAE237100EC8780 /* RopeIPCell.xib */; };
 		1AB5FF981FAF631600EC8780 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF971FAF631600EC8780 /* TabBarViewController.swift */; };
-		1AB5FF9C1FAF6DE400EC8780 /* AddRopeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AB5FF9B1FAF6DE400EC8780 /* AddRopeCell.xib */; };
 		1AB5FFA11FAFAFEB00EC8780 /* NewRopeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FFA01FAFAFEB00EC8780 /* NewRopeViewController.swift */; };
 		1AB5FFA31FB014C000EC8780 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FFA21FB014C000EC8780 /* PreviewView.swift */; };
 		1AB5FFA51FB0B01400EC8780 /* RopeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FFA41FB0B01400EC8780 /* RopeViewController.swift */; };
 		1AB5FFA71FB0B36B00EC8780 /* RopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FFA61FB0B36B00EC8780 /* RopeCell.swift */; };
-		1AC03DF91FB0FEBC00158752 /* FriendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC03DF81FB0FEBC00158752 /* FriendTableViewController.swift */; };
 		1AC03DFB1FB10C8E00158752 /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC03DFA1FB10C8E00158752 /* UserNameViewController.swift */; };
 		1AC03E011FB1454500158752 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC03E001FB1454500158752 /* DataService.swift */; };
 		1AD5CC311FB5599100A01C2E /* extravaganzza.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AD5CC2F1FB5597500A01C2E /* extravaganzza.ttf */; };
@@ -44,6 +45,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A06B0B61FC7BE37002ABFB3 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		1A06B0B81FC89B56002ABFB3 /* Rope.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Rope.entitlements; sourceTree = "<group>"; };
+		1A06B0BB1FC8BF62002ABFB3 /* FriendRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestCell.swift; sourceTree = "<group>"; };
+		1A06B0BF1FC8BF9E002ABFB3 /* FriendRequestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendRequestCell.xib; sourceTree = "<group>"; };
 		1A1785251FA0C85C00427741 /* Rope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A1785281FA0C85C00427741 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A17852A1FA0C85C00427741 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -65,12 +70,10 @@
 		1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		1AB5FF951FAE237100EC8780 /* RopeIPCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RopeIPCell.xib; sourceTree = "<group>"; };
 		1AB5FF971FAF631600EC8780 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		1AB5FF9B1FAF6DE400EC8780 /* AddRopeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddRopeCell.xib; sourceTree = "<group>"; };
 		1AB5FFA01FAFAFEB00EC8780 /* NewRopeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRopeViewController.swift; sourceTree = "<group>"; };
 		1AB5FFA21FB014C000EC8780 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		1AB5FFA41FB0B01400EC8780 /* RopeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeViewController.swift; sourceTree = "<group>"; };
 		1AB5FFA61FB0B36B00EC8780 /* RopeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeCell.swift; sourceTree = "<group>"; };
-		1AC03DF81FB0FEBC00158752 /* FriendTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewController.swift; sourceTree = "<group>"; };
 		1AC03DFA1FB10C8E00158752 /* UserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
 		1AC03E001FB1454500158752 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		1AD5CC2F1FB5597500A01C2E /* extravaganzza.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = extravaganzza.ttf; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 		1A1785271FA0C85C00427741 /* Rope */ = {
 			isa = PBXGroup;
 			children = (
+				1A06B0B81FC89B56002ABFB3 /* Rope.entitlements */,
 				1AC03DFF1FB1453B00158752 /* Resources */,
 				1A5576231FA0DD5E001D404D /* Controller */,
 				1A5576221FA0DD59001D404D /* View */,
@@ -149,9 +153,10 @@
 			children = (
 				1A4BE1791FAA2199001EEB15 /* RopeIPCell.swift */,
 				1AB5FF951FAE237100EC8780 /* RopeIPCell.xib */,
-				1AB5FF9B1FAF6DE400EC8780 /* AddRopeCell.xib */,
 				1AB5FFA21FB014C000EC8780 /* PreviewView.swift */,
 				1AB5FFA61FB0B36B00EC8780 /* RopeCell.swift */,
+				1A06B0BB1FC8BF62002ABFB3 /* FriendRequestCell.swift */,
+				1A06B0BF1FC8BF9E002ABFB3 /* FriendRequestCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -164,8 +169,8 @@
 				1AB5FF971FAF631600EC8780 /* TabBarViewController.swift */,
 				1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */,
 				1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */,
-				1AC03DF81FB0FEBC00158752 /* FriendTableViewController.swift */,
 				1AF5D0D71FC60F7700BDF886 /* RopeDisplayViewController.swift */,
+				1A06B0B61FC7BE37002ABFB3 /* AddFriendViewController.swift */,
 				1A72EE191FA22B810048A45F /* Auth */,
 			);
 			path = Controller;
@@ -258,6 +263,11 @@
 						DevelopmentTeam = S59K556BAM;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -285,11 +295,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A17853B1FA0C8DC00427741 /* GoogleService-Info.plist in Resources */,
+				1A06B0C01FC8BF9E002ABFB3 /* FriendRequestCell.xib in Resources */,
 				1A1785331FA0C85C00427741 /* LaunchScreen.storyboard in Resources */,
 				1A1785301FA0C85C00427741 /* Assets.xcassets in Resources */,
 				1AD5CC321FB5599400A01C2E /* extravaganzza-extra-bold.ttf in Resources */,
 				1AD5CC311FB5599100A01C2E /* extravaganzza.ttf in Resources */,
-				1AB5FF9C1FAF6DE400EC8780 /* AddRopeCell.xib in Resources */,
 				1A5576251FA0DD93001D404D /* Auth.storyboard in Resources */,
 				1A17852E1FA0C85C00427741 /* Main.storyboard in Resources */,
 				1AB5FF961FAE237100EC8780 /* RopeIPCell.xib in Resources */,
@@ -351,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A06B0B71FC7BE37002ABFB3 /* AddFriendViewController.swift in Sources */,
 				1AB5FF901FAD73AD00EC8780 /* CameraViewController.swift in Sources */,
 				1A5576291FA0EB64001D404D /* User.swift in Sources */,
 				1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */,
@@ -370,10 +381,10 @@
 				1AE1C13F1FB3ABCB00A158ED /* RopeIP.swift in Sources */,
 				1AB5FFA11FAFAFEB00EC8780 /* NewRopeViewController.swift in Sources */,
 				1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */,
+				1A06B0BC1FC8BF62002ABFB3 /* FriendRequestCell.swift in Sources */,
 				1AB5FF981FAF631600EC8780 /* TabBarViewController.swift in Sources */,
 				1A4BE17A1FAA2199001EEB15 /* RopeIPCell.swift in Sources */,
 				1AB5FF921FAD747B00EC8780 /* PreviewViewController.swift in Sources */,
-				1AC03DF91FB0FEBC00158752 /* FriendTableViewController.swift in Sources */,
 				1AC03E011FB1454500158752 /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,7 +458,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -498,7 +509,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -513,9 +524,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Rope/Rope.entitlements;
 				DEVELOPMENT_TEAM = S59K556BAM;
 				INFOPLIST_FILE = Rope/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Rope.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -530,9 +542,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Rope/Rope.entitlements;
 				DEVELOPMENT_TEAM = S59K556BAM;
 				INFOPLIST_FILE = Rope/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Rope.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";

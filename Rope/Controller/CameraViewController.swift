@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyCam
 import AVFoundation
 import Firebase
 
@@ -413,8 +412,9 @@ class CameraViewController: UIViewController {
     
     //default setup for camera view
     func showCamera() {
-        
-        ropeTitle.text = currentRope.title!
+        if let title = currentRope.title {
+            ropeTitle.text = title
+        }
         
         longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
         longpress.minimumPressDuration = 0.2

@@ -10,7 +10,6 @@ target 'Rope' do
 	pod 'Firebase/Storage'
 	pod 'Firebase/Messaging'
 	pod 'PhoneNumberKit'
-	pod 'SwiftyCam'
 	pod 'KSTokenView', '~> 4.0'
 
   

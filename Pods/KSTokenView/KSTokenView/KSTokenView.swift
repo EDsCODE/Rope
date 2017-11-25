@@ -404,8 +404,7 @@ open class KSTokenView: UIView {
       _searchTableView.frame = CGRect(x: 0, y: frame.height, width: frame.width, height: _searchResultHeight)
       _searchTableView.delegate = self
       _searchTableView.dataSource = self
-      _searchTableView.separatorStyle = .none
-    
+      
       _hideSearchResults()
       _intrinsicContentHeight = _tokenField.bounds.height
       invalidateIntrinsicContentSize()
@@ -511,6 +510,12 @@ open class KSTokenView: UIView {
    - returns: Boolean if token is added
    */
    fileprivate func _addTokenFromUntokenizedText(_ tokenField: KSTokenField) -> Bool {
+      if (shouldAddTokenFromTextInput && tokenField.text != nil && tokenField.text != KSTextEmpty) {         
+         let trimmedString = tokenField.text!.trimmingCharacters(in: CharacterSet.whitespaces)
+        addTokenWithTitle(trimmedString)
+         _hideSearchResults()
+         return true
+      }
       return false
    }
    
@@ -560,6 +565,7 @@ open class KSTokenView: UIView {
       }
       
       delegate?.tokenView?(self, didAddToken: addedToken!)
+      _ = _canAddMoreToken()
       return addedToken
    }
    

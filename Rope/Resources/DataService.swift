@@ -36,6 +36,7 @@ class DataService {
                                                  "age": CurrentUser.age as AnyObject,
                                                  "ropeIP": false as AnyObject,
                                                  "username": CurrentUser.username as AnyObject]
+        usersRef.child(uid).child("ropeIP").setValue(false)
         mainRef.child("users").child(uid).child("profile").setValue(userData){
             error, databaseReference in
             if let error = error  {
@@ -75,29 +76,16 @@ class DataService {
 //        }
 //    }
     
-    func createRope(title: String, participants: inout [User]) {
+    func createRope(title: String) {
         let key = mainRef.child("ropes").childByAutoId().key
         let expirationDate = Date().millisecondsSince1970 + 43200000
-        var ropeData: Dictionary<String, AnyObject> = ["title": title as AnyObject,
+        let random = Int(arc4random_uniform(4) + 1)
+        let ropeData: Dictionary<String, AnyObject> = ["title": title as AnyObject,
                                                        "createdBy" : (Auth.auth().currentUser?.uid)! as AnyObject,
                                                        "knotCount": 0 as AnyObject,
-                                                       "expirationDate": expirationDate as AnyObject]
+                                                       "expirationDate": expirationDate as AnyObject,
+                                                       "role": random as AnyObject]
         
-        var participantsDictionary = Dictionary<String,Int>()
-        
-        let currentUser = User()
-        currentUser.firstname = CurrentUser.firstname
-        currentUser.lastname = CurrentUser.lastname
-        currentUser.uid = Auth.auth().currentUser?.uid
-        currentUser.username = CurrentUser.username
-
-        participants.append(currentUser)
-        var random = Int(arc4random_uniform(4) + 1)
-        
-        for participant in participants {
-            participantsDictionary[participant.uid!] = random % 4
-            random += 1
-        }
         
         mainRef.child("ropesIP").child(key).setValue(ropeData){
             error, databaseReference in
@@ -106,14 +94,13 @@ class DataService {
             }
         }
         
-        mainRef.child("ropesIP").child(key).child("participants").setValue(participantsDictionary){
+        mainRef.child("ropesIP").child(key).child("participants").child(Auth.auth().currentUser!.uid).setValue(random){
             error, databaseReference in
             if let error = error  {
                 print("error saving Rope participants: \(error.localizedDescription)")
             }
         }
         
-        ropeData["role"] = participantsDictionary[(Auth.auth().currentUser?.uid)!] as AnyObject
         mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").child(key).setValue(ropeData)
     }
     
@@ -160,6 +147,61 @@ class DataService {
             if let error = error  {
                 print("error sending media DataService#sendMedia: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    func addFriend(requestID: String, senderUsername: String) {
+        //change status to accepted
+        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("receivedRequests").child(requestID).child("status").setValue("accepted")
+        
+        //get uid of sender username
+        DataService.instance.mainRef.child("usernames").child(senderUsername).observeSingleEvent(of: .value) { (uid) in
+            
+            //get profile info of sender username
+            DataService.instance.usersRef.child(uid.value as! String).child("profile").observeSingleEvent(of: .value, with: { (info) in
+                let firstname = info.childSnapshot(forPath: "firstName").value as! String
+                let lastname = info.childSnapshot(forPath: "lastName").value as! String
+                let pr: Dictionary<String, AnyObject> = ["firstname" : firstname as AnyObject,
+                                                         "lastname" : lastname as AnyObject,
+                                                         "uid" : uid.value as AnyObject
+                ]
+                //set value for receiver of request
+                DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("friends").child(senderUsername).setValue(pr, withCompletionBlock: { (error, _) in
+                    if let _ = error {
+                        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("receivedRequests").child(requestID).child("status").setValue("pending")
+                    } else {
+                        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("receivedRequests").child(requestID).removeValue()
+                    }
+                })
+            })
+            
+            let user: Dictionary<String, AnyObject> = [ "firstname": CurrentUser.username as AnyObject,
+                                                        "lastname": CurrentUser.lastname as AnyObject,
+                                                        "uid": Auth.auth().currentUser!.uid as AnyObject
+            ]
+            
+            DataService.instance.usersRef.child(uid.value as! String).child("friends").child(CurrentUser.username).setValue(user)
+            
+            
+        }
+    }
+    
+    func sendFriendRequest(to username: String) {
+        let key = mainRef.childByAutoId().key
+        let pr: Dictionary<String, AnyObject> = ["sentDate": Date().millisecondsSince1970 as AnyObject,
+                                                 "receiver" : username as AnyObject,
+                                                 "sender" : CurrentUser.username as AnyObject,
+                                                 "status" : "pending" as AnyObject]
+        DataService.instance.mainRef.child("users").child(Auth.auth().currentUser!.uid).child("sentRequests").child(key).setValue(pr)
+    }
+    
+    func sendRopeRequest(title: String, participants: [User]){
+        for user in participants {
+            let key = mainRef.childByAutoId().key
+            let rr: Dictionary<String, AnyObject> = ["sentDate": Date().millisecondsSince1970 as AnyObject,
+                                                     "sender" : CurrentUser.username as AnyObject,
+                                                     "status" : "pending" as AnyObject]
+            usersRef.child(user.uid!).child("ropeRequests").child(key).setValue(rr)
         }
         
     }

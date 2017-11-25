@@ -8,9 +8,11 @@
 
 import UIKit
 import Firebase
+import UserNotifications
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
 
@@ -18,6 +20,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+            // For iOS 10 data message (sent via FCM
+            Messaging.messaging().delegate = self
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        application.registerForRemoteNotifications()
+        
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = false
         
@@ -28,10 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tabBar.backgroundImage = UIImage()
             tabBar.shadowImage = UIImage()
             DataService.instance.fetchCurrentUser(uid: (Auth.auth().currentUser?.uid)!)
+            
         } else {
             storyboard = UIStoryboard(name: "Auth", bundle: .main)
         }
-        
         // 2
         if let initialViewController = storyboard.instantiateInitialViewController() {
             // 3
@@ -39,9 +59,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 4
             window?.makeKeyAndVisible()
         }
-        
         return true
     }
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        //keep notifcationtoken updated
+        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("profile").child("notificationToken").setValue(fcmToken)
+    }
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

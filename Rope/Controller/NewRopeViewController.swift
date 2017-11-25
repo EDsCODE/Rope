@@ -122,11 +122,14 @@ class NewRopeViewController: UIViewController {
             }
         }
         
+        
+        
         if let title = titleView.text {
-            DataService.instance.createRope(title: title, participants: &participants)
+            DataService.instance.createRope(title: title)
+            DataService.instance.sendRopeRequest(title: title, participants: participants)
+            dismiss(animated: false, completion: nil)
         }
         
-        dismiss(animated: false, completion: nil)
     }
     
     func setupKeyboardObserver() {

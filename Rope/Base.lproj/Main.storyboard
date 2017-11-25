@@ -52,64 +52,50 @@
             </objects>
             <point key="canvasLocation" x="-528" y="919"/>
         </scene>
-        <!--Friend Table View Controller-->
-        <scene sceneID="k0S-eO-3Me">
+        <!--Add Friend View Controller-->
+        <scene sceneID="zym-BN-mPZ">
             <objects>
-                <tableViewController id="cgp-L7-0uR" customClass="FriendTableViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7zK-J0-z3K">
+                <viewController id="7UW-oy-JeD" customClass="AddFriendViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lfp-uH-y0J"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jz7-gn-sLd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nj9-d2-nrG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jSt-re-oLW">
+                                <rect key="frame" x="164" y="158" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="sendRequest:" destination="7UW-oy-JeD" eventType="touchUpInside" id="qBB-QA-ayt"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RUK-pJ-pfH">
+                                <rect key="frame" x="0.0" y="206" width="375" height="461"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8sx-nw-xci">
+                                <rect key="frame" x="108" y="102" width="158" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headerView" id="IJ5-FM-aru">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IJ5-FM-aru" id="faP-v3-nVv">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eYP-oM-niq">
-                                            <rect key="frame" x="8" y="6" width="281.5" height="31.5"/>
-                                            <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAA-Hu-EUH">
-                                            <rect key="frame" x="299.5" y="6" width="67.5" height="31.5"/>
-                                            <state key="normal" title="Add"/>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="cAA-Hu-EUH" secondAttribute="trailing" constant="8" id="7gh-cc-fO6"/>
-                                        <constraint firstItem="cAA-Hu-EUH" firstAttribute="top" secondItem="faP-v3-nVv" secondAttribute="top" constant="6" id="G0x-nM-wuu"/>
-                                        <constraint firstItem="cAA-Hu-EUH" firstAttribute="leading" secondItem="eYP-oM-niq" secondAttribute="trailing" constant="10" id="Hn3-0R-Ux3"/>
-                                        <constraint firstAttribute="bottom" secondItem="cAA-Hu-EUH" secondAttribute="bottom" constant="6" id="U81-Z0-Ai5"/>
-                                        <constraint firstItem="eYP-oM-niq" firstAttribute="top" secondItem="faP-v3-nVv" secondAttribute="top" constant="6" id="Zsy-NZ-shi"/>
-                                        <constraint firstItem="eYP-oM-niq" firstAttribute="width" secondItem="faP-v3-nVv" secondAttribute="width" multiplier="0.75" id="bii-ro-P6y"/>
-                                        <constraint firstItem="eYP-oM-niq" firstAttribute="leading" secondItem="faP-v3-nVv" secondAttribute="leading" constant="8" id="cL7-ha-cgt"/>
-                                        <constraint firstAttribute="bottom" secondItem="eYP-oM-niq" secondAttribute="bottom" constant="6" id="uuM-pI-WOr"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" id="Wqt-cP-v64">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wqt-cP-v64" id="qg2-54-xRD">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="cgp-L7-0uR" id="m3D-4l-tGQ"/>
-                            <outlet property="delegate" destination="cgp-L7-0uR" id="0tl-Ji-9SQ"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="15q-jE-Tw9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                    <connections>
+                        <outlet property="addButton" destination="jSt-re-oLW" id="K1k-NK-5Yu"/>
+                        <outlet property="requestsTableView" destination="RUK-pJ-pfH" id="uxa-zt-X0T"/>
+                        <outlet property="usernameField" destination="8sx-nw-xci" id="OT6-YG-Be3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c1G-bf-xOZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="368.80000000000001" y="2297.9010494752624"/>
+            <point key="canvasLocation" x="487.19999999999999" y="2297.9010494752624"/>
         </scene>
         <!--Rope View Controller-->
         <scene sceneID="4qC-WO-Y0s">
@@ -198,7 +184,7 @@
                                         <rect key="frame" x="15" y="6.5" width="31" height="31"/>
                                         <state key="normal" image="add-user"/>
                                         <connections>
-                                            <segue destination="cgp-L7-0uR" kind="show" id="h3Q-VC-z2v"/>
+                                            <segue destination="7UW-oy-JeD" kind="show" id="UCr-Rd-8yG"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4s-9c-PrA">
@@ -383,11 +369,11 @@
             </objects>
             <point key="canvasLocation" x="1300" y="1417"/>
         </scene>
-        <!--Knot-->
+        <!--Navigation Controller-->
         <scene sceneID="L2A-S8-OE4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XPp-tG-Q75" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1000" title="Knot" id="myQ-X4-PE9"/>
+                    <tabBarItem key="tabBarItem" tag="1000" title="" image="knot_icon" id="myQ-X4-PE9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="v8T-dM-MhS">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -405,6 +391,7 @@
     </scenes>
     <resources>
         <image name="add-user" width="128" height="128"/>
+        <image name="knot_icon" width="60" height="23"/>
         <image name="settings" width="128" height="128"/>
         <image name="square4" width="2500" height="2500"/>
     </resources>
