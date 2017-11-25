@@ -13,13 +13,12 @@ class RopeIPCell: UITableViewCell {
 
     @IBOutlet weak var bubbleView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var knotLabel: UILabel!
+    @IBOutlet weak var senderLabel: UILabel!
+    @IBOutlet weak var declineButton: UIButton!
+    @IBOutlet weak var acceptButton: UIButton!
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        knotLabel.lineBreakMode = .byWordWrapping
-        knotLabel.numberOfLines = 2
         bubbleView.layer.cornerRadius = 10.0
         bubbleView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
         bubbleView.layer.shadowColor = UIColor.black.cgColor

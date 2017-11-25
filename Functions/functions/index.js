@@ -30,16 +30,6 @@ exports.setRopeComplete = functions.https.onRequest((req,res) => {
 	res.send('moving rope');
 });
 
-exports.distributeNewRope = functions.database.ref('/ropes/{ropeID}').onCreate(event => {
-	console.log(event.data.val());
-	event.data.child('participants').forEach(function(participant) {
-		console.log(participant.key);
-		users_ref.child(participant.key).child('ropes').child(event.params.ropeID).set(event.data.val());
-		users_ref.child(participant.key).child('ropeIP').set(false);
-	});
-})
-
-
 exports.sendFriendRequest = functions.database.ref('/users/{userID}/sentRequests/{requestID}').onCreate(event => {
 	var username = event.data.child('receiver').val();
 	var sentDate = event.data.child('sentDate').val();

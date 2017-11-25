@@ -28,36 +28,46 @@
                         <rect key="frame" x="10" y="8" width="355" height="97.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trip to the Store" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dka-ma-G3S">
-                                <rect key="frame" x="8" y="8" width="248.5" height="49"/>
+                                <rect key="frame" x="8" y="8" width="177.5" height="49"/>
                                 <fontDescription key="fontDescription" name="extravaganzza" family="extravaganzza" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 hours left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dol-xe-8eh">
-                                <rect key="frame" x="8" y="57" width="248.5" height="30.5"/>
+                                <rect key="frame" x="8" y="57" width="177.5" height="30.5"/>
                                 <fontDescription key="fontDescription" name="extravaganzza" family="extravaganzza" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28          knots" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wjs-Rv-2To">
-                                <rect key="frame" x="256.5" y="0.0" width="98.5" height="97.5"/>
-                                <fontDescription key="fontDescription" name="extravaganzza" family="extravaganzza" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tig-CX-8Jc">
+                                <rect key="frame" x="185.5" y="0.0" width="81" height="97.5"/>
+                                <state key="normal" title="Decline">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="va7-DU-Itm">
+                                <rect key="frame" x="266.5" y="0.0" width="88.5" height="97.5"/>
+                                <state key="normal" title="Accept">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="dka-ma-G3S" firstAttribute="height" secondItem="kae-K7-g7b" secondAttribute="height" multiplier="0.5" id="A1F-aB-6lH"/>
-                            <constraint firstAttribute="bottom" secondItem="Wjs-Rv-2To" secondAttribute="bottom" id="IWC-Cc-pM0"/>
+                            <constraint firstItem="va7-DU-Itm" firstAttribute="top" secondItem="kae-K7-g7b" secondAttribute="top" id="AGm-nZ-FRb"/>
+                            <constraint firstAttribute="bottom" secondItem="tig-CX-8Jc" secondAttribute="bottom" id="AiB-2j-pgi"/>
+                            <constraint firstItem="tig-CX-8Jc" firstAttribute="top" secondItem="kae-K7-g7b" secondAttribute="top" id="GMv-eR-2iS"/>
                             <constraint firstItem="dka-ma-G3S" firstAttribute="top" secondItem="kae-K7-g7b" secondAttribute="top" constant="8" id="KTK-6f-ebD"/>
                             <constraint firstItem="Dol-xe-8eh" firstAttribute="leading" secondItem="kae-K7-g7b" secondAttribute="leading" constant="8" id="LED-Np-xer"/>
-                            <constraint firstItem="Wjs-Rv-2To" firstAttribute="top" secondItem="kae-K7-g7b" secondAttribute="top" id="Mya-mD-P8i"/>
+                            <constraint firstAttribute="bottom" secondItem="va7-DU-Itm" secondAttribute="bottom" id="NIF-mI-kj6"/>
+                            <constraint firstItem="va7-DU-Itm" firstAttribute="leading" secondItem="tig-CX-8Jc" secondAttribute="trailing" id="OJ7-sQ-vBo"/>
+                            <constraint firstItem="va7-DU-Itm" firstAttribute="width" secondItem="kae-K7-g7b" secondAttribute="width" multiplier="0.25" id="Q6Z-01-XF7"/>
                             <constraint firstItem="Dol-xe-8eh" firstAttribute="top" secondItem="dka-ma-G3S" secondAttribute="bottom" id="WYa-cn-1vF"/>
                             <constraint firstItem="Dol-xe-8eh" firstAttribute="width" secondItem="dka-ma-G3S" secondAttribute="width" id="Z5f-ij-aKQ"/>
+                            <constraint firstItem="tig-CX-8Jc" firstAttribute="leading" secondItem="dka-ma-G3S" secondAttribute="trailing" id="feg-J9-EkE"/>
+                            <constraint firstAttribute="trailing" secondItem="va7-DU-Itm" secondAttribute="trailing" id="jM2-1l-bTc"/>
                             <constraint firstAttribute="bottom" secondItem="Dol-xe-8eh" secondAttribute="bottom" constant="10" id="l3c-QD-f8I"/>
-                            <constraint firstAttribute="trailing" secondItem="Wjs-Rv-2To" secondAttribute="trailing" id="lVL-j8-Dmo"/>
-                            <constraint firstItem="dka-ma-G3S" firstAttribute="width" secondItem="kae-K7-g7b" secondAttribute="width" multiplier="0.7" id="uRu-vf-tTH"/>
-                            <constraint firstItem="Wjs-Rv-2To" firstAttribute="leading" secondItem="dka-ma-G3S" secondAttribute="trailing" id="wmF-Jj-wzk"/>
+                            <constraint firstItem="dka-ma-G3S" firstAttribute="width" secondItem="kae-K7-g7b" secondAttribute="width" multiplier="0.5" id="uRu-vf-tTH"/>
                             <constraint firstItem="dka-ma-G3S" firstAttribute="leading" secondItem="kae-K7-g7b" secondAttribute="leading" constant="8" id="xpw-af-1Jf"/>
                         </constraints>
                     </view>
@@ -70,9 +80,10 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="acceptButton" destination="va7-DU-Itm" id="aFH-d0-Eot"/>
                 <outlet property="bubbleView" destination="kae-K7-g7b" id="oi3-VR-04M"/>
-                <outlet property="knotLabel" destination="Wjs-Rv-2To" id="XQF-Kq-1hY"/>
-                <outlet property="timeLabel" destination="Dol-xe-8eh" id="9Re-HM-tSN"/>
+                <outlet property="declineButton" destination="tig-CX-8Jc" id="mbS-ET-cov"/>
+                <outlet property="senderLabel" destination="Dol-xe-8eh" id="ojW-1a-yBR"/>
                 <outlet property="titleLabel" destination="dka-ma-G3S" id="M46-DU-ZtZ"/>
             </connections>
             <point key="canvasLocation" x="364.5" y="305"/>

@@ -10,6 +10,13 @@ import UIKit
 import AVFoundation
 import Firebase
 
+struct RopeRequest {
+    var key: String
+    var sender: String
+    var sentDate: Int
+    var title: String
+}
+
 class CameraViewController: UIViewController {
     
     weak var buttonTimer: Timer?
@@ -20,6 +27,8 @@ class CameraViewController: UIViewController {
     var currentRope: RopeIP!
     var imageData: Data?
     var videoURL: URL?
+    
+    var ropeNotifs = [RopeRequest]()
     
     var longpress: UILongPressGestureRecognizer!
     var tap: UITapGestureRecognizer!
@@ -102,6 +111,13 @@ class CameraViewController: UIViewController {
         return label
     }()
     
+    var ropeRequestsTable: UITableView = {
+        let tableview = UITableView()
+        tableview.translatesAutoresizingMaskIntoConstraints = false
+        tableview.backgroundColor = .green
+        return tableview
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +128,9 @@ class CameraViewController: UIViewController {
         //determine if current user is in a Rope
         determineRopeInProgress()
         
+        //get rope requests
+        getRopeRequests()
+        
         self.view.addSubview(cameraView)
         self.view.addSubview(topPanel)
         self.view.addSubview(bottomPanel)
@@ -119,8 +138,15 @@ class CameraViewController: UIViewController {
         self.view.addSubview(promptPanel)
         topPanel.addSubview(ropeTitle)
         promptPanel.addSubview(promptText)
+        self.view.addSubview(ropeRequestsTable)
+        ropeRequestsTable.isHidden = false
+        self.view.bringSubview(toFront: ropeRequestsTable)
         
-
+        ropeRequestsTable.dataSource = self
+        ropeRequestsTable.delegate = self
+        ropeRequestsTable.backgroundColor = .clear
+        ropeRequestsTable.separatorStyle = .none
+        ropeRequestsTable.register(UINib(nibName: "RopeIPCell", bundle: nil), forCellReuseIdentifier: "ropeRequestCell")
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage.imageWithColor(color: UIColor(displayP3Red: 100.0, green: 100.0, blue: 100.0, alpha: 0.5))
@@ -159,7 +185,11 @@ class CameraViewController: UIViewController {
             promptPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             promptText.centerXAnchor.constraint(equalTo: promptPanel.centerXAnchor),
             promptText.centerYAnchor.constraint(equalTo: promptPanel.centerYAnchor),
-            promptText.widthAnchor.constraint(equalTo: promptPanel.widthAnchor, multiplier: 0.8)
+            promptText.widthAnchor.constraint(equalTo: promptPanel.widthAnchor, multiplier: 0.8),
+            ropeRequestsTable.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor),
+            ropeRequestsTable.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            ropeRequestsTable.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            ropeRequestsTable.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -200,7 +230,15 @@ class CameraViewController: UIViewController {
             //if no active rope then show default prompt
             if let _ = snapshot.value as? Bool{
                 self.promptPanel.isHidden = false
-                self.view.bringSubview(toFront: self.promptPanel)
+                if self.ropeNotifs.count == 0 {
+                    self.view.bringSubview(toFront: self.promptPanel)
+                    self.promptText.isHidden = false
+                    self.ropeRequestsTable.isHidden = true
+                } else {
+                    self.view.bringSubview(toFront: self.ropeRequestsTable)
+                    self.promptText.isHidden = true
+                    self.ropeRequestsTable.isHidden = false
+                }
                 self.removeGestures()
                 
                 let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "link"), style: .plain, target: self, action: nil) 
@@ -236,6 +274,44 @@ class CameraViewController: UIViewController {
             }
             
         })
+    }
+    
+    func getRopeRequests() {
+        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("ropeRequests").observe(.value) { (snapshot) in
+
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                let notifKey = child.key as String
+                let sender = child.childSnapshot(forPath: "sender").value as! String
+                let sentDate = child.childSnapshot(forPath: "sentDate").value as! Int
+                let ropeTitle = child.childSnapshot(forPath: "title").value as! String
+                let notif = RopeRequest(key: notifKey, sender: sender, sentDate: sentDate, title: ropeTitle)
+                self.ropeNotifs.append(notif)
+            }
+            if self.ropeNotifs.count == 0 {
+                self.view.bringSubview(toFront: self.promptPanel)
+                self.promptText.isHidden = false
+                self.ropeRequestsTable.isHidden = true
+            } else {
+                DispatchQueue.main.async {
+                    self.ropeRequestsTable.reloadData()
+                }
+                self.view.bringSubview(toFront: self.ropeRequestsTable)
+                self.promptText.isHidden = true
+                self.ropeRequestsTable.isHidden = false
+            }
+        }
+    }
+    
+    @objc func acceptButtonClicked(sender:UIButton) {
+        let buttonRow = sender.tag
+        DataService.instance.acceptRopeIP(ropeID: ropeNotifs[buttonRow].key)
+        ropeNotifs.remove(at: buttonRow)
+        ropeRequestsTable.reloadData()
+        print("accepted: \(buttonRow)")
+    }
+    @objc func declineButtonClicked(sender:UIButton) {
+        let buttonRow = sender.tag
+        print("declined: \(buttonRow)")
     }
     
     @objc func leaveRope(_ sneder: UIBarButtonItem){
@@ -412,6 +488,7 @@ class CameraViewController: UIViewController {
     
     //default setup for camera view
     func showCamera() {
+        
         if let title = currentRope.title {
             ropeTitle.text = title
         }
@@ -461,6 +538,7 @@ class CameraViewController: UIViewController {
             print("error setting up camera")
         }
         
+        ropeRequestsTable.isHidden = true
         previewView.isHidden = true
         previewView.removeExistingContent()
         cancelButton.isHidden = true
@@ -595,6 +673,40 @@ class CameraViewController: UIViewController {
         let outputPath = "\(documentPath)/\(name).mov"
         return outputPath
     }
+    
+}
+
+extension CameraViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.contentView.backgroundColor = UIColor.clear
+        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIView.animate(withDuration: 0.3, animations: {
+            cell.layer.transform = CATransform3DMakeScale(1,1,1)
+        })
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 85.0
+    }
+}
+
+extension CameraViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ropeNotifs.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ropeRequestCell", for: indexPath) as! RopeIPCell
+        cell.backgroundColor = .clear
+        cell.acceptButton.tag = indexPath.row
+        cell.acceptButton.addTarget(self, action: #selector(acceptButtonClicked(sender:)), for: .touchUpInside)
+        cell.declineButton.tag = indexPath.row
+        cell.declineButton.addTarget(self, action: #selector(declineButtonClicked(sender:)), for: .touchUpInside)
+        cell.senderLabel.text = ropeNotifs[indexPath.row].sender
+        cell.titleLabel.text = ropeNotifs[indexPath.row].title
+        return cell
+    }
+    
     
 }
 
