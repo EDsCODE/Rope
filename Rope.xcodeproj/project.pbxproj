@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		09D85CBE43E06E1B57DB6FA3 /* Pods_Rope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D3E04C1E7D03CE3F5A08044 /* Pods_Rope.framework */; };
-		1A06B0B71FC7BE37002ABFB3 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A06B0B61FC7BE37002ABFB3 /* AddFriendViewController.swift */; };
 		1A06B0BC1FC8BF62002ABFB3 /* FriendRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A06B0BB1FC8BF62002ABFB3 /* FriendRequestCell.swift */; };
 		1A06B0C01FC8BF9E002ABFB3 /* FriendRequestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A06B0BF1FC8BF9E002ABFB3 /* FriendRequestCell.xib */; };
 		1A1785291FA0C85C00427741 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1785281FA0C85C00427741 /* AppDelegate.swift */; };
@@ -25,6 +24,8 @@
 		1A55762F1FA11DC4001D404D /* LastNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A55762E1FA11DC4001D404D /* LastNameViewController.swift */; };
 		1A5576311FA12A9D001D404D /* AgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576301FA12A9D001D404D /* AgeViewController.swift */; };
 		1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */; };
+		1A905AF11FCBC027000C5CE1 /* RopeIPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */; };
+		1A905AF31FCC6331000C5CE1 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */; };
 		1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF861FAB697600EC8780 /* CustomSegues.swift */; };
 		1AB5FF901FAD73AD00EC8780 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */; };
 		1AB5FF921FAD747B00EC8780 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */; };
@@ -45,7 +46,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A06B0B61FC7BE37002ABFB3 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		1A06B0B81FC89B56002ABFB3 /* Rope.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Rope.entitlements; sourceTree = "<group>"; };
 		1A06B0BB1FC8BF62002ABFB3 /* FriendRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestCell.swift; sourceTree = "<group>"; };
 		1A06B0BF1FC8BF9E002ABFB3 /* FriendRequestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendRequestCell.xib; sourceTree = "<group>"; };
@@ -65,6 +65,8 @@
 		1A55762E1FA11DC4001D404D /* LastNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNameViewController.swift; sourceTree = "<group>"; };
 		1A5576301FA12A9D001D404D /* AgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeViewController.swift; sourceTree = "<group>"; };
 		1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
+		1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeIPDetailViewController.swift; sourceTree = "<group>"; };
+		1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		1AB5FF861FAB697600EC8780 /* CustomSegues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegues.swift; sourceTree = "<group>"; };
 		1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
@@ -170,7 +172,8 @@
 				1AB5FF8F1FAD73AD00EC8780 /* CameraViewController.swift */,
 				1AB5FF911FAD747B00EC8780 /* PreviewViewController.swift */,
 				1AF5D0D71FC60F7700BDF886 /* RopeDisplayViewController.swift */,
-				1A06B0B61FC7BE37002ABFB3 /* AddFriendViewController.swift */,
+				1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */,
+				1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */,
 				1A72EE191FA22B810048A45F /* Auth */,
 			);
 			path = Controller;
@@ -361,7 +364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A06B0B71FC7BE37002ABFB3 /* AddFriendViewController.swift in Sources */,
+				1A905AF11FCBC027000C5CE1 /* RopeIPDetailViewController.swift in Sources */,
 				1AB5FF901FAD73AD00EC8780 /* CameraViewController.swift in Sources */,
 				1A5576291FA0EB64001D404D /* User.swift in Sources */,
 				1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */,
@@ -384,6 +387,7 @@
 				1A06B0BC1FC8BF62002ABFB3 /* FriendRequestCell.swift in Sources */,
 				1AB5FF981FAF631600EC8780 /* TabBarViewController.swift in Sources */,
 				1A4BE17A1FAA2199001EEB15 /* RopeIPCell.swift in Sources */,
+				1A905AF31FCC6331000C5CE1 /* ScannerViewController.swift in Sources */,
 				1AB5FF921FAD747B00EC8780 /* PreviewViewController.swift in Sources */,
 				1AC03E011FB1454500158752 /* DataService.swift in Sources */,
 			);

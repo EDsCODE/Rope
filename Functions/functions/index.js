@@ -30,38 +30,12 @@ exports.setRopeComplete = functions.https.onRequest((req,res) => {
 	res.send('moving rope');
 });
 
-exports.sendFriendRequest = functions.database.ref('/users/{userID}/sentRequests/{requestID}').onCreate(event => {
-	var username = event.data.child('receiver').val();
-	var sentDate = event.data.child('sentDate').val();
-	var status = event.data.child('status').val();
-	var sender = event.data.child('sender').val();
-	usernames_ref.once('value', function(snapshot) {
-		if (snapshot.hasChild(username)) {
-			var receiver = snapshot.child(username).val();
-			var request = {
-				"sentDate" : sentDate,
-				"sender" : sender,
-				"status" : status,
-			};
-			users_ref.child(receiver).child("receivedRequests").push().set(request);
-			users_ref.child(event.params.userID).child('sentRequests').child(event.params.requestID).remove();
-			users_ref.child(receiver).child("profile").child("notificationToken").once('value', function(token) {
-				if (token.exists()) {
-					const payload = {
-						notification: {
-						title: "Rope",
-						body: "Someone wants to be your friend!"
-						}
-					};
-					return admin.messaging().sendToDevice(token.val(), payload)
-					.then(function(response) {
-						console.log("successfully sent message");
-					})
-					.catch(function(error) {
-						console.log("Error sending message:", error);
-					});
-				}
-			})
-		}
-	})
+exports.distributeNewRope = functions.database.ref('/ropes/{ropeID}').onCreate(event => {
+	console.log(event.data.val());
+	event.data.child('participants').forEach(function(participant) {
+		console.log(participant.key);
+		users_ref.child(participant.key).child('ropes').child(event.params.ropeID).set(event.data.val());
+		users_ref.child(participant.key).child('ropeIP').set(false);
+	});
 })
+

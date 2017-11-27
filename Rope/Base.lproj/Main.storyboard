@@ -16,6 +16,50 @@
         </array>
     </customFonts>
     <scenes>
+        <!--RopeIP Detail View Controller-->
+        <scene sceneID="8V1-zU-SAQ">
+            <objects>
+                <viewController id="JU1-ZX-elb" customClass="RopeIPDetailViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dbr-Do-54Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="IBS-40-eWn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BVy-7e-DhZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="grU-J4-TPI">
+                                <rect key="frame" x="74.5" y="0.0" width="225" height="225"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="grU-J4-TPI" secondAttribute="height" multiplier="1:1" id="4UX-Gl-Acm"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="knot_icon" translatesAutoresizingMaskIntoConstraints="NO" id="5zO-VB-4lU">
+                                <rect key="frame" x="159.5" y="85" width="56" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5zO-VB-4lU" secondAttribute="height" multiplier="1:1" id="0Im-nN-E10"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="grU-J4-TPI" firstAttribute="centerX" secondItem="BVy-7e-DhZ" secondAttribute="centerX" id="2iy-zI-y7u"/>
+                            <constraint firstItem="5zO-VB-4lU" firstAttribute="centerY" secondItem="grU-J4-TPI" secondAttribute="centerY" id="BYx-Qw-E4J"/>
+                            <constraint firstItem="5zO-VB-4lU" firstAttribute="width" secondItem="BVy-7e-DhZ" secondAttribute="width" multiplier="0.15" id="U8e-wp-EHo"/>
+                            <constraint firstItem="grU-J4-TPI" firstAttribute="top" secondItem="Dbr-Do-54Q" secondAttribute="bottom" id="aHb-DC-T96"/>
+                            <constraint firstItem="grU-J4-TPI" firstAttribute="width" secondItem="BVy-7e-DhZ" secondAttribute="width" multiplier="0.6" id="jEp-z2-Ehb"/>
+                            <constraint firstItem="5zO-VB-4lU" firstAttribute="centerX" secondItem="grU-J4-TPI" secondAttribute="centerX" id="zOm-E0-KnW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="qrImageView" destination="grU-J4-TPI" id="NSj-OU-ehg"/>
+                        <outlet property="ropeLogo" destination="5zO-VB-4lU" id="ulm-7f-Y2B"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LRj-TA-5GB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1209" y="-690"/>
+        </scene>
         <!--New Rope View Controller-->
         <scene sceneID="FQU-I5-Bob">
             <objects>
@@ -50,52 +94,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xah-7p-zdU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-528" y="919"/>
-        </scene>
-        <!--Add Friend View Controller-->
-        <scene sceneID="zym-BN-mPZ">
-            <objects>
-                <viewController id="7UW-oy-JeD" customClass="AddFriendViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="lfp-uH-y0J"/>
-                        <viewControllerLayoutGuide type="bottom" id="Jz7-gn-sLd"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Nj9-d2-nrG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jSt-re-oLW">
-                                <rect key="frame" x="164" y="158" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add"/>
-                                <connections>
-                                    <action selector="sendRequest:" destination="7UW-oy-JeD" eventType="touchUpInside" id="qBB-QA-ayt"/>
-                                </connections>
-                            </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RUK-pJ-pfH">
-                                <rect key="frame" x="0.0" y="206" width="375" height="461"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8sx-nw-xci">
-                                <rect key="frame" x="108" y="102" width="158" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <outlet property="addButton" destination="jSt-re-oLW" id="K1k-NK-5Yu"/>
-                        <outlet property="requestsTableView" destination="RUK-pJ-pfH" id="uxa-zt-X0T"/>
-                        <outlet property="usernameField" destination="8sx-nw-xci" id="OT6-YG-Be3"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c1G-bf-xOZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="487.19999999999999" y="2297.9010494752624"/>
+            <point key="canvasLocation" x="-1391" y="932"/>
         </scene>
         <!--Rope View Controller-->
         <scene sceneID="4qC-WO-Y0s">
@@ -180,13 +179,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7yw-RQ-wFO">
-                                        <rect key="frame" x="15" y="6.5" width="31" height="31"/>
-                                        <state key="normal" image="add-user"/>
-                                        <connections>
-                                            <segue destination="7UW-oy-JeD" kind="show" id="UCr-Rd-8yG"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4s-9c-PrA">
                                         <rect key="frame" x="329" y="6" width="31" height="31"/>
                                         <state key="normal" image="settings"/>
@@ -197,17 +189,13 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="7yw-RQ-wFO" firstAttribute="centerY" secondItem="NUF-2T-WOg" secondAttribute="centerY" id="6jT-eI-2Hu"/>
                                     <constraint firstItem="f4s-9c-PrA" firstAttribute="height" secondItem="NUF-2T-WOg" secondAttribute="height" multiplier="0.7" id="8xH-45-HYm"/>
                                     <constraint firstItem="f4s-9c-PrA" firstAttribute="centerY" secondItem="NUF-2T-WOg" secondAttribute="centerY" id="9Gw-f1-5P2"/>
                                     <constraint firstItem="SN4-nN-eNy" firstAttribute="centerY" secondItem="NUF-2T-WOg" secondAttribute="centerY" id="EFB-Y2-scE"/>
-                                    <constraint firstItem="7yw-RQ-wFO" firstAttribute="height" secondItem="NUF-2T-WOg" secondAttribute="height" multiplier="0.7" id="IoC-Qw-pIP"/>
                                     <constraint firstItem="SN4-nN-eNy" firstAttribute="centerX" secondItem="NUF-2T-WOg" secondAttribute="centerX" id="NTi-Me-2b0"/>
                                     <constraint firstAttribute="height" constant="44" id="Vzj-JO-DpF"/>
                                     <constraint firstAttribute="trailing" secondItem="f4s-9c-PrA" secondAttribute="trailing" constant="15" id="anJ-tv-GXa"/>
-                                    <constraint firstItem="7yw-RQ-wFO" firstAttribute="width" secondItem="NUF-2T-WOg" secondAttribute="height" multiplier="0.7" id="hQk-i5-aRK"/>
                                     <constraint firstItem="f4s-9c-PrA" firstAttribute="width" secondItem="NUF-2T-WOg" secondAttribute="height" multiplier="0.7" id="oNL-oh-twJ"/>
-                                    <constraint firstItem="7yw-RQ-wFO" firstAttribute="leading" secondItem="NUF-2T-WOg" secondAttribute="leading" constant="15" id="xWN-rY-Wkb"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -231,7 +219,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e3A-DJ-OCj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1300" y="2298"/>
+            <point key="canvasLocation" x="-455" y="2193"/>
         </scene>
         <!--Rope Display View Controller-->
         <scene sceneID="CKx-Xc-uOm">
@@ -277,7 +265,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xsj-x5-Hz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2157" y="2302"/>
+            <point key="canvasLocation" x="622" y="2193"/>
         </scene>
         <!--Knot-->
         <scene sceneID="QWa-bk-cfs">
@@ -316,11 +304,31 @@
                         <outlet property="sendButton" destination="iSf-Kf-EV0" id="IRP-EK-JoU"/>
                         <segue destination="Iy5-K2-bbZ" kind="show" identifier="showPreview" customClass="SegueFromLeft" customModule="Rope" customModuleProvider="target" id="xb6-7n-t8H"/>
                         <segue destination="Eda-dp-xSo" kind="presentation" identifier="toNewRope" animates="NO" id="Z1L-TJ-iW0"/>
+                        <segue destination="JU1-ZX-elb" kind="show" identifier="showRopeIPDetails" id="ZPT-ga-1dY"/>
+                        <segue destination="qaO-9F-FLC" kind="presentation" identifier="showQRscanner" id="ijO-z0-Nda"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Wc-CV-eUZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1639.2" y="509.59520239880067"/>
+            <point key="canvasLocation" x="622" y="510"/>
+        </scene>
+        <!--Scanner View Controller-->
+        <scene sceneID="ffe-zG-O4b">
+            <objects>
+                <viewController id="qaO-9F-FLC" customClass="ScannerViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="r2X-gC-g9J"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ux6-EK-a99"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DYf-QF-zF7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="acu-hV-IdC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1631" y="1320"/>
         </scene>
         <!--Preview View Controller-->
         <scene sceneID="ZW6-VT-b6M">
@@ -367,7 +375,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ukF-fc-fWe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1300" y="1417"/>
+            <point key="canvasLocation" x="-455" y="1356"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="L2A-S8-OE4">
@@ -386,12 +394,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h8l-Z1-dqB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="868" y="510"/>
+            <point key="canvasLocation" x="-455" y="532"/>
         </scene>
     </scenes>
     <resources>
-        <image name="add-user" width="128" height="128"/>
-        <image name="knot_icon" width="60" height="23"/>
+        <image name="knot_icon" width="60" height="60"/>
         <image name="settings" width="128" height="128"/>
         <image name="square4" width="2500" height="2500"/>
     </resources>

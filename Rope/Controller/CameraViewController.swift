@@ -41,17 +41,8 @@ class CameraViewController: UIViewController {
     var backCameraInput: AVCaptureDeviceInput!
     var frontCameraInput: AVCaptureDeviceInput!
     var microphoneInput: AVCaptureDeviceInput!
+    //var captureMetadataOutput: AVCaptureMetadataOutput!
     
-    var topPanel: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(blurEffectView)
-        return view
-    }()
     
     var promptPanel: UIView = {
         let textView = UIView()
@@ -62,17 +53,6 @@ class CameraViewController: UIViewController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         textView.addSubview(blurEffectView)
         return textView
-    }()
-    
-    var bottomPanel: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(blurEffectView)
-        return view
     }()
     
     var previewView: PreviewView = {
@@ -111,14 +91,6 @@ class CameraViewController: UIViewController {
         return label
     }()
     
-    var ropeRequestsTable: UITableView = {
-        let tableview = UITableView()
-        tableview.translatesAutoresizingMaskIntoConstraints = false
-        tableview.backgroundColor = .green
-        return tableview
-    }()
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -127,26 +99,11 @@ class CameraViewController: UIViewController {
         
         //determine if current user is in a Rope
         determineRopeInProgress()
-        
-        //get rope requests
-        getRopeRequests()
-        
+
         self.view.addSubview(cameraView)
-        self.view.addSubview(topPanel)
-        self.view.addSubview(bottomPanel)
         self.view.addSubview(previewView)
         self.view.addSubview(promptPanel)
-        topPanel.addSubview(ropeTitle)
         promptPanel.addSubview(promptText)
-        self.view.addSubview(ropeRequestsTable)
-        ropeRequestsTable.isHidden = false
-        self.view.bringSubview(toFront: ropeRequestsTable)
-        
-        ropeRequestsTable.dataSource = self
-        ropeRequestsTable.delegate = self
-        ropeRequestsTable.backgroundColor = .clear
-        ropeRequestsTable.separatorStyle = .none
-        ropeRequestsTable.register(UINib(nibName: "RopeIPCell", bundle: nil), forCellReuseIdentifier: "ropeRequestCell")
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage.imageWithColor(color: UIColor(displayP3Red: 100.0, green: 100.0, blue: 100.0, alpha: 0.5))
@@ -163,18 +120,6 @@ class CameraViewController: UIViewController {
             cameraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             cameraView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             cameraView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            topPanel.topAnchor.constraint(equalTo: self.view.topAnchor),
-            topPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            topPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            topPanel.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - self.view.bounds.width) / 2),
-            ropeTitle.leadingAnchor.constraint(equalTo: topPanel.leadingAnchor),
-            ropeTitle.trailingAnchor.constraint(equalTo: topPanel.trailingAnchor),
-            ropeTitle.bottomAnchor.constraint(equalTo: topPanel.bottomAnchor),
-            ropeTitle.heightAnchor.constraint(equalToConstant: 50.0),
-            bottomPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            bottomPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            bottomPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            bottomPanel.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - self.view.bounds.width) / 2),
             previewView.topAnchor.constraint(equalTo: self.view.topAnchor),
             previewView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             previewView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -185,11 +130,7 @@ class CameraViewController: UIViewController {
             promptPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             promptText.centerXAnchor.constraint(equalTo: promptPanel.centerXAnchor),
             promptText.centerYAnchor.constraint(equalTo: promptPanel.centerYAnchor),
-            promptText.widthAnchor.constraint(equalTo: promptPanel.widthAnchor, multiplier: 0.8),
-            ropeRequestsTable.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor),
-            ropeRequestsTable.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            ropeRequestsTable.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            ropeRequestsTable.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor)
+            promptText.widthAnchor.constraint(equalTo: promptPanel.widthAnchor, multiplier: 0.8)
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -200,6 +141,7 @@ class CameraViewController: UIViewController {
         videoOutput = AVCaptureMovieFileOutput()
         captureSession?.addOutput(photoOutput)
         captureSession?.addOutput(videoOutput)
+        
         
         let backCamera: AVCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)!
         let frontCamera: AVCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
@@ -233,15 +175,12 @@ class CameraViewController: UIViewController {
                 if self.ropeNotifs.count == 0 {
                     self.view.bringSubview(toFront: self.promptPanel)
                     self.promptText.isHidden = false
-                    self.ropeRequestsTable.isHidden = true
                 } else {
-                    self.view.bringSubview(toFront: self.ropeRequestsTable)
                     self.promptText.isHidden = true
-                    self.ropeRequestsTable.isHidden = false
                 }
                 self.removeGestures()
                 
-                let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "link"), style: .plain, target: self, action: nil) 
+                let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "link"), style: .plain, target: self, action: #selector(self.showScanner(_:)))
                 self.navigationItem.leftBarButtonItem  = leftbutton
                 
                 let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "Plus"), style: .plain, target: self, action: #selector(self.segueToNewRope(_:)))
@@ -254,13 +193,12 @@ class CameraViewController: UIViewController {
                 
                 let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "leaveRope"), style: .plain, target: self, action: #selector(self.leaveRope(_:)))
                 self.navigationItem.leftBarButtonItem  = leftbutton
-                let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "edit"), style: .plain, target: self, action:nil)
+                let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "edit"), style: .plain, target: self, action:#selector(self.showRopeIPDetails(_:)))
                 self.navigationItem.rightBarButtonItem = rightbutton
                 
                 //set currentRope details
                 if let dictionary = snapshot.value as? Dictionary<String, AnyObject> {
                     self.currentRope.id = dictionary.keys.first!
-                    self.currentRope.knotCount = dictionary[dictionary.keys.first!]!["knotCount"] as? Int
                     self.currentRope.expirationDate = dictionary[dictionary.keys.first!]!["expirationDate"] as? Int
                     self.currentRope.title = dictionary[dictionary.keys.first!]!["title"] as? String
                     self.currentRope.role = dictionary[dictionary.keys.first!]!["role"] as? Int
@@ -276,45 +214,15 @@ class CameraViewController: UIViewController {
         })
     }
     
-    func getRopeRequests() {
-        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("ropeRequests").observe(.value) { (snapshot) in
-
-            for child in snapshot.children.allObjects as! [DataSnapshot] {
-                let notifKey = child.key as String
-                let sender = child.childSnapshot(forPath: "sender").value as! String
-                let sentDate = child.childSnapshot(forPath: "sentDate").value as! Int
-                let ropeTitle = child.childSnapshot(forPath: "title").value as! String
-                let notif = RopeRequest(key: notifKey, sender: sender, sentDate: sentDate, title: ropeTitle)
-                self.ropeNotifs.append(notif)
-            }
-            if self.ropeNotifs.count == 0 {
-                self.view.bringSubview(toFront: self.promptPanel)
-                self.promptText.isHidden = false
-                self.ropeRequestsTable.isHidden = true
-            } else {
-                DispatchQueue.main.async {
-                    self.ropeRequestsTable.reloadData()
-                }
-                self.view.bringSubview(toFront: self.ropeRequestsTable)
-                self.promptText.isHidden = true
-                self.ropeRequestsTable.isHidden = false
-            }
-        }
+    @objc func showScanner(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showQRscanner", sender: self)
     }
     
-    @objc func acceptButtonClicked(sender:UIButton) {
-        let buttonRow = sender.tag
-        DataService.instance.acceptRopeIP(ropeID: ropeNotifs[buttonRow].key)
-        ropeNotifs.remove(at: buttonRow)
-        ropeRequestsTable.reloadData()
-        print("accepted: \(buttonRow)")
-    }
-    @objc func declineButtonClicked(sender:UIButton) {
-        let buttonRow = sender.tag
-        print("declined: \(buttonRow)")
+    @objc func showRopeIPDetails(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showRopeIPDetails", sender: self)
     }
     
-    @objc func leaveRope(_ sneder: UIBarButtonItem){
+    @objc func leaveRope(_ sender: UIBarButtonItem){
         let alert = UIAlertController(title: "Leaving Rope", message: "Are you sure you want to leave this Rope?", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
             DataService.instance.leaveCurrentRope()
@@ -415,31 +323,26 @@ class CameraViewController: UIViewController {
             let videoName = "\(NSUUID().uuidString)\(videoURL)"
             let ref = DataService.instance.storageRef.child(videoName)
             
-            squareCropVideo(inputURL: videoURL, completion: { (videoURL) in
-                _ = ref.putFile(from: videoURL, metadata: nil, completion: { (metadata, error) in
-                    if let error = error {
-                        print("error: \(error.localizedDescription)")
-                    } else {
-                        let downloadURL = metadata?.downloadURL()
-                        self.currentRope.knotCount! += 1
-                        DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope)
-                        self.videoURL = nil
-                    }
-                })
+            _ = ref.putFile(from: videoURL, metadata: nil, completion: { (metadata, error) in
+                if let error = error {
+                    print("error: \(error.localizedDescription)")
+                } else {
+                    let downloadURL = metadata?.downloadURL()
+                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope)
+                    self.videoURL = nil
+                }
             })
+            
         } else if let image = imageData {
             let uid = NSUUID().uuidString
             let ref = DataService.instance.storageRef.child("\(uid).jpg")
             
             let image = UIImage(data: image)!
-            let square = squareCropImageToSideLength(sourceImage: image, sideLength: 1080.0)
-            
-            _ = ref.putData(UIImagePNGRepresentation(square)!, metadata: nil, completion: {(metadata, error) in
+            _ = ref.putData(UIImagePNGRepresentation(image)!, metadata: nil, completion: {(metadata, error) in
                 if let error  = error {
                     print("error: \(error.localizedDescription))")
                 } else {
                     let downloadURL = metadata?.downloadURL()
-                    self.currentRope.knotCount! += 1
                     DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "image", ropeIP: self.currentRope)
                 }
             })
@@ -454,8 +357,8 @@ class CameraViewController: UIViewController {
         // create whatever path you want
         
         let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: bottomPanel.frame.minY))
-        path.addLine(to: CGPoint(x: self.view.bounds.width, y: bottomPanel.frame.minY))
+        path.move(to: CGPoint(x: 0, y: self.view.frame.midY))
+        path.addLine(to: CGPoint(x: self.view.bounds.width, y: self.view.frame.midY))
         
         // create shape layer for that path
         
@@ -538,7 +441,6 @@ class CameraViewController: UIViewController {
             print("error setting up camera")
         }
         
-        ropeRequestsTable.isHidden = true
         previewView.isHidden = true
         previewView.removeExistingContent()
         cancelButton.isHidden = true
@@ -555,8 +457,6 @@ class CameraViewController: UIViewController {
         self.sendButton.isHidden = false
         self.tabBarController?.tabBar.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
-        self.view.bringSubview(toFront: topPanel)
-        self.view.bringSubview(toFront: bottomPanel)
         self.view.bringSubview(toFront: cancelButton)
         self.view.bringSubview(toFront: sendButton)
     }
@@ -571,142 +471,17 @@ class CameraViewController: UIViewController {
         }
     }
     
-    
-    //crop video to Square
-    func squareCropVideo(inputURL: URL, completion: @escaping (_ outputURL : URL) -> ()){
-        let asset = AVAsset.init(url: inputURL)
-        print (asset)
-        let composition = AVMutableComposition.init()
-        composition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: kCMPersistentTrackID_Invalid)
-        
-        //input clip
-        let clipVideoTrack = asset.tracks(withMediaType: AVMediaType.video)[0]
-        
-        //make it square
-        let videoComposition = AVMutableVideoComposition()
-        videoComposition.renderSize = CGSize(width: CGFloat(clipVideoTrack.naturalSize.height), height: CGFloat(clipVideoTrack.naturalSize.height))
-        videoComposition.frameDuration = CMTimeMake(1, 30)
-        let instruction = AVMutableVideoCompositionInstruction()
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30))
-        
-        //rotate to potrait
-        let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
-        let t1 = CGAffineTransform(translationX: clipVideoTrack.naturalSize.height, y: -(clipVideoTrack.naturalSize.width - clipVideoTrack.naturalSize.height) / 2)
-        let t2: CGAffineTransform = t1.rotated(by: .pi/2)
-        let finalTransform: CGAffineTransform = t2
-        transformer.setTransform(finalTransform, at: kCMTimeZero)
-        instruction.layerInstructions = [transformer]
-        videoComposition.instructions = [instruction]
-        
-        let croppedOutputFileUrl = URL( fileURLWithPath: getOutputPath( NSUUID().uuidString ) )
-        let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)!
-        exportSession.videoComposition = videoComposition
-        exportSession.outputURL = croppedOutputFileUrl
-        exportSession.outputFileType = AVFileType.mov
-        
-        exportSession.exportAsynchronously( completionHandler: { () -> Void in
-            
-            if exportSession.status == .completed {
-                DispatchQueue.main.async(execute: {
-                    completion(croppedOutputFileUrl)
-                })
-                return
-            } else if exportSession.status == .failed {
-                print("Export failed - \(String(describing: exportSession.error))")
-            }
-            return
-            
-        })
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showRopeIPDetails" {
+            let destination = segue.destination as! RopeIPDetailViewController
+            destination.ropeIP = currentRope
+        }
     }
     
-    private func squareCropImageToSideLength(sourceImage: UIImage, sideLength: CGFloat) -> UIImage {
-        // input size comes from image
-        let inputSize: CGSize = sourceImage.size
-        
-        // round up side length to avoid fractional output size
-        let sideLength: CGFloat = ceil(sideLength)
-        
-        // output size has sideLength for both dimensions
-        let outputSize: CGSize = CGSize(width: sideLength,height:  sideLength)
-        
-        // calculate scale so that smaller dimension fits sideLength
-        let scale: CGFloat = max(sideLength / inputSize.width,
-                                 sideLength / inputSize.height)
-        
-        // scaling the image with this scale results in this output size
-        let scaledInputSize: CGSize = CGSize(width: inputSize.width * scale, height: inputSize.height * scale)
-        
-        // determine point in center of "canvas"
-        let center: CGPoint = CGPoint(x: outputSize.width/2.0, y: outputSize.height/2.0)
-        
-        // calculate drawing rect relative to output Size
-        let outputRect: CGRect = CGRect(x: center.x - scaledInputSize.width/2.0,
-                                        y: center.y - scaledInputSize.height/2.0,
-                                        width: scaledInputSize.width,
-                                        height: scaledInputSize.height)
-        
-        // begin a new bitmap context, scale 0 takes display scale
-        UIGraphicsBeginImageContextWithOptions(outputSize, true, 0)
-        
-        // optional: set the interpolation quality.
-        // For this you need to grab the underlying CGContext
-        let ctx: CGContext = UIGraphicsGetCurrentContext()!
-        ctx.interpolationQuality = .high
-        
-        // draw the source image into the calculated rect
-        sourceImage.draw(in: outputRect)
-        
-        // create new image from bitmap context
-        let outImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        
-        // clean up
-        UIGraphicsEndImageContext()
-        
-        // pass back new image
-        return outImage
+    func found(code: String) {
+        print(code)
     }
-    
-    
-    func getOutputPath( _ name: String ) -> String {
-        let documentPath = NSSearchPathForDirectoriesInDomains( .documentDirectory, .userDomainMask, true )[ 0 ] as NSString
-        let outputPath = "\(documentPath)/\(name).mov"
-        return outputPath
-    }
-    
-}
 
-extension CameraViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.contentView.backgroundColor = UIColor.clear
-        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
-        UIView.animate(withDuration: 0.3, animations: {
-            cell.layer.transform = CATransform3DMakeScale(1,1,1)
-        })
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 85.0
-    }
-}
-
-extension CameraViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ropeNotifs.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ropeRequestCell", for: indexPath) as! RopeIPCell
-        cell.backgroundColor = .clear
-        cell.acceptButton.tag = indexPath.row
-        cell.acceptButton.addTarget(self, action: #selector(acceptButtonClicked(sender:)), for: .touchUpInside)
-        cell.declineButton.tag = indexPath.row
-        cell.declineButton.addTarget(self, action: #selector(declineButtonClicked(sender:)), for: .touchUpInside)
-        cell.senderLabel.text = ropeNotifs[indexPath.row].sender
-        cell.titleLabel.text = ropeNotifs[indexPath.row].title
-        return cell
-    }
-    
     
 }
 

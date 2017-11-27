@@ -43,7 +43,6 @@ class RopeViewController: UIViewController {
                 for (key,value) in ropeData as! [String:Dictionary<String, AnyObject>]{
                     let _rope = Rope()
                     _rope.expirationDate = value["expirationDate"] as! Int
-                    _rope.knotCount = value["knotCount"] as! Int
                     _rope.creatorID = value["createdBy"] as! String
                     _rope.title = value["title"] as! String
                     _rope.participants = [User]()

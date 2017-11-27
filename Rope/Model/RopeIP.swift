@@ -12,7 +12,6 @@ class RopeIP: NSObject {
     var expirationDate: Int?
     var participants: [User]?
     var title: String?
-    var knotCount: Int?
     var id: String?
     var role: Int?
     
@@ -22,9 +21,6 @@ class RopeIP: NSObject {
         }
         if let title = title {
             print(title)
-        }
-        if let count = knotCount {
-            print(count)
         }
     }
     

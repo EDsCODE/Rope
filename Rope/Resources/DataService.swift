@@ -56,7 +56,6 @@ class DataService {
                         let rope = RopeIP()
                         rope.id = snapshot.key
                         rope.expirationDate = ropeshot.childSnapshot(forPath: "expirationDate").value as? Int
-                        rope.knotCount = ropeshot.childSnapshot(forPath: "knotCount").value as? Int
                         rope.title = ropeshot.childSnapshot(forPath: "title").value as? String
                         
                         completion(rope)
@@ -68,30 +67,14 @@ class DataService {
         }
     }
     
-//    func setupRopeIPListener() {
-//        if let currentUser = Auth.auth().currentUser {
-//            mainRef.child("users").child(currentUser.uid).child("ropeIP").observe(.childAdded, with: { (snapshot) in
-//                print(snapshot.key)
-//            })
-//        }
-//    }
-    
-    func createRope(title: String, participants: [User]) {
+    func createRope(title: String) {
         let key = mainRef.child("ropes").childByAutoId().key
         let expirationDate = Date().millisecondsSince1970 + 43200000
         let random = Int(arc4random_uniform(4) + 1)
         var ropeData: Dictionary<String, AnyObject> = ["title": title as AnyObject,
                                                        "createdBy" : (Auth.auth().currentUser?.uid)! as AnyObject,
-                                                       "knotCount": 0 as AnyObject,
                                                        "expirationDate": expirationDate as AnyObject,
                                                        "nextRole": (random + 1) % 4 as AnyObject]
-        for user in participants {
-            let rr: Dictionary<String, AnyObject> = ["sentDate": Date().millisecondsSince1970 as AnyObject,
-                                                     "title": title as AnyObject,
-                                                     "sender" : CurrentUser.username as AnyObject,
-                                                     "status" : "pending" as AnyObject]
-            usersRef.child(user.uid!).child("ropeRequests").child(key).setValue(rr)
-        }
         
         mainRef.child("ropesIP").child(key).setValue(ropeData){
             error, databaseReference in
@@ -99,17 +82,32 @@ class DataService {
                 print("error saving Rope: \(error.localizedDescription)")
             }
         }
-        
-        mainRef.child("ropesIP").child(key).child("participants").child(Auth.auth().currentUser!.uid).setValue(random){
-            error, databaseReference in
-            if let error = error  {
-                print("error saving Rope participants: \(error.localizedDescription)")
-            }
-        }
-        
         ropeData["role"] = random as AnyObject
+        ropeData["nextRole"] = nil
         mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").child(key).setValue(ropeData)
     }
+    
+    func join(ropeID: String, completion: @escaping (_ result: Bool) -> Void) {
+        mainRef.child("ropesIP").child(ropeID).observeSingleEvent(of: .value) { (snapshot) in
+            var values = snapshot.value as! Dictionary<String, AnyObject>
+            var currentRole = values["nextRole"] as! Int
+            self.mainRef.child("ropesIP").child(ropeID).updateChildValues(["nextRole": (currentRole + 1) % 4 as AnyObject])
+            self.mainRef.child("ropesIP").child(ropeID).child("participants").updateChildValues([Auth.auth().currentUser!.uid: currentRole])
+            
+            values["nextRole"] = nil
+            values["role"] = currentRole as AnyObject
+            DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("ropeIP").child(ropeID).setValue(values) {
+                error, databaseReference in
+                if let error = error  {
+                    print("error saving Rope: \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        }
+    }
+    
     
     func doesUserExist(uid: String, completion: @escaping (_ result: Bool) -> Void) {
         mainRef.child("users").observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
@@ -144,78 +142,12 @@ class DataService {
                                                  "sentDate": Int(date.timeIntervalSince1970 * 1000) as AnyObject,
                                                  "senderID": senderID as AnyObject]
         
-        //update knotcount
-        mainRef.child("ropesIP").child(ropeIP.id!).child("knotCount").setValue(ropeIP.knotCount!)
-        
-        usersRef.child(Auth.auth().currentUser!.uid).child("ropeIP").child(ropeIP.id!).child("knotCount").setValue(ropeIP.knotCount!)
-        
         mainRef.child("ropesIP").child(ropeIP.id!).child("media").child(key).updateChildValues(pr){
             error, databaseReference in
             if let error = error  {
                 print("error sending media DataService#sendMedia: \(error.localizedDescription)")
             }
         }
-    }
-    
-    func addFriend(requestID: String, senderUsername: String) {
-        //change status to accepted
-        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("receivedRequests").child(requestID).child("status").setValue("accepted")
-        
-        //get uid of sender username
-        DataService.instance.mainRef.child("usernames").child(senderUsername).observeSingleEvent(of: .value) { (uid) in
-            
-            //get profile info of sender username
-            DataService.instance.usersRef.child(uid.value as! String).child("profile").observeSingleEvent(of: .value, with: { (info) in
-                let firstname = info.childSnapshot(forPath: "firstName").value as! String
-                let lastname = info.childSnapshot(forPath: "lastName").value as! String
-                let pr: Dictionary<String, AnyObject> = ["firstname" : firstname as AnyObject,
-                                                         "lastname" : lastname as AnyObject,
-                                                         "uid" : uid.value as AnyObject
-                ]
-                //set value for receiver of request
-                DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("friends").child(senderUsername).setValue(pr, withCompletionBlock: { (error, _) in
-                    if let _ = error {
-                        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("receivedRequests").child(requestID).child("status").setValue("pending")
-                    } else {
-                        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("receivedRequests").child(requestID).removeValue()
-                    }
-                })
-            })
-            
-            let user: Dictionary<String, AnyObject> = [ "firstname": CurrentUser.username as AnyObject,
-                                                        "lastname": CurrentUser.lastname as AnyObject,
-                                                        "uid": Auth.auth().currentUser!.uid as AnyObject
-            ]
-            
-            DataService.instance.usersRef.child(uid.value as! String).child("friends").child(CurrentUser.username).setValue(user)
-            
-            
-        }
-    }
-    
-    func sendFriendRequest(to username: String) {
-        let key = mainRef.childByAutoId().key
-        let pr: Dictionary<String, AnyObject> = ["sentDate": Date().millisecondsSince1970 as AnyObject,
-                                                 "receiver" : username as AnyObject,
-                                                 "sender" : CurrentUser.username as AnyObject,
-                                                 "status" : "pending" as AnyObject]
-        DataService.instance.mainRef.child("users").child(Auth.auth().currentUser!.uid).child("sentRequests").child(key).setValue(pr)
-    }
-    
-    func acceptRopeIP(ropeID: String) {
-        mainRef.child("ropesIP").child(ropeID).observeSingleEvent(of: .value) { (snapshot) in
-            let role = snapshot.childSnapshot(forPath: "nextRole").value as! Int
-            
-            let ropeIPData: Dictionary<String, AnyObject> = ["createdBy": snapshot.childSnapshot(forPath: "createdBy").value as AnyObject,
-                                                     "expirationDate" : snapshot.childSnapshot(forPath: "expirationDate").value as AnyObject,
-                                                     "knotCount" : snapshot.childSnapshot(forPath: "knotCount").value as AnyObject,
-                                                     "role" : role as AnyObject,
-                                                     "title": snapshot.childSnapshot(forPath: "title").value as AnyObject]
-            self.mainRef.child("ropesIP").child(ropeID).child("nextRole").setValue((role + 1) % 4)
-            self.mainRef.child("ropesIP").child(ropeID).child("participants").updateChildValues([Auth.auth().currentUser!.uid: role])
-            self.usersRef.child(Auth.auth().currentUser!.uid).child("ropeIP").child(snapshot.key).setValue(ropeIPData)
-        }
-        self.usersRef.child(Auth.auth().currentUser!.uid).child("ropeRequests").child(ropeID).removeValue()
     }
 }
 

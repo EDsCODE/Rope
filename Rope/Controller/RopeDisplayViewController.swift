@@ -38,15 +38,13 @@ class RopeDisplayViewController: UIViewController {
         self.view.backgroundColor = .black
         self.view.addSubview(imageDisplay)
     
-        
-        let contraints = [
-            imageDisplay.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            imageDisplay.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            imageDisplay.widthAnchor.constraint(equalTo: self.view.widthAnchor),
-            imageDisplay.heightAnchor.constraint(equalTo: self.view.widthAnchor)
-            
+        let constraints = [
+            imageDisplay.topAnchor.constraint(equalTo: self.view.topAnchor),
+            imageDisplay.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            imageDisplay.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            imageDisplay.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
         ]
-        NSLayoutConstraint.activate(contraints)
+        NSLayoutConstraint.activate(constraints)
 
         displayRope(currentIndex)
     }
@@ -62,8 +60,8 @@ class RopeDisplayViewController: UIViewController {
     }
     
     func displayRope(_ index: Int) {
-        if rope.knotCount > 0 {
-            if index < rope.knotCount && index >= 0{
+        if rope.media.count > 0 {
+            if index < rope.media.count && index >= 0{
                 
                 //if media hasn't loaded yet
                 if rope.media[index].loadState == .loading || rope.media[index].loadState == .unloaded {
@@ -95,7 +93,7 @@ class RopeDisplayViewController: UIViewController {
                         currentIndex += 1
                     }
                 }
-            } else if index == rope.knotCount {
+            } else if index == rope.media.count {
                 currentIndex = 0
                 displayRope(currentIndex)
             }
