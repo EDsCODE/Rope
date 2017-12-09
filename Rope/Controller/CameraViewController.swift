@@ -77,7 +77,7 @@ class CameraViewController: UIViewController {
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont(name: "extravaganzza", size: 18.0)
+        label.font = UIFont(name: "Nunito-SemiBold", size: 16.0)
         label.text = "You are currently not in a Rope. Create or join one to get started!"
         return label
     }()
@@ -87,13 +87,25 @@ class CameraViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont(name: "extravaganzza", size: 26.0)
+        label.font = UIFont(name: "Nunito-Regular", size: 26.0)
         return label
+    }()
+    
+    var roleButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
+        button.imageView?.contentMode = .scaleAspectFill
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        button.layer.shadowRadius = 2
+        button.layer.shadowOpacity = 0.5
+        button.tintColor = .white
+        return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //perform necessary setup for camera view
         setupCamera()
         
@@ -103,14 +115,23 @@ class CameraViewController: UIViewController {
         self.view.addSubview(cameraView)
         self.view.addSubview(previewView)
         self.view.addSubview(promptPanel)
+        self.view.addSubview(roleButton)
         promptPanel.addSubview(promptText)
+        let colorTop = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.6).cgColor
+        let colorBottom = UIColor.clear.cgColor
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.locations = [ 0.0, 1.0]
+        gradientLayer.frame = CGRect(x:0, y:-20, width:self.view.frame.width, height:(self.navigationController?.navigationBar.frame.height)! + 20)
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage.imageWithColor(color: UIColor(displayP3Red: 100.0, green: 100.0, blue: 100.0, alpha: 0.5))
+        let background = image(from: gradientLayer)
+        
+        self.navigationController?.navigationBar.setBackgroundImage(background, for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.titleTextAttributes =
             [
-                NSAttributedStringKey.font: UIFont(name: "extravaganzza", size: 28)!,
+                NSAttributedStringKey.font: UIFont(name: "Nunito-Regular", size: 24)!,
                 NSAttributedStringKey.foregroundColor: UIColor.white
             ]
         
@@ -130,9 +151,22 @@ class CameraViewController: UIViewController {
             promptPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             promptText.centerXAnchor.constraint(equalTo: promptPanel.centerXAnchor),
             promptText.centerYAnchor.constraint(equalTo: promptPanel.centerYAnchor),
-            promptText.widthAnchor.constraint(equalTo: promptPanel.widthAnchor, multiplier: 0.8)
+            promptText.widthAnchor.constraint(equalTo: promptPanel.widthAnchor, multiplier: 0.8),
+            roleButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15.0),
+            roleButton.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor),
+            roleButton.widthAnchor.constraint(equalToConstant: 30.0),
+            roleButton.heightAnchor.constraint(equalToConstant: 30.0)
         ]
+        
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    func image(from layer: CALayer) -> UIImage {
+        UIGraphicsBeginImageContext(layer.frame.size)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return outputImage ?? UIImage()
     }
     
     func setupCamera() {
@@ -172,6 +206,7 @@ class CameraViewController: UIViewController {
             //if no active rope then show default prompt
             if let _ = snapshot.value as? Bool{
                 self.promptPanel.isHidden = false
+                self.navigationItem.title = "Knot"
                 if self.ropeNotifs.count == 0 {
                     self.view.bringSubview(toFront: self.promptPanel)
                     self.promptText.isHidden = false
@@ -180,10 +215,10 @@ class CameraViewController: UIViewController {
                 }
                 self.removeGestures()
                 
-                let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "link"), style: .plain, target: self, action: #selector(self.showScanner(_:)))
+                let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "join-1"), style: .plain, target: self, action: #selector(self.showScanner(_:)))
                 self.navigationItem.leftBarButtonItem  = leftbutton
                 
-                let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "Plus"), style: .plain, target: self, action: #selector(self.segueToNewRope(_:)))
+                let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus_test"), style: .plain, target: self, action: #selector(self.segueToNewRope(_:)))
                 self.navigationItem.rightBarButtonItem = rightbutton
                 self.navigationItem.rightBarButtonItem?.tintColor = .white
                 self.navigationItem.leftBarButtonItem?.tintColor = .white
@@ -320,6 +355,7 @@ class CameraViewController: UIViewController {
     @IBAction func sendMedia(_ sender: Any) {
         showCamera()
         if let videoURL = videoURL {
+            
             let videoName = "\(NSUUID().uuidString)\(videoURL)"
             let ref = DataService.instance.storageRef.child(videoName)
             
@@ -328,7 +364,7 @@ class CameraViewController: UIViewController {
                     print("error: \(error.localizedDescription)")
                 } else {
                     let downloadURL = metadata?.downloadURL()
-                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope)
+                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope, videoURL: videoURL, image: nil)
                     self.videoURL = nil
                 }
             })
@@ -337,13 +373,12 @@ class CameraViewController: UIViewController {
             let uid = NSUUID().uuidString
             let ref = DataService.instance.storageRef.child("\(uid).jpg")
             
-            let image = UIImage(data: image)!
-            _ = ref.putData(UIImagePNGRepresentation(image)!, metadata: nil, completion: {(metadata, error) in
+            _ = ref.putData(image, metadata: nil, completion: {(metadata, error) in
                 if let error  = error {
                     print("error: \(error.localizedDescription))")
                 } else {
                     let downloadURL = metadata?.downloadURL()
-                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "image", ropeIP: self.currentRope)
+                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "image", ropeIP: self.currentRope, videoURL: nil, image: image)
                 }
             })
             
@@ -393,7 +428,7 @@ class CameraViewController: UIViewController {
     func showCamera() {
         
         if let title = currentRope.title {
-            ropeTitle.text = title
+            self.navigationItem.title = title
         }
         
         longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
@@ -410,6 +445,9 @@ class CameraViewController: UIViewController {
                 self.view.removeGestureRecognizer(longpress)
             }
             self.view.addGestureRecognizer(tap)
+            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
+            self.roleButton.isHidden = false
+            
         case 1:
             if !self.captureSession!.inputs.contains(self.frontCameraInput) {
                 self.captureSession?.removeInput(self.backCameraInput)
@@ -419,6 +457,9 @@ class CameraViewController: UIViewController {
                 self.view.removeGestureRecognizer(tap)
             }
             self.view.addGestureRecognizer(longpress)
+            
+            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
+            self.roleButton.isHidden = false
         case 2:
             if !self.captureSession!.inputs.contains(self.backCameraInput) {
                 self.captureSession?.removeInput(self.frontCameraInput)
@@ -428,6 +469,8 @@ class CameraViewController: UIViewController {
                 self.view.removeGestureRecognizer(longpress)
             }
             self.view.addGestureRecognizer(tap)
+            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
+            self.roleButton.isHidden = false
         case 3:
             if !self.captureSession!.inputs.contains(self.backCameraInput) {
                 self.captureSession?.removeInput(self.frontCameraInput)
@@ -437,6 +480,8 @@ class CameraViewController: UIViewController {
                 self.view.removeGestureRecognizer(tap)
             }
             self.view.addGestureRecognizer(longpress)
+            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
+            self.roleButton.isHidden = false
         default:
             print("error setting up camera")
         }
@@ -499,12 +544,12 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         
         if getCameraType() == frontCameraInput {
             //Fixed mirrored videos for back camera.
-            self.imageData = UIImagePNGRepresentation(UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .leftMirrored))
+            self.imageData = UIImageJPEGRepresentation(UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .leftMirrored), 0.9)
             previewView.displayImage(UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .leftMirrored))
             showMediaSetup()
         } else {
             //Otherwise just submit regular image.
-            self.imageData = imageData
+            self.imageData = UIImageJPEGRepresentation(UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .right), 0.9)
             previewView.displayImage(UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: .right))
             showMediaSetup()
         }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="42c-KX-FU7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="42c-KX-FU7">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -98,16 +98,17 @@
             </objects>
             <point key="canvasLocation" x="5026" y="-306"/>
         </scene>
-        <!--User Name View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="d9g-Ee-FKh">
             <objects>
-                <viewController id="5Q2-Yz-64v" customClass="UserNameViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5Q2-Yz-64v" customClass="SignUpViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B6Q-d0-QcO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="ld3-Uv-Nme"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Spc-CC-uWp"/>
                     <connections>
                         <segue destination="UQb-7s-C2n" kind="show" identifier="firstNameSegue" id="AkI-vg-VrO"/>
                     </connections>

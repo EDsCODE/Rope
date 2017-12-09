@@ -15,6 +15,7 @@ class Rope: NSObject {
     var id: String!
     var media: [Media]!
     var creatorID: String!
+    var thumbnailData: Data!
     
     func printDetail() {
         print(expirationDate)

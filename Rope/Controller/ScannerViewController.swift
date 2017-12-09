@@ -12,13 +12,19 @@ import UIKit
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var promptLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        cancelButton.layer.shadowColor = UIColor.black.cgColor
+        cancelButton.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        cancelButton.layer.shadowRadius = 2
+        cancelButton.layer.shadowOpacity = 0.5
+        
         view.backgroundColor = UIColor.black
         captureSession = AVCaptureSession()
-        
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
         let videoInput: AVCaptureDeviceInput
         
@@ -54,6 +60,10 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         view.layer.addSublayer(previewLayer)
         
         captureSession.startRunning()
+        let overlay = createOverlay(frame: view.frame)
+        view.addSubview(overlay)
+        view.bringSubview(toFront: cancelButton)
+        view.bringSubview(toFront: promptLabel)
     }
     
     func failed() {
@@ -80,10 +90,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        captureSession.stopRunning()
         
-        
-        if let metadataObject = metadataObjects.first {
+        if let metadataObject = metadataObjects.first, metadataObject.type == .qr {
+            captureSession.stopRunning()
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
@@ -99,6 +108,31 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                 self.captureSession.startRunning()
             }
         })
+    }
+    
+    func createOverlay(frame : CGRect) -> UIView
+    {
+        let overlayView = UIView(frame: frame)
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        
+        let path = CGMutablePath()
+        path.addRect(CGRect(x: 20.0, y: self.view.frame.midY / 2, width: self.view.frame.width - 40, height: self.view.frame.width - 40))
+        path.addRect(CGRect(origin: .zero, size: overlayView.frame.size))
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.path = path
+        maskLayer.fillRule = kCAFillRuleEvenOdd
+        
+        overlayView.layer.mask = maskLayer
+        overlayView.clipsToBounds = true
+        
+        return overlayView
+    }
+    
+    @IBAction func closeView(_ sender: Any) {
+        captureSession.stopRunning()
+        dismiss(animated: false, completion: nil)
     }
     
     override var prefersStatusBarHidden: Bool {

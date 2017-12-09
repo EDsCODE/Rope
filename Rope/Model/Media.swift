@@ -11,6 +11,7 @@ import AVFoundation
 import Firebase
 
 class Media: NSObject {
+    var senderName: String!
     var senderID: String!
     var mediaType: String!
     var image: Data?
