@@ -25,12 +25,6 @@ class RopeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tabBarItems = self.tabBarController?.tabBar.items as! [UITabBarItem]
-        for item in tabBarItems {
-            item.title = nil
-            item.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-        }
-        
         ropeCollectionView.delegate = self
         ropeCollectionView.dataSource = self
         self.initialRopeFetch()
@@ -101,31 +95,32 @@ class RopeViewController: UIViewController {
                             }
                             
                             //start loading media and push onto async queues
-//                            DispatchQueue.global(qos: .userInitiated).async {
-//                                DataService.instance.mainRef.child("ropes").child(key).child("media").queryOrdered(byChild: "sentDate").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
-//                                    if let mediaDictionary = snapshot.value as? Dictionary<String,AnyObject> {
-//                                        for (key,value) in mediaDictionary as! [String:Dictionary<String, AnyObject>] {
-//                                            let _media = Media()
-//                                            _media.senderName = value["senderName"] as! String
-//                                            _media.senderID = value["senderID"] as! String
-//                                            _media.key = key
-//                                            _media.mediaType = value["mediaType"] as! String
-//                                            _media.sentDate = value["sentDate"] as! Int
-//
-//                                            _media.url = URL(string: value["mediaURL"] as! String)
-//
-//                                            let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
-//
-//                                            _rope.media.insert(_media, at: index)
-//                                            DispatchQueue.global(qos: .utility).async {
-//                                                _media.load {
-//                                                    print("media loaded")
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                })
-//                            }
+                            DispatchQueue.global(qos: .userInitiated).async {
+                                DataService.instance.mainRef.child("ropes").child(key).child("media").queryOrdered(byChild: "sentDate").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
+                                    if let mediaDictionary = snapshot.value as? Dictionary<String,AnyObject> {
+                                        for (key,value) in mediaDictionary as! [String:Dictionary<String, AnyObject>] {
+                                            let _media = Media()
+                                            _media.senderName = value["senderName"] as! String
+                                            _media.senderID = value["senderID"] as! String
+                                            _media.key = key
+                                            _media.mediaType = value["mediaType"] as! String
+                                            _media.sentDate = value["sentDate"] as! Int
+                                            _media.loadState = .loading
+
+                                            _media.url = URL(string: value["mediaURL"] as! String)
+
+                                            let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
+
+                                            _rope.media.insert(_media, at: index)
+                                            DispatchQueue.global(qos: .utility).async {
+                                                _media.load {
+                                                    print("media loaded")
+                                                }
+                                            }
+                                        }
+                                    }
+                                })
+                            }
                             
                             //load users async because they're unneeded at the moment
                             DispatchQueue.global(qos: .userInitiated).async {
@@ -199,29 +194,30 @@ class RopeViewController: UIViewController {
                         }
                         
                         //start loading media and push onto async queues
-//                        DispatchQueue.global(qos: .userInitiated).async {
-//                            DataService.instance.mainRef.child("ropes").child(snapshot.key).child("media").queryOrdered(byChild: "sentDate").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
-//                                if let mediaDictionary = snapshot.value as? Dictionary<String,AnyObject> {
-//                                    for (key,value) in mediaDictionary as! [String:Dictionary<String, AnyObject>] {
-//                                        let _media = Media()
-//                                        _media.senderName = value["senderName"] as! String
-//                                        _media.senderID = value["senderID"] as! String
-//                                        _media.key = key
-//                                        _media.mediaType = value["mediaType"] as! String
-//                                        _media.sentDate = value["sentDate"] as! Int
-//                                        _media.url = URL(string: value["mediaURL"] as! String)
-//
-//                                        let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
-//                                        _rope.media.insert(_media, at: index)
-//                                        DispatchQueue.global(qos: .utility).async {
-//                                            _media.load {
-//                                                print("media loaded")
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            })
-//                        }
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            DataService.instance.mainRef.child("ropes").child(snapshot.key).child("media").queryOrdered(byChild: "sentDate").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
+                                if let mediaDictionary = snapshot.value as? Dictionary<String,AnyObject> {
+                                    for (key,value) in mediaDictionary as! [String:Dictionary<String, AnyObject>] {
+                                        let _media = Media()
+                                        _media.senderName = value["senderName"] as! String
+                                        _media.senderID = value["senderID"] as! String
+                                        _media.key = key
+                                        _media.mediaType = value["mediaType"] as! String
+                                        _media.sentDate = value["sentDate"] as! Int
+                                        _media.url = URL(string: value["mediaURL"] as! String)
+                                        _media.loadState = .loading
+
+                                        let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
+                                        _rope.media.insert(_media, at: index)
+                                        DispatchQueue.global(qos: .utility).async {
+                                            _media.load {
+                                                print("media loaded")
+                                            }
+                                        }
+                                    }
+                                }
+                            })
+                        }
                         
                         //load users async because they're unneeded at the moment
                         DispatchQueue.global(qos: .userInitiated).async {
@@ -296,31 +292,31 @@ class RopeViewController: UIViewController {
                             }
                             
                             //start loading media and push onto async queues
-                            //                            DispatchQueue.global(qos: .userInitiated).async {
-                            //                                DataService.instance.mainRef.child("ropes").child(key).child("media").queryOrdered(byChild: "sentDate").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
-                            //                                    if let mediaDictionary = snapshot.value as? Dictionary<String,AnyObject> {
-                            //                                        for (key,value) in mediaDictionary as! [String:Dictionary<String, AnyObject>] {
-                            //                                            let _media = Media()
-                            //                                            _media.senderName = value["senderName"] as! String
-                            //                                            _media.senderID = value["senderID"] as! String
-                            //                                            _media.key = key
-                            //                                            _media.mediaType = value["mediaType"] as! String
-                            //                                            _media.sentDate = value["sentDate"] as! Int
-                            //
-                            //                                            _media.url = URL(string: value["mediaURL"] as! String)
-                            //
-                            //                                            let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
-                            //
-                            //                                            _rope.media.insert(_media, at: index)
-                            //                                            DispatchQueue.global(qos: .utility).async {
-                            //                                                _media.load {
-                            //                                                    print("media loaded")
-                            //                                                }
-                            //                                            }
-                            //                                        }
-                            //                                    }
-                            //                                })
-                            //                            }
+                            DispatchQueue.global(qos: .userInitiated).async {
+                                DataService.instance.mainRef.child("ropes").child(key).child("media").queryOrdered(byChild: "sentDate").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
+                                    if let mediaDictionary = snapshot.value as? Dictionary<String,AnyObject> {
+                                        for (key,value) in mediaDictionary as! [String:Dictionary<String, AnyObject>] {
+                                            let _media = Media()
+                                            _media.senderName = value["senderName"] as! String
+                                            _media.senderID = value["senderID"] as! String
+                                            _media.key = key
+                                            _media.mediaType = value["mediaType"] as! String
+                                            _media.sentDate = value["sentDate"] as! Int
+
+                                            _media.url = URL(string: value["mediaURL"] as! String)
+
+                                            let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
+
+                                            _rope.media.insert(_media, at: index)
+                                            DispatchQueue.global(qos: .utility).async {
+                                                _media.load {
+                                                    print("media loaded")
+                                                }
+                                            }
+                                        }
+                                    }
+                                })
+                            }
                             
                             //load users async because they're unneeded at the moment
                             DispatchQueue.global(qos: .userInitiated).async {

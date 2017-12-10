@@ -106,23 +106,43 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //perform necessary setup for camera view
         setupCamera()
         
         //determine if current user is in a Rope
         determineRopeInProgress()
 
+        //add views
         self.view.addSubview(cameraView)
         self.view.addSubview(previewView)
         self.view.addSubview(promptPanel)
         self.view.addSubview(roleButton)
         promptPanel.addSubview(promptText)
-        let colorTop = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.6).cgColor
+        
+        //cancel button shadow
+        cancelButton.layer.shadowColor = UIColor.black.cgColor
+        cancelButton.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        cancelButton.layer.shadowRadius = 2
+        cancelButton.layer.shadowOpacity = 0.5
+        
+        //sendbutton shadow and color
+        sendButton.tintColor = .white
+        sendButton.layer.shadowColor = UIColor.black.cgColor
+        sendButton.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        sendButton.layer.shadowRadius = 2
+        sendButton.layer.shadowOpacity = 0.5
+        
+        //set tabbar color
+        self.tabBarController?.tabBar.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
+        
+        //top gradient
+        let colorTop = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4).cgColor
         let colorBottom = UIColor.clear.cgColor
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [colorTop, colorBottom]
         gradientLayer.locations = [ 0.0, 1.0]
-        gradientLayer.frame = CGRect(x:0, y:-20, width:self.view.frame.width, height:(self.navigationController?.navigationBar.frame.height)! + 20)
+        gradientLayer.frame = CGRect(x:0, y:-20, width:self.view.frame.width, height:(self.navigationController?.navigationBar.frame.height)! + 80)
         
         let background = image(from: gradientLayer)
         
@@ -153,7 +173,7 @@ class CameraViewController: UIViewController {
             promptText.centerYAnchor.constraint(equalTo: promptPanel.centerYAnchor),
             promptText.widthAnchor.constraint(equalTo: promptPanel.widthAnchor, multiplier: 0.8),
             roleButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15.0),
-            roleButton.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor),
+            roleButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.view.frame.height * 0.1),
             roleButton.widthAnchor.constraint(equalToConstant: 30.0),
             roleButton.heightAnchor.constraint(equalToConstant: 30.0)
         ]
@@ -293,6 +313,7 @@ class CameraViewController: UIViewController {
             
             videoOutput.startRecording(to: filePath, recordingDelegate: self)
             
+            self.roleButton.isHidden = true
             self.tabBarController?.tabBar.isHidden = true
             self.navigationController?.navigationBar.isHidden = true
             isRecording = true
@@ -392,15 +413,15 @@ class CameraViewController: UIViewController {
         // create whatever path you want
         
         let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: self.view.frame.midY))
-        path.addLine(to: CGPoint(x: self.view.bounds.width, y: self.view.frame.midY))
+        path.move(to: CGPoint(x: 0, y: self.view.frame.height))
+        path.addLine(to: CGPoint(x: self.view.bounds.width, y: self.view.frame.height))
         
         // create shape layer for that path
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.fillColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor
         shapeLayer.strokeColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1).cgColor
-        shapeLayer.lineWidth = 4
+        shapeLayer.lineWidth = 30
         shapeLayer.path = path.cgPath
         
         // animate it
@@ -446,7 +467,6 @@ class CameraViewController: UIViewController {
             }
             self.view.addGestureRecognizer(tap)
             self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
-            self.roleButton.isHidden = false
             
         case 1:
             if !self.captureSession!.inputs.contains(self.frontCameraInput) {
@@ -459,7 +479,6 @@ class CameraViewController: UIViewController {
             self.view.addGestureRecognizer(longpress)
             
             self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
-            self.roleButton.isHidden = false
         case 2:
             if !self.captureSession!.inputs.contains(self.backCameraInput) {
                 self.captureSession?.removeInput(self.frontCameraInput)
@@ -470,7 +489,6 @@ class CameraViewController: UIViewController {
             }
             self.view.addGestureRecognizer(tap)
             self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
-            self.roleButton.isHidden = false
         case 3:
             if !self.captureSession!.inputs.contains(self.backCameraInput) {
                 self.captureSession?.removeInput(self.frontCameraInput)
@@ -481,7 +499,6 @@ class CameraViewController: UIViewController {
             }
             self.view.addGestureRecognizer(longpress)
             self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
-            self.roleButton.isHidden = false
         default:
             print("error setting up camera")
         }
@@ -492,11 +509,13 @@ class CameraViewController: UIViewController {
         sendButton.isHidden = true
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
+        self.roleButton.isHidden = false
         self.shapeLayer?.removeFromSuperlayer()
     }
     
     func showMediaSetup() {
         removeGestures()
+        self.roleButton.isHidden = true
         previewView.isHidden = false
         self.cancelButton.isHidden = false
         self.sendButton.isHidden = false

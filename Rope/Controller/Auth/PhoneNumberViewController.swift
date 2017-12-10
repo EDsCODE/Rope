@@ -81,6 +81,9 @@ class PhoneNumberViewController: UIViewController {
             let parsedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
 
             //If parse successful, connect to firebase and attempt to verify.
+            CurrentUser.phoneNumber = parsedNumber
+            self.performSegue(withIdentifier: "verificationSegue", sender: nil)
+            
             PhoneAuthProvider.provider().verifyPhoneNumber(parsedNumber, uiDelegate: nil) { (verificationID, error) in
                 //When response received, stop spinner and re-enable user input
                 self.view.isUserInteractionEnabled = true
@@ -91,8 +94,6 @@ class PhoneNumberViewController: UIViewController {
                 }
                 //Otherwise, send to verification page.
                 UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
-                CurrentUser.phoneNumber = parsedNumber
-                self.performSegue(withIdentifier: "verificationSegue", sender: nil)
                 self.view.isUserInteractionEnabled = true
             }
             //If phone number parsing fails, print error.

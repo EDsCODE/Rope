@@ -49,6 +49,7 @@
 		1ABECFBE1FDA4769004719ED /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABECFAC1FDA45BC004719ED /* Nunito-Regular.ttf */; };
 		1ABECFBF1FDA4769004719ED /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABECFAD1FDA45BC004719ED /* Nunito-SemiBold.ttf */; };
 		1ABECFC01FDA4769004719ED /* Nunito-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABECFA61FDA45BA004719ED /* Nunito-SemiBoldItalic.ttf */; };
+		1ABECFC41FDC86AF004719ED /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABECFC31FDC86AF004719ED /* SettingsTableViewController.swift */; };
 		1AC03DFB1FB10C8E00158752 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC03DFA1FB10C8E00158752 /* SignUpViewController.swift */; };
 		1AC03E011FB1454500158752 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC03E001FB1454500158752 /* DataService.swift */; };
 		1AD5CC311FB5599100A01C2E /* extravaganzza.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AD5CC2F1FB5597500A01C2E /* extravaganzza.ttf */; };
@@ -104,6 +105,7 @@
 		1ABECFB01FDA45BC004719ED /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
 		1ABECFB11FDA45BC004719ED /* Nunito-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Italic.ttf"; sourceTree = "<group>"; };
 		1ABECFB21FDA45BD004719ED /* Nunito-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-BoldItalic.ttf"; sourceTree = "<group>"; };
+		1ABECFC31FDC86AF004719ED /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1AC03DFA1FB10C8E00158752 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1AC03E001FB1454500158752 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		1AD5CC2F1FB5597500A01C2E /* extravaganzza.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = extravaganzza.ttf; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				1AF5D0D71FC60F7700BDF886 /* RopeDisplayViewController.swift */,
 				1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */,
 				1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */,
+				1ABECFC31FDC86AF004719ED /* SettingsTableViewController.swift */,
 				1A72EE191FA22B810048A45F /* Auth */,
 			);
 			path = Controller;
@@ -437,6 +440,7 @@
 				1AE1C13D1FB3AB3200A158ED /* Rope.swift in Sources */,
 				1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */,
 				1A1785291FA0C85C00427741 /* AppDelegate.swift in Sources */,
+				1ABECFC41FDC86AF004719ED /* SettingsTableViewController.swift in Sources */,
 				1AE1C13F1FB3ABCB00A158ED /* RopeIP.swift in Sources */,
 				1AB5FFA11FAFAFEB00EC8780 /* NewRopeViewController.swift in Sources */,
 				1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */,

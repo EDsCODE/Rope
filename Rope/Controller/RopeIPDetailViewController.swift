@@ -13,10 +13,13 @@ class RopeIPDetailViewController: UIViewController {
     @IBOutlet weak var qrImageView: UIImageView!
     var ropeIP: RopeIP!
     @IBOutlet weak var ropeLogo: UIImageView!
-    
+    @IBOutlet weak var cancelButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor(displayP3Red: 42.0/255.0, green: 42.0/255.0, blue: 42.0/255.0, alpha: 1)
+        
         ropeLogo.isHidden = true
         let image = generateQRCode(from: ropeIP.id!)
         qrImageView.image = image
@@ -38,6 +41,11 @@ class RopeIPDetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func cancel(_ sender: Any) {
+        dismiss(animated: false, completion: nil)
+    }
+    
     
     func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)

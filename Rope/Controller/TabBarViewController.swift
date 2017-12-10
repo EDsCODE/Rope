@@ -12,7 +12,14 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tabBarItems = self.tabBar.items as! [UITabBarItem]
+        for item in tabBarItems {
+            item.title = nil
+            item.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        }
+        self.tabBar.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
         self.tabBar.barTintColor = .black
+        self.tabBar.unselectedItemTintColor = .white
         self.tabBar.tintColor = .white
         // Do any additional setup after loading the view.
     }
@@ -24,10 +31,14 @@ class TabBarViewController: UITabBarController {
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 1000 {
+            self.tabBar.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
             self.tabBar.barTintColor = .black
+            self.tabBar.unselectedItemTintColor = .white
             self.tabBar.tintColor = .white
         } else if item.tag == 2000 {
+            self.tabBar.backgroundColor = .clear
             self.tabBar.barTintColor = .white
+            self.tabBar.unselectedItemTintColor = .black
             self.tabBar.tintColor = .black
         }
     }

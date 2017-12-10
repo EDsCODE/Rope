@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.registerForRemoteNotifications()
         
         FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = false
+        Database.database().isPersistenceEnabled = true
         
         if Auth.auth().currentUser != nil {
             storyboard = UIStoryboard(name: "Main", bundle: .main)
@@ -64,7 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         //keep notifcationtoken updated
-        DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("profile").child("notificationToken").setValue(fcmToken)
+        
+        //CHECK THIS
+        //DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("profile").child("notificationToken").setValue(fcmToken)
     }
     
 
