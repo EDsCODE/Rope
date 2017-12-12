@@ -34,7 +34,9 @@ exports.distributeNewRope = functions.database.ref('/ropes/{ropeID}').onCreate(e
 	console.log(event.data.val());
 	event.data.child('participants').forEach(function(participant) {
 		console.log(participant.key);
-		users_ref.child(participant.key).child('ropes').child(event.params.ropeID).set(event.data.val());
+		let ropeData = event.data.val();
+		ropeData['viewed'] = false;
+		users_ref.child(participant.key).child('ropes').child(event.params.ropeID).set(ropeData);
 		users_ref.child(participant.key).child('ropeIP').set(false);
 	});
 })

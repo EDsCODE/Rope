@@ -14,6 +14,7 @@ class RopeIP: NSObject {
     var title: String?
     var id: String?
     var role: Int?
+    var contribution: Int?
     
     func printdetail() {
         if let expiration = expirationDate {

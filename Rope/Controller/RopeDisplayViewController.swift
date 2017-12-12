@@ -16,7 +16,7 @@ class RopeDisplayViewController: UIViewController {
     var playerLayer: AVPlayerLayer?
     fileprivate var nextObserver: NSObjectProtocol?
     var rope: Rope!
-    var currentIndex = 0
+    var currentIndex = -1
     var isPlaying = false
     @IBOutlet weak var cancelPlayback: UIButton!
     fileprivate var repeatObserver: NSObjectProtocol?
@@ -36,13 +36,48 @@ class RopeDisplayViewController: UIViewController {
         return view
     }()
     
+    var titleView: GradientView = {
+        let view = GradientView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.isHidden = true
+        return view
+    }()
+    
     var creatorLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.text = "hello"
-        label.font = UIFont(name: "Nunito-SemiBold", size: 12.0)
+        label.isHidden = true
+        label.font = UIFont(name: "Nunito-SemiBold", size: 16.0)
         return label
+    }()
+    
+    var titleLabel : UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.text = "TITLE"
+        label.font = UIFont(name: "Nunito-SemiBold", size: 28.0)
+        return label
+    }()
+    
+    var timeLabel : UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.text = "TIME"
+        label.font = UIFont(name: "Nunito-SemiBold", size: 16.0)
+        return label
+    }()
+    
+    var separator : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.lightGray
+        view.layer.cornerRadius = 2
+        return view
     }()
 
     override func viewDidLoad() {
@@ -50,7 +85,11 @@ class RopeDisplayViewController: UIViewController {
         self.view.backgroundColor = .black
         self.view.addSubview(imageDisplay)
         self.view.addSubview(informationView)
-        self.view.addSubview(creatorLabel)
+        informationView.addSubview(creatorLabel)
+        self.view.addSubview(titleView)
+        titleView.addSubview(titleLabel)
+        titleView.addSubview(timeLabel)
+        titleView.addSubview(separator)
         
         cancelPlayback.layer.shadowColor = UIColor.black.cgColor
         cancelPlayback.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
@@ -66,16 +105,34 @@ class RopeDisplayViewController: UIViewController {
             informationView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             informationView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             informationView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.1),
-            creatorLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15.0),
+            titleView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            titleView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            titleView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            titleView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5),
+            creatorLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0),
             creatorLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             creatorLabel.topAnchor.constraint(equalTo: informationView.topAnchor),
-            creatorLabel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            creatorLabel.bottomAnchor.constraint(equalTo: self.informationView.bottomAnchor),
+            timeLabel.leadingAnchor.constraint(equalTo: self.titleView.leadingAnchor, constant: 20.0),
+            timeLabel.trailingAnchor.constraint(equalTo: self.titleView.trailingAnchor, constant: -20.0),
+            timeLabel.heightAnchor.constraint(equalToConstant: 20.0),
+            timeLabel.bottomAnchor.constraint(equalTo: self.titleView.bottomAnchor, constant: -15.0),
+            separator.bottomAnchor.constraint(equalTo: self.timeLabel.topAnchor, constant: -10.0),
+            separator.leadingAnchor.constraint(equalTo: self.titleView.leadingAnchor, constant: 20.0),
+            separator.trailingAnchor.constraint(equalTo: self.titleView.trailingAnchor, constant: -20.0),
+            separator.heightAnchor.constraint(equalToConstant: 4.0),
+            titleLabel.leadingAnchor.constraint(equalTo: self.titleView.leadingAnchor, constant: 20.0),
+            titleLabel.trailingAnchor.constraint(equalTo: self.titleView.trailingAnchor, constant: -20.0),
+            titleLabel.bottomAnchor.constraint(equalTo: self.separator.topAnchor, constant: -10.0),
+            titleLabel.heightAnchor.constraint(equalToConstant: 40.0)
         ]
         NSLayoutConstraint.activate(constraints)
         
         isPlaying = true
-        let nextMediaGesture = UITapGestureRecognizer(target: self, action: #selector(clickedNext(_:)))
-        imageDisplay.addGestureRecognizer(nextMediaGesture)
+        let nextMediaGestureImage = UITapGestureRecognizer(target: self, action: #selector(clickedNext(_:)))
+        let nextMediaGestureGradient = UITapGestureRecognizer(target: self, action: #selector(clickedNext(_:)))
+        imageDisplay.addGestureRecognizer(nextMediaGestureImage)
+        titleView.addGestureRecognizer(nextMediaGestureGradient)
         
         displayRope(currentIndex)
     }
@@ -96,15 +153,25 @@ class RopeDisplayViewController: UIViewController {
     
     func displayRope(_ index: Int) {
         print("displaying \(currentIndex)")
+        
+        if index < rope.media.count - 1 && index >= -1 && self.rope.media[index + 1].loadState == .loading {
+            self.rope.media[index + 1].load {
+                print("media at \(index + 1) loaded")
+            }
+        }
+        
         if rope.media.count > 0 && isPlaying {
             if index < rope.media.count && index >= 0{
-                
+                titleView.isHidden = true
                 //if media hasn't loaded yet
-                if rope.media[index].loadState == .loading || rope.media[index].loadState == .unloaded {
+                if rope.media[index].loadState == .loading {
+                    removeExistingContent()
                     self.rope.media[index].addObserver(self, forKeyPath: "loadState", options: .new, context: nil)
+                    //display title screen with thumbnail
                     imageDisplay.image = #imageLiteral(resourceName: "cat")
                     imageDisplay.clipsToBounds = true
                 } else {
+                    creatorLabel.isHidden = false
                     //display image for 3 seconds
                     if "image" == rope.media[index].mediaType {
                         removeExistingContent()
@@ -130,8 +197,23 @@ class RopeDisplayViewController: UIViewController {
                     creatorLabel.text = rope.media[index].senderName
                 }
             } else if index == rope.media.count {
-                currentIndex = 0
+                currentIndex = -1
                 displayRope(currentIndex)
+            } else if index == -1 {
+                removeExistingContent()
+                creatorLabel.isHidden = true
+                titleView.isHidden = false
+                titleLabel.text = rope.title
+                let startDate = Date(timeIntervalSince1970: Double(rope.media[0].sentDate / 1000))
+                let endDate = Date(timeIntervalSince1970: Double(rope.media[rope.media.count - 1].sentDate / 1000))
+                let dayTimePeriodFormatter = DateFormatter()
+                dayTimePeriodFormatter.dateFormat = "MMMM dd, YYYY"
+                let startdateString = dayTimePeriodFormatter.string(from: startDate)
+                let enddateString = dayTimePeriodFormatter.string(from: endDate)
+                timeLabel.text = (startdateString == enddateString) ? "\(startdateString)": "\(startdateString) - \(enddateString)"
+                imageDisplay.image = UIImage(data: self.rope.thumbnailData)
+                imageDisplay.clipsToBounds = true
+                currentIndex += 1
             }
             self.view.bringSubview(toFront: cancelPlayback)
 
@@ -141,10 +223,12 @@ class RopeDisplayViewController: UIViewController {
     }
     
     @IBAction func cancelPlayback(_ sender: Any) {
-        playerLayer?.player?.pause()
-        removeExistingContent()
-        isPlaying = false
         dismiss(animated: false, completion: nil)
+        DispatchQueue.main.async {
+            self.playerLayer?.player?.pause()
+            self.removeExistingContent()
+            self.isPlaying = false
+        }
     }
     
     func removeExistingContent() {
@@ -212,7 +296,7 @@ class GradientView: UIView {
     
     override public func draw(_ rect: CGRect) {
         self.gradient.frame = self.bounds
-        self.gradient.colors = [UIColor.clear.cgColor, UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7).cgColor]
+        self.gradient.colors = [UIColor.clear.cgColor, UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor]
         self.gradient.startPoint = CGPoint(x: 1, y: 0)
         self.gradient.endPoint = CGPoint(x: 1, y: 1)
         if self.gradient.superlayer == nil {

@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.registerForRemoteNotifications()
         
         FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = true
+        Database.database().isPersistenceEnabled = false
         
         if Auth.auth().currentUser != nil {
             storyboard = UIStoryboard(name: "Main", bundle: .main)

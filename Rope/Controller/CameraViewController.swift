@@ -104,6 +104,26 @@ class CameraViewController: UIViewController {
         return button
     }()
     
+    var knotView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        view.layer.cornerRadius = 5.0
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    var knotCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.textAlignment = .right
+        label.textColor = .white
+        label.text = "0"
+        label.font = UIFont(name: "Nunito-Regular", size: 16.0)
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,6 +137,8 @@ class CameraViewController: UIViewController {
         self.view.addSubview(cameraView)
         self.view.addSubview(previewView)
         self.view.addSubview(promptPanel)
+        self.view.addSubview(knotView)
+        self.view.addSubview(knotCountLabel)
         self.view.addSubview(roleButton)
         promptPanel.addSubview(promptText)
         
@@ -175,7 +197,15 @@ class CameraViewController: UIViewController {
             roleButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15.0),
             roleButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.view.frame.height * 0.1),
             roleButton.widthAnchor.constraint(equalToConstant: 30.0),
-            roleButton.heightAnchor.constraint(equalToConstant: 30.0)
+            roleButton.heightAnchor.constraint(equalToConstant: 30.0),
+            knotView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15.0),
+            knotView.centerYAnchor.constraint(equalTo: roleButton.centerYAnchor),
+            knotView.widthAnchor.constraint(equalToConstant: 10.0),
+            knotView.heightAnchor.constraint(equalToConstant: 10.0),
+            knotCountLabel.trailingAnchor.constraint(equalTo: knotView.leadingAnchor, constant: -5.0),
+            knotCountLabel.centerYAnchor.constraint(equalTo: roleButton.centerYAnchor),
+            knotCountLabel.widthAnchor.constraint(equalToConstant: 50.0),
+            knotCountLabel.heightAnchor.constraint(equalToConstant: 30.0)
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -217,6 +247,27 @@ class CameraViewController: UIViewController {
     
     }
     
+    func noRopeIPLayout() {
+        self.removeGestures()
+        self.promptPanel.isHidden = false
+        self.navigationItem.title = "Knot"
+        if self.ropeNotifs.count == 0 {
+            self.view.bringSubview(toFront: self.promptPanel)
+            self.promptText.isHidden = false
+        } else {
+            self.promptText.isHidden = true
+        }
+        self.removeGestures()
+        
+        let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "join-1"), style: .plain, target: self, action: #selector(self.showScanner(_:)))
+        self.navigationItem.leftBarButtonItem  = leftbutton
+        
+        let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus_test"), style: .plain, target: self, action: #selector(self.segueToNewRope(_:)))
+        self.navigationItem.rightBarButtonItem = rightbutton
+        self.navigationItem.rightBarButtonItem?.tintColor = .white
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
+    }
+    
     func determineRopeInProgress() {
         
         currentRope = RopeIP()
@@ -225,23 +276,7 @@ class CameraViewController: UIViewController {
             
             //if no active rope then show default prompt
             if let _ = snapshot.value as? Bool{
-                self.promptPanel.isHidden = false
-                self.navigationItem.title = "Knot"
-                if self.ropeNotifs.count == 0 {
-                    self.view.bringSubview(toFront: self.promptPanel)
-                    self.promptText.isHidden = false
-                } else {
-                    self.promptText.isHidden = true
-                }
-                self.removeGestures()
-                
-                let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "join-1"), style: .plain, target: self, action: #selector(self.showScanner(_:)))
-                self.navigationItem.leftBarButtonItem  = leftbutton
-                
-                let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus_test"), style: .plain, target: self, action: #selector(self.segueToNewRope(_:)))
-                self.navigationItem.rightBarButtonItem = rightbutton
-                self.navigationItem.rightBarButtonItem?.tintColor = .white
-                self.navigationItem.leftBarButtonItem?.tintColor = .white
+                self.noRopeIPLayout()
                 
             //if there is active rope allow user to use camera
             } else {
@@ -257,6 +292,8 @@ class CameraViewController: UIViewController {
                     self.currentRope.expirationDate = dictionary[dictionary.keys.first!]!["expirationDate"] as? Int
                     self.currentRope.title = dictionary[dictionary.keys.first!]!["title"] as? String
                     self.currentRope.role = dictionary[dictionary.keys.first!]!["role"] as? Int
+                    self.currentRope.contribution = dictionary[dictionary.keys.first!]!["contribution"] as? Int
+                    self.knotCountLabel.text = "\(5 - self.currentRope.contribution!)"
                 }
                 
                 self.showCamera()
@@ -314,6 +351,8 @@ class CameraViewController: UIViewController {
             videoOutput.startRecording(to: filePath, recordingDelegate: self)
             
             self.roleButton.isHidden = true
+            self.knotCountLabel.isHidden = true
+            self.knotView.isHidden = true
             self.tabBarController?.tabBar.isHidden = true
             self.navigationController?.navigationBar.isHidden = true
             isRecording = true
@@ -375,6 +414,23 @@ class CameraViewController: UIViewController {
     
     @IBAction func sendMedia(_ sender: Any) {
         showCamera()
+        currentRope.contribution! += 1
+        knotCountLabel.text = "\(5 - currentRope.contribution!)"
+        DataService.instance.updateContribution(currentRope.id!, currentRope.contribution!)
+        
+        print(currentRope.contribution!)
+        if currentRope.contribution! >= 5 {
+            DataService.instance.leaveCurrentRope()
+            self.noRopeIPLayout()
+            //clear currentrope
+            currentRope.contribution = nil
+            currentRope.expirationDate = nil
+            currentRope.id = nil
+            currentRope.participants = nil
+            currentRope.role = nil
+            currentRope.title = nil
+        }
+        
         if let videoURL = videoURL {
             
             let videoName = "\(NSUUID().uuidString)\(videoURL)"
@@ -385,6 +441,7 @@ class CameraViewController: UIViewController {
                     print("error: \(error.localizedDescription)")
                 } else {
                     let downloadURL = metadata?.downloadURL()
+                    
                     DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope, videoURL: videoURL, image: nil)
                     self.videoURL = nil
                 }
@@ -510,12 +567,16 @@ class CameraViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
         self.roleButton.isHidden = false
+        self.knotCountLabel.isHidden = false
+        self.knotView.isHidden = false
         self.shapeLayer?.removeFromSuperlayer()
     }
     
     func showMediaSetup() {
         removeGestures()
         self.roleButton.isHidden = true
+        self.knotCountLabel.isHidden = true
+        self.knotView.isHidden = true
         previewView.isHidden = false
         self.cancelButton.isHidden = false
         self.sendButton.isHidden = false

@@ -172,6 +172,17 @@
                                                         <constraint firstAttribute="bottom" secondItem="CfV-Sy-sR9" secondAttribute="bottom" constant="5" id="Xm1-yV-alc"/>
                                                     </constraints>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nS-53-HD2">
+                                                    <rect key="frame" x="108" y="5" width="37" height="17"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="Kh5-fg-qKC"/>
+                                                        <constraint firstAttribute="width" constant="37" id="rva-Ux-N4J"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="12"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -180,15 +191,18 @@
                                             <constraint firstItem="Xjk-To-NzT" firstAttribute="height" secondItem="aXs-6U-2Cr" secondAttribute="height" multiplier="0.3" id="LNp-AE-yDN"/>
                                             <constraint firstItem="SLW-FX-KWk" firstAttribute="centerX" secondItem="aXs-6U-2Cr" secondAttribute="centerX" id="PGu-eb-7LV"/>
                                             <constraint firstAttribute="bottom" secondItem="SLW-FX-KWk" secondAttribute="bottom" id="QY9-ty-x8x"/>
+                                            <constraint firstItem="6nS-53-HD2" firstAttribute="top" secondItem="aXs-6U-2Cr" secondAttribute="top" constant="5" id="SL1-M3-st6"/>
                                             <constraint firstAttribute="trailing" secondItem="SLW-FX-KWk" secondAttribute="trailing" id="eUR-G7-5RA"/>
                                             <constraint firstAttribute="trailing" secondItem="Xjk-To-NzT" secondAttribute="trailing" id="gJO-HB-Pfh"/>
                                             <constraint firstItem="SLW-FX-KWk" firstAttribute="centerY" secondItem="aXs-6U-2Cr" secondAttribute="centerY" id="qv8-P0-nOG"/>
                                             <constraint firstItem="SLW-FX-KWk" firstAttribute="leading" secondItem="aXs-6U-2Cr" secondAttribute="leading" id="rUk-i1-th6"/>
                                             <constraint firstItem="SLW-FX-KWk" firstAttribute="top" secondItem="aXs-6U-2Cr" secondAttribute="top" id="uck-Q6-JGv"/>
                                             <constraint firstAttribute="bottom" secondItem="Xjk-To-NzT" secondAttribute="bottom" id="vml-rW-xLm"/>
+                                            <constraint firstAttribute="trailing" secondItem="6nS-53-HD2" secondAttribute="trailing" constant="5" id="xUI-a1-jk7"/>
                                         </constraints>
                                         <size key="customSize" width="150" height="150"/>
                                         <connections>
+                                            <outlet property="newLabel" destination="6nS-53-HD2" id="oUU-aT-lye"/>
                                             <outlet property="overlayView" destination="Xjk-To-NzT" id="uyd-je-Uhi"/>
                                             <outlet property="ropeImage" destination="SLW-FX-KWk" id="g7Q-0F-FJ5"/>
                                             <outlet property="titleLabel" destination="CfV-Sy-sR9" id="ttn-e1-D4v"/>

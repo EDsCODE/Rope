@@ -47,8 +47,6 @@ class RopeViewController: UIViewController {
             if let ropeData = snapshot.value as? Dictionary<String, AnyObject>{
                 for (key,value) in ropeData as! [String:Dictionary<String, AnyObject>]{
                     
-                    print("ear expiration date \(self.earliestQueryPoint)")
-                    
                     let _rope = Rope()
                     _rope.expirationDate = value["expirationDate"] as! Int
                     _rope.creatorID = value["createdBy"] as! String
@@ -56,6 +54,7 @@ class RopeViewController: UIViewController {
                     _rope.participants = [User]()
                     _rope.media = [Media]()
                     _rope.id = key
+                    _rope.viewed = value["viewed"] as! Bool
                     
                     if _rope.expirationDate < self.earliestQueryPoint {
                         self.earliestQueryPoint = _rope.expirationDate
@@ -112,11 +111,11 @@ class RopeViewController: UIViewController {
                                             let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
 
                                             _rope.media.insert(_media, at: index)
-                                            DispatchQueue.global(qos: .utility).async {
-                                                _media.load {
-                                                    print("media loaded")
-                                                }
-                                            }
+//                                            DispatchQueue.global(qos: .utility).async {
+//                                                _media.load {
+//                                                    print("media loaded")
+//                                                }
+//                                            }
                                         }
                                     }
                                 })
@@ -156,6 +155,7 @@ class RopeViewController: UIViewController {
                 _rope.participants = [User]()
                 _rope.media = [Media]()
                 _rope.id = snapshot.key
+                _rope.viewed = ropedata["viewed"] as! Bool
                 
                 if _rope.expirationDate < self.earliestQueryPoint {
                     self.earliestQueryPoint = _rope.expirationDate
@@ -209,11 +209,11 @@ class RopeViewController: UIViewController {
 
                                         let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
                                         _rope.media.insert(_media, at: index)
-                                        DispatchQueue.global(qos: .utility).async {
-                                            _media.load {
-                                                print("media loaded")
-                                            }
-                                        }
+//                                        DispatchQueue.global(qos: .utility).async {
+//                                            _media.load {
+//                                                print("media loaded")
+//                                            }
+//                                        }
                                     }
                                 }
                             })
@@ -243,6 +243,8 @@ class RopeViewController: UIViewController {
     }
     
     func loadmore() {
+        print(self.latestQueryPoint)
+        print(self.earliestQueryPoint)
         DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropes").queryOrdered(byChild: "expirationDate").queryEnding(atValue: self.earliestQueryPoint - 1).queryLimited(toLast: 4).observeSingleEvent(of: .value) { (snapshot) in
             if let ropeData = snapshot.value as? Dictionary<String, AnyObject>{
                 for (key,value) in ropeData as! [String:Dictionary<String, AnyObject>]{
@@ -254,6 +256,7 @@ class RopeViewController: UIViewController {
                     _rope.participants = [User]()
                     _rope.media = [Media]()
                     _rope.id = key
+                    _rope.viewed = value["viewed"] as! Bool
                     
                     if _rope.expirationDate < self.earliestQueryPoint {
                         self.earliestQueryPoint = _rope.expirationDate
@@ -302,17 +305,18 @@ class RopeViewController: UIViewController {
                                             _media.key = key
                                             _media.mediaType = value["mediaType"] as! String
                                             _media.sentDate = value["sentDate"] as! Int
+                                            _media.loadState = .loading
 
                                             _media.url = URL(string: value["mediaURL"] as! String)
 
                                             let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
 
                                             _rope.media.insert(_media, at: index)
-                                            DispatchQueue.global(qos: .utility).async {
-                                                _media.load {
-                                                    print("media loaded")
-                                                }
-                                            }
+//                                            DispatchQueue.global(qos: .utility).async {
+//                                                _media.load {
+//                                                    print("media loaded")
+//                                                }
+//                                            }
                                         }
                                     }
                                 })
@@ -394,7 +398,24 @@ extension RopeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
-        performSegue(withIdentifier: "showRope", sender: self)
+        let cell = collectionView.cellForItem(at: indexPath) as! RopeCell
+        print(cell.contentView.frame)
+        let fakeImage = UIImageView(frame: cell.contentView.convert(cell.contentView.frame, to: self.view))
+        fakeImage.image = cell.ropeImage.image!
+        //self.view.addSubview(fakeImage)
+        UIView.animate(withDuration: 0.15, animations: {
+            fakeImage.frame = self.view.bounds
+            self.view.addSubview(fakeImage)
+        }) { (_) in
+            self.performSegue(withIdentifier: "showRope", sender: self)
+            DispatchQueue.main.async {
+                fakeImage.removeFromSuperview()
+            }
+        }
+        cell.rope.viewed = true
+        DataService.instance.setViewed(cell.rope.id)
+        self.ropeCollectionView.reloadData()
+        //performSegue(withIdentifier: "showRope", sender: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -416,9 +437,13 @@ extension RopeViewController: UICollectionViewDataSource {
         cell.rope = ropes[indexPath.row]
         cell.titleLabel.text = cell.rope.title
         cell.ropeImage.image = UIImage(data: cell.rope.thumbnailData)
+        if cell.rope.viewed {
+            cell.newLabel.isHidden = true
+        } else {
+            cell.newLabel.isHidden = false
+        }
         return cell
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return ropes.count

@@ -54,18 +54,19 @@ class DataService {
         if let currentUser = Auth.auth().currentUser {
             mainRef.child("users").child(currentUser.uid).child("ropeIP").observe(.childAdded, with: {(snapshot) in
                     self.mainRef.child("ropesIP").child(snapshot.key).observeSingleEvent(of: .value, with: { (ropeshot) in
-                        let rope = RopeIP()
-                        rope.id = snapshot.key
-                        rope.expirationDate = ropeshot.childSnapshot(forPath: "expirationDate").value as? Int
-                        rope.title = ropeshot.childSnapshot(forPath: "title").value as? String
-                        
-                        completion(rope)
-                        
+                        let _ropeIP = RopeIP()
+                        _ropeIP.id = snapshot.key
+                        _ropeIP.expirationDate = ropeshot.childSnapshot(forPath: "expirationDate").value as? Int
+                        _ropeIP.title = ropeshot.childSnapshot(forPath: "title").value as? String
+                        _ropeIP.contribution = ropeshot.childSnapshot(forPath: "contribution").value as? Int
+                        completion(_ropeIP)
                     })
-                
-                
             })
         }
+    }
+    
+    func updateContribution(_ ropeIPkey: String, _ contribution: Int) {
+        mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").child(ropeIPkey).child("contribution").setValue(contribution)
     }
     
     func createRope(title: String) {
@@ -87,20 +88,22 @@ class DataService {
         mainRef.child("ropesIP").child(key).child("participants").child(Auth.auth().currentUser!.uid).setValue(random)
         
         ropeData["role"] = random as AnyObject
+        ropeData["contribution"] = 0 as AnyObject
         ropeData["nextRole"] = nil
         mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").child(key).setValue(ropeData)
     }
     
     func join(ropeID: String, completion: @escaping (_ result: Bool) -> Void) {
         mainRef.child("ropesIP").child(ropeID).observeSingleEvent(of: .value) { (snapshot) in
-            var values = snapshot.value as! Dictionary<String, AnyObject>
-            let currentRole = values["nextRole"] as! Int
+            var ropeData = snapshot.value as! Dictionary<String, AnyObject>
+            let currentRole = ropeData["nextRole"] as! Int
             self.mainRef.child("ropesIP").child(ropeID).updateChildValues(["nextRole": (currentRole + 1) % 4 as AnyObject])
             self.mainRef.child("ropesIP").child(ropeID).child("participants").updateChildValues([Auth.auth().currentUser!.uid: currentRole])
             
-            values["nextRole"] = nil
-            values["role"] = currentRole as AnyObject
-            DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("ropeIP").child(ropeID).setValue(values) {
+            ropeData["nextRole"] = nil
+            ropeData["contribution"] = 0 as AnyObject
+            ropeData["role"] = currentRole as AnyObject
+            DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("ropeIP").child(ropeID).setValue(ropeData) {
                 error, databaseReference in
                 if let error = error  {
                     print("error saving Rope: \(error.localizedDescription)")
@@ -135,6 +138,10 @@ class DataService {
     
     func leaveCurrentRope() {
          mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").setValue(false)
+    }
+    
+    func setViewed(_ ropeID: String) {
+        mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropes").child(ropeID).child("viewed").setValue(true)
     }
     
     func sendMedia(senderID: String, mediaURL: URL, mediaType: String, ropeIP: RopeIP, videoURL: URL?, image: Data?){

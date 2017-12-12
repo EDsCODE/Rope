@@ -14,11 +14,18 @@ class RopeCell: UICollectionViewCell {
     @IBOutlet weak var ropeImage: UIImageView!
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var newLabel: UILabel!
+    
     var rope: Rope!
     
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layoutIfNeeded()
+        
+        
+        newLabel.layer.cornerRadius = 2.0
+        newLabel.layer.masksToBounds = true
+        
         for layer in overlayView.layer.sublayers! {
             if(layer.name == "gradient"){
                 layer.removeFromSuperlayer()
