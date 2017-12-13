@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import Firebase
+import Compression
 
 struct RopeRequest {
     var key: String
@@ -127,6 +128,10 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //record gesture
+        longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
+        longpress.minimumPressDuration = 0.2
+        
         //perform necessary setup for camera view
         setupCamera()
         
@@ -155,6 +160,16 @@ class CameraViewController: UIViewController {
         sendButton.layer.shadowRadius = 2
         sendButton.layer.shadowOpacity = 0.5
         
+        knotCountLabel.layer.shadowColor = UIColor.black.cgColor
+        knotCountLabel.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        knotCountLabel.layer.shadowRadius = 2
+        knotCountLabel.layer.shadowOpacity = 0.5
+        
+        knotView.layer.shadowColor = UIColor.black.cgColor
+        knotView.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        knotView.layer.shadowRadius = 2
+        knotView.layer.shadowOpacity = 0.5
+        
         //set tabbar color
         self.tabBarController?.tabBar.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
         
@@ -176,7 +191,6 @@ class CameraViewController: UIViewController {
                 NSAttributedStringKey.font: UIFont(name: "Nunito-Regular", size: 24)!,
                 NSAttributedStringKey.foregroundColor: UIColor.white
             ]
-        
         
         let constraints = [
             cameraView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -226,7 +240,6 @@ class CameraViewController: UIViewController {
         captureSession?.addOutput(photoOutput)
         captureSession?.addOutput(videoOutput)
         
-        
         let backCamera: AVCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)!
         let frontCamera: AVCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)!
         let microphone: AVCaptureDevice = AVCaptureDevice.default(for: AVMediaType.audio)!
@@ -248,16 +261,16 @@ class CameraViewController: UIViewController {
     }
     
     func noRopeIPLayout() {
+        print("noRopeIPLayout")
         self.removeGestures()
         self.promptPanel.isHidden = false
-        self.navigationItem.title = "Knot"
+        self.navigationController?.navigationBar.topItem?.title = "Knot"
         if self.ropeNotifs.count == 0 {
             self.view.bringSubview(toFront: self.promptPanel)
             self.promptText.isHidden = false
         } else {
             self.promptText.isHidden = true
         }
-        self.removeGestures()
         
         let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "join-1"), style: .plain, target: self, action: #selector(self.showScanner(_:)))
         self.navigationItem.leftBarButtonItem  = leftbutton
@@ -275,7 +288,7 @@ class CameraViewController: UIViewController {
         DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropeIP").observe(.value, with: { (snapshot) in
             
             //if no active rope then show default prompt
-            if let _ = snapshot.value as? Bool{
+            if let _ = snapshot.value as? Bool {
                 self.noRopeIPLayout()
                 
             //if there is active rope allow user to use camera
@@ -412,6 +425,22 @@ class CameraViewController: UIViewController {
         showCamera()
     }
     
+    func compressVideo(inputURL: URL, outputURL: URL, handler:@escaping (_ exportSession: AVAssetExportSession?)-> Void) {
+        let urlAsset = AVURLAsset(url: inputURL, options: nil)
+        guard let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPreset960x540) else {
+            handler(nil)
+            
+            return
+        }
+        
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = AVFileType.mov
+        exportSession.shouldOptimizeForNetworkUse = true
+        exportSession.exportAsynchronously { () -> Void in
+            handler(exportSession)
+        }
+    }
+    
     @IBAction func sendMedia(_ sender: Any) {
         showCamera()
         currentRope.contribution! += 1
@@ -420,47 +449,48 @@ class CameraViewController: UIViewController {
         
         print(currentRope.contribution!)
         if currentRope.contribution! >= 5 {
-            DataService.instance.leaveCurrentRope()
+            self.view.removeGestureRecognizer(longpress)
             self.noRopeIPLayout()
-            //clear currentrope
-            currentRope.contribution = nil
-            currentRope.expirationDate = nil
-            currentRope.id = nil
-            currentRope.participants = nil
-            currentRope.role = nil
-            currentRope.title = nil
+            DataService.instance.leaveCurrentRope()
         }
         
         if let videoURL = videoURL {
+            let data = NSData(contentsOf: videoURL as URL)!
+            print("File size before compression: \(Double(data.length / 1048576)) mb")
+            let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".m4v")
             
-            let videoName = "\(NSUUID().uuidString)\(videoURL)"
-            let ref = DataService.instance.storageRef.child(videoName)
-            
-            _ = ref.putFile(from: videoURL, metadata: nil, completion: { (metadata, error) in
-                if let error = error {
-                    print("error: \(error.localizedDescription)")
-                } else {
-                    let downloadURL = metadata?.downloadURL()
+            //DispatchQueue.main.async {
+                self.compressVideo(inputURL: videoURL, outputURL: compressedURL) { (exportSession) in
+                    guard let session = exportSession else {
+                        return
+                    }
                     
-                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope, videoURL: videoURL, image: nil)
-                    self.videoURL = nil
+                    switch session.status {
+                    case .completed:
+                        guard let compressedData = NSData(contentsOf: (exportSession?.outputURL!)!) else {
+                            return
+                        }
+                        let videoName = "\(NSUUID().uuidString)\((exportSession?.outputURL!)!)"
+                        let ref = DataService.instance.storageRef.child(videoName)
+                        
+                        _ = ref.putFile(from: (exportSession?.outputURL!)!, metadata: nil, completion: { (metadata, error) in
+                            if let error = error {
+                                print("error: \(error.localizedDescription)")
+                            } else {
+                                let downloadURL = metadata?.downloadURL()
+                                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope, videoURL: (exportSession?.outputURL!)!, image: nil)
+                                self.videoURL = nil
+                            }
+                        })
+                        print("File size after compression: \(Double(compressedData.length / 1048576)) mb")
+                    default:
+                        print("error compressing")
+                        break
+                    }
                 }
-            })
-            
-        } else if let image = imageData {
-            let uid = NSUUID().uuidString
-            let ref = DataService.instance.storageRef.child("\(uid).jpg")
-            
-            _ = ref.putData(image, metadata: nil, completion: {(metadata, error) in
-                if let error  = error {
-                    print("error: \(error.localizedDescription))")
-                } else {
-                    let downloadURL = metadata?.downloadURL()
-                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "image", ropeIP: self.currentRope, videoURL: nil, image: image)
-                }
-            })
-            
+            //}
         }
+        
     }
     
     
@@ -509,52 +539,22 @@ class CameraViewController: UIViewController {
             self.navigationItem.title = title
         }
         
-        longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
-        longpress.minimumPressDuration = 0.2
-        tap = UITapGestureRecognizer(target: self, action: #selector(screenTapped(sender:)))
+        self.view.addGestureRecognizer(longpress)
         
         switch self.currentRope.role! {
+            
         case 0:
-            if !self.captureSession!.inputs.contains(self.frontCameraInput) {
-                self.captureSession?.removeInput(self.backCameraInput)
-                self.captureSession?.addInput(self.frontCameraInput)
+            if !self.captureSession!.inputs.contains(self.backCameraInput) {
+                self.captureSession?.removeInput(self.frontCameraInput)
+                self.captureSession?.addInput(self.backCameraInput)
             }
-            if let gestures = self.view.gestureRecognizers, gestures.contains(longpress) {
-                self.view.removeGestureRecognizer(longpress)
-            }
-            self.view.addGestureRecognizer(tap)
-            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
             
+            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
         case 1:
-            if !self.captureSession!.inputs.contains(self.frontCameraInput) {
-                self.captureSession?.removeInput(self.backCameraInput)
-                self.captureSession?.addInput(self.frontCameraInput)
-            }
-            if let gestures = self.view.gestureRecognizers, gestures.contains(tap) {
-                self.view.removeGestureRecognizer(tap)
-            }
-            self.view.addGestureRecognizer(longpress)
-            
-            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
-        case 2:
             if !self.captureSession!.inputs.contains(self.backCameraInput) {
                 self.captureSession?.removeInput(self.frontCameraInput)
                 self.captureSession?.addInput(self.backCameraInput)
             }
-            if let gestures = self.view.gestureRecognizers, gestures.contains(longpress) {
-                self.view.removeGestureRecognizer(longpress)
-            }
-            self.view.addGestureRecognizer(tap)
-            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
-        case 3:
-            if !self.captureSession!.inputs.contains(self.backCameraInput) {
-                self.captureSession?.removeInput(self.frontCameraInput)
-                self.captureSession?.addInput(self.backCameraInput)
-            }
-            if let gestures = self.view.gestureRecognizers, gestures.contains(tap) {
-                self.view.removeGestureRecognizer(tap)
-            }
-            self.view.addGestureRecognizer(longpress)
             self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
         default:
             print("error setting up camera")
@@ -590,8 +590,6 @@ class CameraViewController: UIViewController {
         if let gestures = self.view.gestureRecognizers{
             if gestures.contains(longpress) {
                 self.view.removeGestureRecognizer(longpress)
-            } else if gestures.contains(tap) {
-                self.view.removeGestureRecognizer(tap)
             }
         }
     }

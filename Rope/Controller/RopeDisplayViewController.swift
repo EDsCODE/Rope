@@ -154,23 +154,31 @@ class RopeDisplayViewController: UIViewController {
     func displayRope(_ index: Int) {
         print("displaying \(currentIndex)")
         
-        if index < rope.media.count - 1 && index >= -1 && self.rope.media[index + 1].loadState == .loading {
-            self.rope.media[index + 1].load {
-                print("media at \(index + 1) loaded")
-            }
+        if index < rope.media.count - 1 && index >= -1 && self.rope.media[index + 1].loadState == .unloaded {
+            self.rope.media[index + 1].load(completion: { (loaded) in
+                if loaded {
+                    self.rope.media[index + 1].loadState = .loaded
+                    print("media at \(index + 1) loaded")
+                }
+            })
         }
         
         if rope.media.count > 0 && isPlaying {
             if index < rope.media.count && index >= 0{
                 titleView.isHidden = true
                 //if media hasn't loaded yet
-                if rope.media[index].loadState == .loading {
+                if rope.media[index].loadState == .unloaded {
                     removeExistingContent()
                     self.rope.media[index].addObserver(self, forKeyPath: "loadState", options: .new, context: nil)
                     //display title screen with thumbnail
                     imageDisplay.image = #imageLiteral(resourceName: "cat")
                     imageDisplay.clipsToBounds = true
-                } else {
+                } else if rope.media[index].loadState == .loading {
+                    removeExistingContent()
+                    self.rope.media[index].addObserver(self, forKeyPath: "loadState", options: .new, context: nil)
+                    imageDisplay.image = #imageLiteral(resourceName: "cat")
+                    imageDisplay.clipsToBounds = true
+                } else if rope.media[index].loadState == .loaded {
                     creatorLabel.isHidden = false
                     //display image for 3 seconds
                     if "image" == rope.media[index].mediaType {

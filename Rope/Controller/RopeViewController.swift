@@ -13,6 +13,7 @@ class RopeViewController: UIViewController {
 
     @IBOutlet weak var ropeCollectionView: UICollectionView!
     @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var promptLabel: UILabel!
     
     var ropes = [Rope]()
     var selectedIndex = 0
@@ -42,8 +43,30 @@ class RopeViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //set navigation bar items visible but keep bar clear
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+    
+    func shouldPromptAppear() {
+        if ropeCollectionView.numberOfItems(inSection: 0) == 0 {
+            promptLabel.isHidden = false
+            self.view.bringSubview(toFront: promptLabel)
+        } else {
+            promptLabel.isHidden = true
+        }
+    }
+    
     func initialRopeFetch() {
         DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropes").queryOrdered(byChild: "expirationDate").queryLimited(toLast: 6).observeSingleEvent(of: .value) { (snapshot) in
+            
             if let ropeData = snapshot.value as? Dictionary<String, AnyObject>{
                 for (key,value) in ropeData as! [String:Dictionary<String, AnyObject>]{
                     
@@ -83,9 +106,11 @@ class RopeViewController: UIViewController {
                             
                             let index = self.ropes.insertionIndexOf(elem: _rope) { $0.expirationDate > $1.expirationDate }
                             self.ropes.insert(_rope, at: index)
-                            
+                            print(self.initialLoadComplete)
                             if self.ropes.count == ropeData.count {
                                 self.initialLoadComplete = true
+                                self.ropeCollectionView.reloadData()
+                                self.shouldPromptAppear()
                                 self.setupRopeObserver()
                             }
                             
@@ -104,7 +129,7 @@ class RopeViewController: UIViewController {
                                             _media.key = key
                                             _media.mediaType = value["mediaType"] as! String
                                             _media.sentDate = value["sentDate"] as! Int
-                                            _media.loadState = .loading
+                                            _media.loadState = .unloaded
 
                                             _media.url = URL(string: value["mediaURL"] as! String)
 
@@ -138,8 +163,9 @@ class RopeViewController: UIViewController {
                             }
                         }
                     })
+                    
                 }
-                self.ropeCollectionView.reloadData()
+                
             }
         }
     }
@@ -205,7 +231,7 @@ class RopeViewController: UIViewController {
                                         _media.mediaType = value["mediaType"] as! String
                                         _media.sentDate = value["sentDate"] as! Int
                                         _media.url = URL(string: value["mediaURL"] as! String)
-                                        _media.loadState = .loading
+                                        _media.loadState = .unloaded
 
                                         let index = _rope.media.insertionIndexOf(elem: _media) { $0.sentDate < $1.sentDate }
                                         _rope.media.insert(_media, at: index)
@@ -238,6 +264,7 @@ class RopeViewController: UIViewController {
                 })
             }
             self.ropeCollectionView.reloadData()
+            self.shouldPromptAppear()
         }
         
     }
@@ -245,10 +272,12 @@ class RopeViewController: UIViewController {
     func loadmore() {
         print(self.latestQueryPoint)
         print(self.earliestQueryPoint)
-        DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropes").queryOrdered(byChild: "expirationDate").queryEnding(atValue: self.earliestQueryPoint - 1).queryLimited(toLast: 4).observeSingleEvent(of: .value) { (snapshot) in
+        DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropes").queryOrdered(byChild: "expirationDate").queryEnding(atValue: self.ropes[self.ropes.count - 1].expirationDate - 1).queryLimited(toLast: 1).observeSingleEvent(of: .value) { (snapshot) in
             if let ropeData = snapshot.value as? Dictionary<String, AnyObject>{
                 for (key,value) in ropeData as! [String:Dictionary<String, AnyObject>]{
-                    
+                    if value["expirationDate"] == nil {
+                        return
+                    }
                     let _rope = Rope()
                     _rope.expirationDate = value["expirationDate"] as! Int
                     _rope.creatorID = value["createdBy"] as! String
@@ -285,10 +314,7 @@ class RopeViewController: UIViewController {
                             
                             let index = self.ropes.insertionIndexOf(elem: _rope) { $0.expirationDate > $1.expirationDate }
                             self.ropes.insert(_rope, at: index)
-                            
-                            if self.ropes.count == ropeData.count {
-                                self.loadingMore = false
-                            }
+                            self.loadingMore = false
                             
                             DispatchQueue.main.async {
                                 self.ropeCollectionView.reloadData()
@@ -305,7 +331,7 @@ class RopeViewController: UIViewController {
                                             _media.key = key
                                             _media.mediaType = value["mediaType"] as! String
                                             _media.sentDate = value["sentDate"] as! Int
-                                            _media.loadState = .loading
+                                            _media.loadState = .unloaded
 
                                             _media.url = URL(string: value["mediaURL"] as! String)
 
@@ -341,25 +367,11 @@ class RopeViewController: UIViewController {
                     })
                 }
                 self.ropeCollectionView.reloadData()
+                self.shouldPromptAppear()
             } else {
                 self.loadingMore = false
             }
         }
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        //set navigation bar items visible but keep bar clear
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -415,11 +427,15 @@ extension RopeViewController: UICollectionViewDelegate {
         cell.rope.viewed = true
         DataService.instance.setViewed(cell.rope.id)
         self.ropeCollectionView.reloadData()
+        
         //performSegue(withIdentifier: "showRope", sender: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.section == 0 && indexPath.row + 1 == collectionView.numberOfItems(inSection: indexPath.section) && !self.loadingMore && self.initialLoadComplete == true) {
+        if (indexPath.section == 0 &&
+            indexPath.row == self.ropes.count - 1 &&
+            !self.loadingMore &&
+            self.initialLoadComplete == true) {
             self.loadingMore = true
             self.loadmore()
             print("loading more")
@@ -431,7 +447,7 @@ extension RopeViewController: UICollectionViewDelegate {
 extension RopeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+        shouldPromptAppear()
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "rope", for: indexPath) as! RopeCell
         cell.titleLabel.text = "hello"
         cell.rope = ropes[indexPath.row]

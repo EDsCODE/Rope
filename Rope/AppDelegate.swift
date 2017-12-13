@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
@@ -40,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = false
+        
         
         if Auth.auth().currentUser != nil {
             storyboard = UIStoryboard(name: "Main", bundle: .main)
@@ -66,7 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //keep notifcationtoken updated
         
         //CHECK THIS
-        //DataService.instance.usersRef.child(Auth.auth().currentUser!.uid).child("profile").child("notificationToken").setValue(fcmToken)
+        if let user = Auth.auth().currentUser {
+            DataService.instance.usersRef.child(user.uid).child("profile").child("notificationToken").setValue(fcmToken)
+        }
     }
     
 

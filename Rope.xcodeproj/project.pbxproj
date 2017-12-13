@@ -20,9 +20,6 @@
 		1A5576251FA0DD93001D404D /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5576241FA0DD93001D404D /* Auth.storyboard */; };
 		1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */; };
 		1A5576291FA0EB64001D404D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576281FA0EB64001D404D /* User.swift */; };
-		1A55762D1FA116F0001D404D /* FirstNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A55762C1FA116F0001D404D /* FirstNameViewController.swift */; };
-		1A55762F1FA11DC4001D404D /* LastNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A55762E1FA11DC4001D404D /* LastNameViewController.swift */; };
-		1A5576311FA12A9D001D404D /* AgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576301FA12A9D001D404D /* AgeViewController.swift */; };
 		1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */; };
 		1A905AF11FCBC027000C5CE1 /* RopeIPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */; };
 		1A905AF31FCC6331000C5CE1 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */; };
@@ -76,9 +73,6 @@
 		1A5576241FA0DD93001D404D /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		1A5576281FA0EB64001D404D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		1A55762C1FA116F0001D404D /* FirstNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstNameViewController.swift; sourceTree = "<group>"; };
-		1A55762E1FA11DC4001D404D /* LastNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNameViewController.swift; sourceTree = "<group>"; };
-		1A5576301FA12A9D001D404D /* AgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeViewController.swift; sourceTree = "<group>"; };
 		1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
 		1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeIPDetailViewController.swift; sourceTree = "<group>"; };
 		1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
@@ -217,9 +211,6 @@
 				1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */,
 				1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */,
 				1AC03DFA1FB10C8E00158752 /* SignUpViewController.swift */,
-				1A55762C1FA116F0001D404D /* FirstNameViewController.swift */,
-				1A55762E1FA11DC4001D404D /* LastNameViewController.swift */,
-				1A5576301FA12A9D001D404D /* AgeViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -428,13 +419,10 @@
 				1A5576291FA0EB64001D404D /* User.swift in Sources */,
 				1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */,
 				1A17852B1FA0C85C00427741 /* LoginViewController.swift in Sources */,
-				1A5576311FA12A9D001D404D /* AgeViewController.swift in Sources */,
 				1AF5D0D81FC60F7700BDF886 /* RopeDisplayViewController.swift in Sources */,
 				1AC03DFB1FB10C8E00158752 /* SignUpViewController.swift in Sources */,
 				1AF5D0D21FC5E05D00BDF886 /* Media.swift in Sources */,
 				1AB5FFA31FB014C000EC8780 /* PreviewView.swift in Sources */,
-				1A55762D1FA116F0001D404D /* FirstNameViewController.swift in Sources */,
-				1A55762F1FA11DC4001D404D /* LastNameViewController.swift in Sources */,
 				1AB5FFA71FB0B36B00EC8780 /* RopeCell.swift in Sources */,
 				1AB5FFA51FB0B01400EC8780 /* RopeViewController.swift in Sources */,
 				1AE1C13D1FB3AB3200A158ED /* Rope.swift in Sources */,

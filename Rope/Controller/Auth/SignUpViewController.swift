@@ -165,13 +165,28 @@ class SignUpViewController: UIViewController {
         CurrentUser.age = ageField.text!
         //make instance in firebase database
         if let user = Auth.auth().currentUser?.uid {
-            DataService.instance.saveUser(uid: user)
+            print("signing up")
+            
+            DataService.instance.doesUsernameExist(username: usernameField.text!.lowercased(), completion: { (exists) in
+                if exists {
+                    let alert = UIAlertController(title: "Username in use", message: "Please try a different username", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                } else {
+                    DataService.instance.saveUser(uid: user, completion: { (finished) in
+                        if finished {
+                            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                            let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainView")
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.window?.rootViewController = mainViewController
+                        } else {
+                            print("saving went wrong")
+                        }
+                    })
+                }
+            })
         }
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainView")
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = mainViewController
     }
     
     

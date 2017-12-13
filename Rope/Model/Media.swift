@@ -29,7 +29,7 @@ class Media: NSObject {
         print(key)
     }
     
-    func load(completion: @escaping () -> Void) {
+    func load(completion: @escaping (_ loaded: Bool) -> Void) {
         self.loadState = .loading
         let _url = Storage.storage().reference(forURL: url.absoluteString)
         _url.getData(maxSize: 1073741824, completion: {(data, error) in
@@ -39,16 +39,15 @@ class Media: NSObject {
                 
                 self.image = data
                 self.loadState = .loaded
-                completion()
+                completion(true)
                 
             } else if self.mediaType == "video" {
                 
                 let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
                 let filePath = documentsURL.appendingPathComponent("\(UUID().uuidString).mp4")
                 try! data?.write(to: filePath, options: Data.WritingOptions.atomic)
-                self.videoURL = filePath                
-                self.loadState = .loaded
-                completion()
+                self.videoURL = filePath
+                completion(true)
                 
             } else {
                 print("Error: Invalid type from Media#load!")

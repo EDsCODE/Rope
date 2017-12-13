@@ -18,6 +18,7 @@ class PreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let url = videoURL {
             let player = AVPlayer(url: url)
             playerLayer = AVPlayerLayer(player: player)

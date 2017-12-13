@@ -41,3 +41,38 @@ exports.distributeNewRope = functions.database.ref('/ropes/{ropeID}').onCreate(e
 	});
 })
 
+exports.checkCount = functions.database.ref('/ropesIP/{ropeID}/thumbnail/{thumbnailID}').onCreate(event => {
+	ropesIP_ref.child(event.params.ropeID).once('value', function(snapshot) {
+		let ropeData = snapshot.val();
+		let participantsLength = Object.keys(ropeData['participants']).length;
+		let thumbnailLength = Object.keys(ropeData['thumbnail']).length;
+		ropeData['expirationDate'] = Date.now();
+		console.log(participantsLength)
+		console.log(thumbnailLength);
+		if (participantsLength * 5 == thumbnailLength) {
+			Object.keys(ropeData['participants']).forEach(function(participantKey) {
+				users_ref.child(participantKey).child('profile').child('notificationToken').once('value', function(token) {
+					if (token.exists()) {
+						const payload = {
+							notification: {
+							title: "Rope",
+							body: "You have a new available Rope!"
+							}
+						};
+						admin.messaging().sendToDevice(token.val(), payload)
+						.then(function(response) {
+							console.log("successfully sent message");
+						})
+						.catch(function(error) {
+							console.log("Error sending message:", error);
+						});
+					} 
+				})
+			})
+			ropes_ref.child(event.params.ropeID).set(ropeData);
+			ropesIP_ref.child(event.params.ropeID).remove();
+		}
+
+	})
+})
+
