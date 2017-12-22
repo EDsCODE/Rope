@@ -29,7 +29,7 @@ class RopeViewController: UIViewController {
         ropeCollectionView.delegate = self
         ropeCollectionView.dataSource = self
         self.initialRopeFetch()
-        
+        shouldPromptAppear()
         //load layout async so the tab button has no lag
         DispatchQueue.global(qos: .userInitiated).async {
             let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -166,6 +166,8 @@ class RopeViewController: UIViewController {
                     
                 }
                 
+            } else {
+                self.setupRopeObserver()
             }
         }
     }

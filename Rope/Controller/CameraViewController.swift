@@ -448,6 +448,8 @@ class CameraViewController: UIViewController {
         DataService.instance.updateContribution(currentRope.id!, currentRope.contribution!)
         
         print(currentRope.contribution!)
+        
+        let copyRopeIP = self.currentRope.copy() as! RopeIP
         if currentRope.contribution! >= 5 {
             self.view.removeGestureRecognizer(longpress)
             self.noRopeIPLayout()
@@ -458,27 +460,29 @@ class CameraViewController: UIViewController {
             let data = NSData(contentsOf: videoURL as URL)!
             print("File size before compression: \(Double(data.length / 1048576)) mb")
             let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".m4v")
-            
-            //DispatchQueue.main.async {
+            UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
+            DispatchQueue.global(qos: .background).async {
+                
                 self.compressVideo(inputURL: videoURL, outputURL: compressedURL) { (exportSession) in
                     guard let session = exportSession else {
+                        print("export session cmopression failed")
                         return
                     }
                     
                     switch session.status {
                     case .completed:
                         guard let compressedData = NSData(contentsOf: (exportSession?.outputURL!)!) else {
+                            print("compress data failed")
                             return
                         }
                         let videoName = "\(NSUUID().uuidString)\((exportSession?.outputURL!)!)"
                         let ref = DataService.instance.storageRef.child(videoName)
-                        
                         _ = ref.putFile(from: (exportSession?.outputURL!)!, metadata: nil, completion: { (metadata, error) in
                             if let error = error {
                                 print("error: \(error.localizedDescription)")
                             } else {
                                 let downloadURL = metadata?.downloadURL()
-                                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: self.currentRope, videoURL: (exportSession?.outputURL!)!, image: nil)
+                                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: copyRopeIP, videoURL: (exportSession?.outputURL!)!, image: nil)
                                 self.videoURL = nil
                             }
                         })
@@ -488,7 +492,7 @@ class CameraViewController: UIViewController {
                         break
                     }
                 }
-            //}
+            }
         }
         
     }
@@ -544,18 +548,17 @@ class CameraViewController: UIViewController {
         switch self.currentRope.role! {
             
         case 0:
-            if !self.captureSession!.inputs.contains(self.backCameraInput) {
-                self.captureSession?.removeInput(self.frontCameraInput)
-                self.captureSession?.addInput(self.backCameraInput)
+            if !self.captureSession!.inputs.contains(self.frontCameraInput) {
+                self.captureSession?.removeInput(self.backCameraInput)
+                self.captureSession?.addInput(self.frontCameraInput)
             }
-            
             self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
         case 1:
             if !self.captureSession!.inputs.contains(self.backCameraInput) {
                 self.captureSession?.removeInput(self.frontCameraInput)
                 self.captureSession?.addInput(self.backCameraInput)
             }
-            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
+            self.roleButton.setImage(#imageLiteral(resourceName: "videolandscape").withRenderingMode(.alwaysTemplate), for: .normal)
         default:
             print("error setting up camera")
         }

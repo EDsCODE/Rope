@@ -100,16 +100,24 @@ class NewRopeViewController: UIViewController {
     
     @objc func createRopeAction(gesture: UITapGestureRecognizer) {
         
-        if let title = titleView.text {
-            DataService.instance.createRope(title: title)
-            dismiss(animated: false, completion: nil)
+        titleView.text = titleView.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard let text = titleView.text, !text.isEmpty
+            else {
+                let alert = UIAlertController(title: "Invalid Title", message: "The Rope Title cannot be empty", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                self.createButton.isHidden = true
+                return
         }
+        
+        DataService.instance.createRope(title: text)
+        dismiss(animated: false, completion: nil)
+        
         
     }
     
     @objc func showButton(_ sender: SkyFloatingLabelTextField){
-        
-        sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
         
         guard let text = sender.text, !text.isEmpty
             else {

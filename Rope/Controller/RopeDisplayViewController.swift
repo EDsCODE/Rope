@@ -24,7 +24,7 @@ class RopeDisplayViewController: UIViewController {
     var imageDisplay : UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .white
+        imageView.backgroundColor = UIColor(displayP3Red: 42.0/255.0, green: 42.0/255.0, blue: 42.0/255.0, alpha: 1)
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
@@ -79,6 +79,8 @@ class RopeDisplayViewController: UIViewController {
         view.layer.cornerRadius = 2
         return view
     }()
+    
+    var thumbnailSpinner: SpinnerView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +92,8 @@ class RopeDisplayViewController: UIViewController {
         titleView.addSubview(titleLabel)
         titleView.addSubview(timeLabel)
         titleView.addSubview(separator)
+        
+        thumbnailSpinner = SpinnerView(frame: CGRect(x: self.view.frame.midX - 25.0, y: self.view.frame.midY - 25.0, width: 50.0, height: 50.0))
         
         cancelPlayback.layer.shadowColor = UIColor.black.cgColor
         cancelPlayback.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
@@ -139,6 +143,7 @@ class RopeDisplayViewController: UIViewController {
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "loadState" {
+            thumbnailSpinner.layer.removeAllAnimations()
             displayRope(currentIndex)
             if let media = object as? Media {
                 print("removing observer")
@@ -153,7 +158,6 @@ class RopeDisplayViewController: UIViewController {
     
     func displayRope(_ index: Int) {
         print("displaying \(currentIndex)")
-        
         if index < rope.media.count - 1 && index >= -1 && self.rope.media[index + 1].loadState == .unloaded {
             self.rope.media[index + 1].load(completion: { (loaded) in
                 if loaded {
@@ -171,13 +175,19 @@ class RopeDisplayViewController: UIViewController {
                     removeExistingContent()
                     self.rope.media[index].addObserver(self, forKeyPath: "loadState", options: .new, context: nil)
                     //display title screen with thumbnail
-                    imageDisplay.image = #imageLiteral(resourceName: "cat")
-                    imageDisplay.clipsToBounds = true
+//                    imageDisplay.image = #imageLiteral(resourceName: "cat")
+//                    imageDisplay.clipsToBounds = true
+                    thumbnailSpinner.isHidden = false
+                    imageDisplay.addSubview(thumbnailSpinner)
+                    thumbnailSpinner.animate()
                 } else if rope.media[index].loadState == .loading {
                     removeExistingContent()
                     self.rope.media[index].addObserver(self, forKeyPath: "loadState", options: .new, context: nil)
-                    imageDisplay.image = #imageLiteral(resourceName: "cat")
-                    imageDisplay.clipsToBounds = true
+//                    imageDisplay.image = #imageLiteral(resourceName: "cat")
+//                    imageDisplay.clipsToBounds = true
+                    thumbnailSpinner.isHidden = false
+                    imageDisplay.addSubview(thumbnailSpinner)
+                    thumbnailSpinner.animate()
                 } else if rope.media[index].loadState == .loaded {
                     creatorLabel.isHidden = false
                     //display image for 3 seconds
@@ -240,6 +250,9 @@ class RopeDisplayViewController: UIViewController {
     }
     
     func removeExistingContent() {
+        thumbnailSpinner.isHidden = true
+        thumbnailSpinner.removeFromSuperview()
+        thumbnailSpinner.layer.removeAllAnimations()
         imageDisplay.image = nil
         playerLayer?.player?.pause()
         playerLayer?.removeFromSuperlayer()

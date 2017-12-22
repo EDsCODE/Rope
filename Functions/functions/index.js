@@ -20,11 +20,27 @@ exports.setRopeComplete = functions.https.onRequest((req,res) => {
 	ropesIP_ref.orderByChild('expirationDate').once('value', function(snapshot) {
 		const currentTime = new Date().getTime();
 		snapshot.forEach(function(rope) {
-			if (rope.child('expirationDate').val() > currentTime) {
-				return;
+			if (rope.hasChild('expirationDate')) {
+				if (rope.child('expirationDate').val() > currentTime) {
+					return;
+				}
+
+				if (rope.hasChild('media')) {
+					ropes_ref.child(rope.key).set(rope.val());
+					ropesIP_ref.child(rope.key).remove();
+				} else {
+					var numberOfPeople = 0;
+					ropesIP_ref.child('participants').forEach(function(participant) {
+						users_ref.child(participant.key).child('ropeIP').set(false);
+						numberOfPeople++;
+						if (numberOfPeople == ropesIP_ref.child('participants').length) {
+							ropesIP_ref.child(rope.key).remove();
+						}
+					})
+				}
+			} else {
+				ropesIP_ref.child(rope.key).remove();
 			}
-			ropes_ref.child(rope.key).set(rope.val());
-			ropesIP_ref.child(rope.key).remove();
 		});
 	});
 	res.send('moving rope');
@@ -38,6 +54,23 @@ exports.distributeNewRope = functions.database.ref('/ropes/{ropeID}').onCreate(e
 		ropeData['viewed'] = false;
 		users_ref.child(participant.key).child('ropes').child(event.params.ropeID).set(ropeData);
 		users_ref.child(participant.key).child('ropeIP').set(false);
+		users_ref.child(participant.key).child('profile').child('notificationToken').once('value', function(token) {
+			if (token.exists()) {
+				const payload = {
+					notification: {
+					title: "Rope",
+					body: "You have a new Rope!"
+					}
+				};
+				admin.messaging().sendToDevice(token.val(), payload)
+				.then(function(response) {
+					console.log("successfully sent message");
+				})
+				.catch(function(error) {
+					console.log("Error sending message:", error);
+				})
+			} 
+		})
 	});
 })
 
@@ -50,29 +83,9 @@ exports.checkCount = functions.database.ref('/ropesIP/{ropeID}/thumbnail/{thumbn
 		console.log(participantsLength)
 		console.log(thumbnailLength);
 		if (participantsLength * 5 == thumbnailLength) {
-			Object.keys(ropeData['participants']).forEach(function(participantKey) {
-				users_ref.child(participantKey).child('profile').child('notificationToken').once('value', function(token) {
-					if (token.exists()) {
-						const payload = {
-							notification: {
-							title: "Rope",
-							body: "You have a new available Rope!"
-							}
-						};
-						admin.messaging().sendToDevice(token.val(), payload)
-						.then(function(response) {
-							console.log("successfully sent message");
-						})
-						.catch(function(error) {
-							console.log("Error sending message:", error);
-						});
-					} 
-				})
-			})
 			ropes_ref.child(event.params.ropeID).set(ropeData);
 			ropesIP_ref.child(event.params.ropeID).remove();
 		}
 
 	})
 })
-

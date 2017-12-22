@@ -89,6 +89,7 @@ class VerificationViewController: UIViewController {
             //If response is an error, display error message.
             if let error = error {
                 print("Verification Error: \(error)")
+                self.view.isUserInteractionEnabled = true
                 return
             } else {
                 let uid = Auth.auth().currentUser!.uid
@@ -101,6 +102,7 @@ class VerificationViewController: UIViewController {
                     } else {
                         self.performSegue(withIdentifier: "usernameSegue", sender: self)
                     }
+                    self.view.isUserInteractionEnabled = true
                 }
             }
         }

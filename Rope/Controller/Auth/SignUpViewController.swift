@@ -99,14 +99,18 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: .UIApplicationWillResignActive, object: nil)
+        
         self.title = "Sign Up"
         self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "Nunito-Light", size: 22.0)!, NSAttributedStringKey.foregroundColor: UIColor.white]
         self.view.backgroundColor = UIColor(displayP3Red: 42.0/255.0, green: 42.0/255.0, blue: 42.0/255.0, alpha: 1)
         UIApplication.shared.statusBarStyle = .lightContent
         
-        self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-
+//        self.navigationController?.navigationBar.tintColor = UIColor.white
+//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        
         self.view.addSubview(firstnameField)
         self.view.addSubview(lastnameField)
         self.view.addSubview(usernameField)
@@ -144,6 +148,22 @@ class SignUpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func willResignActive(_ notification: Notification) {
+        do {
+            try Auth.auth().signOut()
+            let storyBoard = UIStoryboard(name: "Auth", bundle: nil)
+            let mainViewController = storyBoard.instantiateViewController(withIdentifier: "AuthView")
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window?.rootViewController = mainViewController
+        }catch {
+            print("Error clearing login")
+        }
+    }
+    
     @objc func showButton(_ sender: SkyFloatingLabelTextField){
 
         firstnameField.text = firstnameField.text?.trimmingCharacters(in: .whitespaces)
@@ -159,10 +179,19 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func segueToNext(_ sender: UIButton){
+        
+        if firstnameField.text!.isEmpty || lastnameField.text!.isEmpty || usernameField.text!.isEmpty || ageField.text!.isEmpty {
+            let alert = UIAlertController(title: "Invalid Entry", message: "Fields cannot be left blank", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         CurrentUser.firstname = firstnameField.text!
         CurrentUser.lastname = lastnameField.text!
         CurrentUser.username = usernameField.text!
         CurrentUser.age = ageField.text!
+        
         //make instance in firebase database
         if let user = Auth.auth().currentUser?.uid {
             print("signing up")

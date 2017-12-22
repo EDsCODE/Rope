@@ -61,51 +61,6 @@ class DataService {
             print("saved user successfully")
         }
         self.mainRef.child("usernames").child(CurrentUser.username.lowercased()).setValue(uid)
-        
-//        mainRef.child("usernames").observeSingleEvent(of: .value) { (snapshot) in
-//            if snapshot.hasChild(CurrentUser.username.lowercased()) {
-//                let profileData: Dictionary<String, AnyObject> = ["phoneNumber": CurrentUser.phoneNumber as AnyObject,
-//                                                               "firstName" : CurrentUser.firstname as AnyObject,
-//                                                               "lastName": CurrentUser.lastname as AnyObject,
-//                                                               "age": CurrentUser.age as AnyObject,
-//                                                               "ropeIP": false as AnyObject,
-//                                                               "username": CurrentUser.username as AnyObject,
-//                                                               "notificationToken": InstanceID.instanceID().token() as AnyObject]
-//                let ropeData : Dictionary<String,AnyObject> = ["profile": profileData as AnyObject,
-//                                                               "ropeIP": false as AnyObject]
-//
-//                self.mainRef.child("users").child(uid).setValue(ropeData){
-//                    error, databaseReference in
-//                    if let error = error  {
-//                        print("error saving user: \(error.localizedDescription)")
-//                        return
-//                    }
-//                    completion(true)
-//                    print("saved user successfully")
-//                }
-//                self.mainRef.child("usernames").child(CurrentUser.username).setValue(uid)
-//            } else {
-//                completion(false)
-//            }
-//        }
-        
-//        let userData: Dictionary<String, AnyObject> = ["phoneNumber": CurrentUser.phoneNumber as AnyObject,
-//                                                 "firstName" : CurrentUser.firstname as AnyObject,
-//                                                 "lastName": CurrentUser.lastname as AnyObject,
-//                                                 "age": CurrentUser.age as AnyObject,
-//                                                 "ropeIP": false as AnyObject,
-//                                                 "username": CurrentUser.username as AnyObject,
-//                                                 "notificationToken": InstanceID.instanceID().token() as AnyObject]
-//        usersRef.child(uid).child("ropeIP").setValue(false)
-//        mainRef.child("users").child(uid).child("profile").setValue(userData){
-//            error, databaseReference in
-//            if let error = error  {
-//                print("error saving user: \(error.localizedDescription)")
-//                return
-//            }
-//            print("saved user successfully")
-//        }
-//        mainRef.child("usernames").child(CurrentUser.username).setValue(uid)
     }
     
     func initialFetchRopesIP(completion: @escaping (_ ropeIP: RopeIP) -> Void) {
@@ -130,7 +85,7 @@ class DataService {
     
     func createRope(title: String) {
         let key = mainRef.child("ropes").childByAutoId().key
-        let expirationDate = Date().millisecondsSince1970 + 43200000
+        let expirationDate = Date().millisecondsSince1970 + 14400000
         let random = Int(arc4random_uniform(2))
         var ropeData: Dictionary<String, AnyObject> = ["title": title as AnyObject,
                                                        "createdBy" : (Auth.auth().currentUser?.uid)! as AnyObject,
@@ -214,7 +169,7 @@ class DataService {
                                                  "sentDate": Int(date.timeIntervalSince1970 * 1000) as AnyObject,
                                                  "senderID": senderID as AnyObject,
                                                  "senderName": "\(CurrentUser.firstname) \(CurrentUser.lastname)" as AnyObject]
-        UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
+
             self.mainRef.child("ropesIP").child(id).child("media").child(key).updateChildValues(pr){
                 error, databaseReference in
                 if let error = error  {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RopeIP: NSObject {
+class RopeIP: NSObject, NSCopying {
     var expirationDate: Int?
     var participants: [User]?
     var title: String?
@@ -23,6 +23,17 @@ class RopeIP: NSObject {
         if let title = title {
             print(title)
         }
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = RopeIP()
+        copy.expirationDate = expirationDate
+        copy.participants = participants
+        copy.title = title
+        copy.id = id
+        copy.role = role
+        copy.contribution = contribution
+        return copy
     }
     
 }

@@ -20,6 +20,7 @@
 		1A5576251FA0DD93001D404D /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5576241FA0DD93001D404D /* Auth.storyboard */; };
 		1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */; };
 		1A5576291FA0EB64001D404D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576281FA0EB64001D404D /* User.swift */; };
+		1A6E62BA1FE1A632000DD7E8 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6E62B91FE1A632000DD7E8 /* SpinnerView.swift */; };
 		1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */; };
 		1A905AF11FCBC027000C5CE1 /* RopeIPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */; };
 		1A905AF31FCC6331000C5CE1 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */; };
@@ -73,6 +74,7 @@
 		1A5576241FA0DD93001D404D /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		1A5576281FA0EB64001D404D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1A6E62B91FE1A632000DD7E8 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
 		1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeIPDetailViewController.swift; sourceTree = "<group>"; };
 		1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				1AB5FFA61FB0B36B00EC8780 /* RopeCell.swift */,
 				1A06B0BB1FC8BF62002ABFB3 /* FriendRequestCell.swift */,
 				1A06B0BF1FC8BF9E002ABFB3 /* FriendRequestCell.xib */,
+				1A6E62B91FE1A632000DD7E8 /* SpinnerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A905AF11FCBC027000C5CE1 /* RopeIPDetailViewController.swift in Sources */,
+				1A6E62BA1FE1A632000DD7E8 /* SpinnerView.swift in Sources */,
 				1AB5FF901FAD73AD00EC8780 /* CameraViewController.swift in Sources */,
 				1A5576291FA0EB64001D404D /* User.swift in Sources */,
 				1AB5FF871FAB697600EC8780 /* CustomSegues.swift in Sources */,
@@ -585,6 +589,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -603,6 +608,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
