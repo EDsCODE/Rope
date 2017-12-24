@@ -170,47 +170,43 @@ class DataService {
                                                  "senderID": senderID as AnyObject,
                                                  "senderName": "\(CurrentUser.firstname) \(CurrentUser.lastname)" as AnyObject]
 
-            self.mainRef.child("ropesIP").child(id).child("media").child(key).updateChildValues(pr){
-                error, databaseReference in
-                if let error = error  {
-                    print("error sending media DataService#sendMedia: \(error.localizedDescription)")
-                }
-                print("sucess sending message")
+        self.mainRef.child("ropesIP").child(id).child("media").child(key).updateChildValues(pr){
+            error, databaseReference in
+            if let error = error  {
+                print("error sending media DataService#sendMedia: \(error.localizedDescription)")
             }
-            
-            let uid = NSUUID().uuidString
-            let ref = self.storageRef.child("\(uid).jpg")
-            
-            //add thumbnail
-            if let videoURL = videoURL {
-                let asset = AVURLAsset(url: videoURL, options: nil)
-                let imgGenerator = AVAssetImageGenerator(asset: asset)
-                imgGenerator.appliesPreferredTrackTransform = true
-                do {
-                    let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
-                    let uiImage = UIImage(cgImage: cgImage)
-                    _ = ref.putData(UIImageJPEGRepresentation(uiImage, 0.5)!, metadata: nil, completion: {(metadata, error) in
-                        if let error  = error {
-                            print("error: \(error.localizedDescription))")
-                        } else {
-                            let downloadURL = metadata?.downloadURL()
-                            self.mainRef.child("ropesIP").child(id).child("thumbnail").child(key).setValue(downloadURL?.absoluteString){
-                                error, databaseReference in
-                                if let error = error  {
-                                    print("error sending media DataService#sendMedia: \(error.localizedDescription)")
-                                }
+            print("sucess sending message")
+        }
+        
+        let uid = NSUUID().uuidString
+        let ref = self.storageRef.child("\(uid).jpg")
+        
+        //add thumbnail
+        if let videoURL = videoURL {
+            let asset = AVURLAsset(url: videoURL, options: nil)
+            let imgGenerator = AVAssetImageGenerator(asset: asset)
+            imgGenerator.appliesPreferredTrackTransform = true
+            do {
+                let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+                let uiImage = UIImage(cgImage: cgImage)
+                _ = ref.putData(UIImageJPEGRepresentation(uiImage, 0.5)!, metadata: nil, completion: {(metadata, error) in
+                    if let error  = error {
+                        print("error: \(error.localizedDescription))")
+                    } else {
+                        let downloadURL = metadata?.downloadURL()
+                        self.mainRef.child("ropesIP").child(id).child("thumbnail").child(key).setValue(downloadURL?.absoluteString){
+                            error, databaseReference in
+                            
+                            if let error = error  {
+                                print("error sending media DataService#sendMedia: \(error.localizedDescription)")
                             }
                         }
-                    })
-                } catch {
-                    print("thumbnail error: \(error)")
-                }
+                    }
+                })
+            } catch {
+                print("thumbnail error: \(error)")
             }
-        
-        
-        
-        
-        
+        }
         
     }
 }

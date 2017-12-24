@@ -130,7 +130,7 @@ class CameraViewController: UIViewController {
         
         //record gesture
         longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
-        longpress.minimumPressDuration = 0.2
+        longpress.minimumPressDuration = 0.0
         
         //perform necessary setup for camera view
         setupCamera()
@@ -443,6 +443,8 @@ class CameraViewController: UIViewController {
     
     @IBAction func sendMedia(_ sender: Any) {
         showCamera()
+        UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
+        
         currentRope.contribution! += 1
         knotCountLabel.text = "\(5 - currentRope.contribution!)"
         DataService.instance.updateContribution(currentRope.id!, currentRope.contribution!)
@@ -460,9 +462,9 @@ class CameraViewController: UIViewController {
             let data = NSData(contentsOf: videoURL as URL)!
             print("File size before compression: \(Double(data.length / 1048576)) mb")
             let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".m4v")
-            UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
-            DispatchQueue.global(qos: .background).async {
-                
+            
+            //DispatchQueue.global(qos: .background).async {
+                print("starting task")
                 self.compressVideo(inputURL: videoURL, outputURL: compressedURL) { (exportSession) in
                     guard let session = exportSession else {
                         print("export session cmopression failed")
@@ -470,11 +472,14 @@ class CameraViewController: UIViewController {
                     }
                     
                     switch session.status {
+                        
                     case .completed:
+                        
                         guard let compressedData = NSData(contentsOf: (exportSession?.outputURL!)!) else {
                             print("compress data failed")
                             return
                         }
+                        
                         let videoName = "\(NSUUID().uuidString)\((exportSession?.outputURL!)!)"
                         let ref = DataService.instance.storageRef.child(videoName)
                         _ = ref.putFile(from: (exportSession?.outputURL!)!, metadata: nil, completion: { (metadata, error) in
@@ -486,13 +491,15 @@ class CameraViewController: UIViewController {
                                 self.videoURL = nil
                             }
                         })
+                        
                         print("File size after compression: \(Double(compressedData.length / 1048576)) mb")
+                        
                     default:
                         print("error compressing")
                         break
                     }
                 }
-            }
+            //}
         }
         
     }

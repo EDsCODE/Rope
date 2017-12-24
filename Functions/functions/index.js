@@ -30,10 +30,10 @@ exports.setRopeComplete = functions.https.onRequest((req,res) => {
 					ropesIP_ref.child(rope.key).remove();
 				} else {
 					var numberOfPeople = 0;
-					ropesIP_ref.child('participants').forEach(function(participant) {
+					rope.child('participants').forEach(function(participant) {
 						users_ref.child(participant.key).child('ropeIP').set(false);
 						numberOfPeople++;
-						if (numberOfPeople == ropesIP_ref.child('participants').length) {
+						if (numberOfPeople == rope.child('participants').numChildren()) {
 							ropesIP_ref.child(rope.key).remove();
 						}
 					})
