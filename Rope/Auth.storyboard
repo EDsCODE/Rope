@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Nunito-Bold.ttf">
+            <string>Nunito-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="SHz-Ah-Yye">
@@ -47,57 +52,6 @@
             </objects>
             <point key="canvasLocation" x="1262" y="-21"/>
         </scene>
-        <!--First Name View Controller-->
-        <scene sceneID="3Eo-v7-CBM">
-            <objects>
-                <viewController id="UQb-7s-C2n" customClass="FirstNameViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Xgl-Wa-5Lg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="Zap-he-tfz"/>
-                    </view>
-                    <connections>
-                        <segue destination="dmX-o5-NEU" kind="show" identifier="lastNameSegue" id="sgt-Dp-10S"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WdU-tb-9aj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3162" y="-306"/>
-        </scene>
-        <!--Last Name View Controller-->
-        <scene sceneID="ySI-5t-MFt">
-            <objects>
-                <viewController id="dmX-o5-NEU" customClass="LastNameViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Fxa-o1-GHe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="FMi-EU-nz9"/>
-                    </view>
-                    <connections>
-                        <segue destination="ryI-PN-Wi7" kind="show" identifier="ageViewSegue" id="cJq-rW-KOa"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0GO-h2-h9y" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4122" y="-306"/>
-        </scene>
-        <!--Age View Controller-->
-        <scene sceneID="JyR-SI-zCh">
-            <objects>
-                <viewController id="ryI-PN-Wi7" customClass="AgeViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="UcA-bZ-CHz">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="0wW-gg-NoO"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9gC-Ot-Wip" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5026" y="-306"/>
-        </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="d9g-Ee-FKh">
             <objects>
@@ -110,12 +64,54 @@
                     </view>
                     <navigationItem key="navigationItem" id="Spc-CC-uWp"/>
                     <connections>
-                        <segue destination="UQb-7s-C2n" kind="show" identifier="firstNameSegue" id="AkI-vg-VrO"/>
+                        <segue destination="JKe-mD-CPu" kind="show" identifier="segueToOnboarding" id="W3R-yM-X28"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOi-Ff-8Yz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2302" y="-306"/>
+            <point key="canvasLocation" x="2207" y="-21"/>
+        </scene>
+        <!--Onboarding View Controller-->
+        <scene sceneID="FWR-dz-Lqe">
+            <objects>
+                <viewController id="JKe-mD-CPu" customClass="OnboardingViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="d90-Ed-IfP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Gs-l4-NXM" customClass="PaperOnboarding" customModule="paper_onboarding">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TXu-M6-sgL">
+                                <rect key="frame" x="108" y="500" width="158" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="22"/>
+                                <state key="normal" title="GET STARTED">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="goToMainView:" destination="JKe-mD-CPu" eventType="touchUpInside" id="c2S-f3-Z6B"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3Gs-l4-NXM" firstAttribute="top" secondItem="iRQ-EZ-8vm" secondAttribute="top" id="8Ja-y8-xLC"/>
+                            <constraint firstItem="iRQ-EZ-8vm" firstAttribute="bottom" secondItem="3Gs-l4-NXM" secondAttribute="bottom" id="KFK-s7-TGN"/>
+                            <constraint firstItem="3Gs-l4-NXM" firstAttribute="leading" secondItem="iRQ-EZ-8vm" secondAttribute="leading" id="k0w-1c-zvB"/>
+                            <constraint firstItem="iRQ-EZ-8vm" firstAttribute="trailing" secondItem="3Gs-l4-NXM" secondAttribute="trailing" id="uH2-E6-dDP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iRQ-EZ-8vm"/>
+                    </view>
+                    <connections>
+                        <outlet property="onboardingView" destination="3Gs-l4-NXM" id="V83-RG-NYQ"/>
+                        <outlet property="startButton" destination="TXu-M6-sgL" id="mDk-eR-ahV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Yl-Ce-mlo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3176.8000000000002" y="-21.139430284857571"/>
         </scene>
         <!--Phone Number View Controller-->
         <scene sceneID="BsR-cg-bNQ">

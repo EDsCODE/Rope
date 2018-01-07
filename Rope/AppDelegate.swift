@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import UserNotifications
+import Fabric
+import Crashlytics
 
 
 @UIApplicationMain
@@ -20,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+        Fabric.with([Crashlytics.self])
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self

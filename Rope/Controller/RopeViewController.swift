@@ -106,7 +106,6 @@ class RopeViewController: UIViewController {
                             
                             let index = self.ropes.insertionIndexOf(elem: _rope) { $0.expirationDate > $1.expirationDate }
                             self.ropes.insert(_rope, at: index)
-                            print(self.initialLoadComplete)
                             if self.ropes.count == ropeData.count {
                                 self.initialLoadComplete = true
                                 self.ropeCollectionView.reloadData()
@@ -440,7 +439,6 @@ extension RopeViewController: UICollectionViewDelegate {
             self.initialLoadComplete == true) {
             self.loadingMore = true
             self.loadmore()
-            print("loading more")
         }
     }
     

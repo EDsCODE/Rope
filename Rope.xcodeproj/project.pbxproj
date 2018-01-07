@@ -16,6 +16,10 @@
 		1A1785301FA0C85C00427741 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A17852F1FA0C85C00427741 /* Assets.xcassets */; };
 		1A1785331FA0C85C00427741 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A1785311FA0C85C00427741 /* LaunchScreen.storyboard */; };
 		1A17853B1FA0C8DC00427741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A17853A1FA0C8DC00427741 /* GoogleService-Info.plist */; };
+		1A1B51491FFC1E9200B1B073 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1B51481FFC1E9200B1B073 /* WebViewController.swift */; };
+		1A1B514E1FFC3E7900B1B073 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1B514C1FFC3E7800B1B073 /* Crashlytics.framework */; };
+		1A1B514F1FFC3E7900B1B073 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1B514D1FFC3E7900B1B073 /* Fabric.framework */; };
+		1A1B51511FFC65F900B1B073 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1B51501FFC65F900B1B073 /* OnboardingViewController.swift */; };
 		1A4BE17A1FAA2199001EEB15 /* RopeIPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4BE1791FAA2199001EEB15 /* RopeIPCell.swift */; };
 		1A5576251FA0DD93001D404D /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5576241FA0DD93001D404D /* Auth.storyboard */; };
 		1A5576271FA0DFB2001D404D /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */; };
@@ -70,6 +74,10 @@
 		1A1785321FA0C85C00427741 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1A1785341FA0C85C00427741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A17853A1FA0C8DC00427741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1A1B51481FFC1E9200B1B073 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		1A1B514C1FFC3E7800B1B073 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
+		1A1B514D1FFC3E7900B1B073 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		1A1B51501FFC65F900B1B073 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		1A4BE1791FAA2199001EEB15 /* RopeIPCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RopeIPCell.swift; sourceTree = "<group>"; };
 		1A5576241FA0DD93001D404D /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
@@ -120,7 +128,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A1B514E1FFC3E7900B1B073 /* Crashlytics.framework in Frameworks */,
 				09D85CBE43E06E1B57DB6FA3 /* Pods_Rope.framework in Frameworks */,
+				1A1B514F1FFC3E7900B1B073 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +212,7 @@
 				1A905AF01FCBC027000C5CE1 /* RopeIPDetailViewController.swift */,
 				1A905AF21FCC6331000C5CE1 /* ScannerViewController.swift */,
 				1ABECFC31FDC86AF004719ED /* SettingsTableViewController.swift */,
+				1A1B51481FFC1E9200B1B073 /* WebViewController.swift */,
 				1A72EE191FA22B810048A45F /* Auth */,
 			);
 			path = Controller;
@@ -214,6 +225,7 @@
 				1A5576261FA0DFB2001D404D /* PhoneNumberViewController.swift */,
 				1A72EE1C1FA2320F0048A45F /* VerificationViewController.swift */,
 				1AC03DFA1FB10C8E00158752 /* SignUpViewController.swift */,
+				1A1B51501FFC65F900B1B073 /* OnboardingViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -221,6 +233,8 @@
 		1AC03DFF1FB1453B00158752 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1A1B514C1FFC3E7800B1B073 /* Crashlytics.framework */,
+				1A1B514D1FFC3E7900B1B073 /* Fabric.framework */,
 				1AD5CC2E1FB5595D00A01C2E /* Fonts */,
 				1AC03E001FB1454500158752 /* DataService.swift */,
 			);
@@ -280,6 +294,7 @@
 				1A1785231FA0C85C00427741 /* Resources */,
 				F0A995B0BDEF0B735E08C141 /* [CP] Embed Pods Frameworks */,
 				54E5AC46F2C1696D0048FC64 /* [CP] Copy Pods Resources */,
+				1A1B514A1FFC3E3400B1B073 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -365,6 +380,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1A1B514A1FFC3E3400B1B073 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 02716321c527cacae8630f5b1fc7d56c0d7a17c2 5dde39b13f638f3f1a30dacf5a8b2576267af63fcb2ad1e92babbc68ab49947e";
+		};
 		54E5AC46F2C1696D0048FC64 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -428,10 +456,12 @@
 				1AF5D0D21FC5E05D00BDF886 /* Media.swift in Sources */,
 				1AB5FFA31FB014C000EC8780 /* PreviewView.swift in Sources */,
 				1AB5FFA71FB0B36B00EC8780 /* RopeCell.swift in Sources */,
+				1A1B51491FFC1E9200B1B073 /* WebViewController.swift in Sources */,
 				1AB5FFA51FB0B01400EC8780 /* RopeViewController.swift in Sources */,
 				1AE1C13D1FB3AB3200A158ED /* Rope.swift in Sources */,
 				1A72EE1D1FA2320F0048A45F /* VerificationViewController.swift in Sources */,
 				1A1785291FA0C85C00427741 /* AppDelegate.swift in Sources */,
+				1A1B51511FFC65F900B1B073 /* OnboardingViewController.swift in Sources */,
 				1ABECFC41FDC86AF004719ED /* SettingsTableViewController.swift in Sources */,
 				1AE1C13F1FB3ABCB00A158ED /* RopeIP.swift in Sources */,
 				1AB5FFA11FAFAFEB00EC8780 /* NewRopeViewController.swift in Sources */,
@@ -581,7 +611,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Rope/Rope.entitlements;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = S59K556BAM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Rope/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -600,7 +635,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Rope/Rope.entitlements;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = S59K556BAM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Rope/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -21,7 +21,7 @@ class RopeIPDetailViewController: UIViewController {
         self.view.backgroundColor = UIColor(displayP3Red: 42.0/255.0, green: 42.0/255.0, blue: 42.0/255.0, alpha: 1)
         
         ropeLogo.isHidden = true
-        let image = generateQRCode(from: ropeIP.id!)
+        let image = generateQRCode(from: ropeIP.id)
         qrImageView.image = image
         
         // Do any additional setup after loading the view.

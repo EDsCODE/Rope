@@ -204,10 +204,7 @@ class SignUpViewController: UIViewController {
                 } else {
                     DataService.instance.saveUser(uid: user, completion: { (finished) in
                         if finished {
-                            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-                            let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainView")
-                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                            appDelegate.window?.rootViewController = mainViewController
+                            self.performSegue(withIdentifier: "segueToOnboarding", sender: self)
                         } else {
                             print("saving went wrong")
                         }

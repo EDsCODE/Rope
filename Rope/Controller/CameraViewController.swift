@@ -10,12 +10,11 @@ import UIKit
 import AVFoundation
 import Firebase
 import Compression
+import PromiseKit
 
-struct RopeRequest {
-    var key: String
-    var sender: String
-    var sentDate: Int
-    var title: String
+enum CustomError : Error {
+    case unwrap
+    case thumbnailFail
 }
 
 class CameraViewController: UIViewController {
@@ -25,11 +24,11 @@ class CameraViewController: UIViewController {
     var isRecording = false
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var sendButton: UIButton!
-    var currentRope: RopeIP!
+    var currentRope: RopeIP?
     var imageData: Data?
     var videoURL: URL?
     
-    var ropeNotifs = [RopeRequest]()
+    var progressDict: [String: Int] = [:]
     
     var longpress: UILongPressGestureRecognizer!
     var tap: UITapGestureRecognizer!
@@ -133,7 +132,25 @@ class CameraViewController: UIViewController {
         longpress.minimumPressDuration = 0.0
         
         //perform necessary setup for camera view
-        setupCamera()
+        if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
+            setupCamera()
+        } else {
+            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted: Bool) -> Void in
+                if granted == true {
+                    DispatchQueue.main.async {
+                        self.setupCamera()
+                    }
+                } else {
+                    let alert = UIAlertController(title: nil, message: "This app requires access to your camera to proceed. Please open settings and grant permission to camera.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+                        UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                    })
+                    self.present(alert, animated: true, completion: nil)
+                }
+            })
+        }
+        
+        
         
         //determine if current user is in a Rope
         determineRopeInProgress()
@@ -265,15 +282,12 @@ class CameraViewController: UIViewController {
         self.removeGestures()
         self.promptPanel.isHidden = false
         self.navigationController?.navigationBar.topItem?.title = "Knot"
-        if self.ropeNotifs.count == 0 {
-            self.view.bringSubview(toFront: self.promptPanel)
-            self.promptText.isHidden = false
-        } else {
-            self.promptText.isHidden = true
-        }
+        self.view.bringSubview(toFront: self.promptPanel)
+        self.promptText.isHidden = false
         
-        let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "join-1"), style: .plain, target: self, action: #selector(self.showScanner(_:)))
+        let leftbutton = UIBarButtonItem(image:#imageLiteral(resourceName: "qrcode"), style: .plain, target: self, action: #selector(self.showScanner(_:)))
         self.navigationItem.leftBarButtonItem  = leftbutton
+        
         
         let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus_test"), style: .plain, target: self, action: #selector(self.segueToNewRope(_:)))
         self.navigationItem.rightBarButtonItem = rightbutton
@@ -282,8 +296,6 @@ class CameraViewController: UIViewController {
     }
     
     func determineRopeInProgress() {
-        
-        currentRope = RopeIP()
         
         DataService.instance.usersRef.child((Auth.auth().currentUser?.uid)!).child("ropeIP").observe(.value, with: { (snapshot) in
             
@@ -296,17 +308,18 @@ class CameraViewController: UIViewController {
                 
                 let leftbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "leaveRope"), style: .plain, target: self, action: #selector(self.leaveRope(_:)))
                 self.navigationItem.leftBarButtonItem  = leftbutton
-                let rightbutton = UIBarButtonItem(image: #imageLiteral(resourceName: "edit"), style: .plain, target: self, action:#selector(self.showRopeIPDetails(_:)))
+                let rightbutton = UIBarButtonItem(image:#imageLiteral(resourceName: "qrcode"), style: .plain, target: self, action:#selector(self.showRopeIPDetails(_:)))
                 self.navigationItem.rightBarButtonItem = rightbutton
                 
                 //set currentRope details
                 if let dictionary = snapshot.value as? Dictionary<String, AnyObject> {
-                    self.currentRope.id = dictionary.keys.first!
-                    self.currentRope.expirationDate = dictionary[dictionary.keys.first!]!["expirationDate"] as? Int
-                    self.currentRope.title = dictionary[dictionary.keys.first!]!["title"] as? String
-                    self.currentRope.role = dictionary[dictionary.keys.first!]!["role"] as? Int
-                    self.currentRope.contribution = dictionary[dictionary.keys.first!]!["contribution"] as? Int
-                    self.knotCountLabel.text = "\(5 - self.currentRope.contribution!)"
+                    let id = dictionary.keys.first!
+                    let expirationDate = dictionary[dictionary.keys.first!]!["expirationDate"] as! Int
+                    let title = dictionary[dictionary.keys.first!]!["title"] as! String
+                    let role = dictionary[dictionary.keys.first!]!["role"] as! Int
+                    let contribution = dictionary[dictionary.keys.first!]!["contribution"] as! Int
+                    self.currentRope = RopeIP(expirationDate: expirationDate, participants: [], title: title, id: id, role: role, contribution: contribution)
+                    self.knotCountLabel.text = "\(5 - contribution)"
                 }
                 
                 self.showCamera()
@@ -331,6 +344,8 @@ class CameraViewController: UIViewController {
         let alert = UIAlertController(title: "Leaving Rope", message: "Are you sure you want to leave this Rope?", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
             DataService.instance.leaveCurrentRope()
+            self.currentRope = nil
+            self.progressDict = [:]
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -425,82 +440,160 @@ class CameraViewController: UIViewController {
         showCamera()
     }
     
-    func compressVideo(inputURL: URL, outputURL: URL, handler:@escaping (_ exportSession: AVAssetExportSession?)-> Void) {
+//    func compressVideo(inputURL: URL, outputURL: URL, handler:@escaping (_ exportSession: AVAssetExportSession?)-> Void) {
+//        let urlAsset = AVURLAsset(url: inputURL, options: nil)
+//        guard let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPreset960x540) else {
+//            handler(nil)
+//
+//            return
+//        }
+//
+//        exportSession.outputURL = outputURL
+//        exportSession.outputFileType = AVFileType.mov
+//        exportSession.shouldOptimizeForNetworkUse = true
+//        exportSession.exportAsynchronously { () -> Void in
+//            handler(exportSession)
+//        }
+//    }
+    
+    func compressVideo(inputURL: URL, outputURL: URL) -> Promise<AVAssetExportSession> {
         let urlAsset = AVURLAsset(url: inputURL, options: nil)
         guard let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPreset960x540) else {
-            handler(nil)
-            
-            return
+            return Promise(error: CustomError.unwrap)
         }
-        
-        exportSession.outputURL = outputURL
-        exportSession.outputFileType = AVFileType.mov
-        exportSession.shouldOptimizeForNetworkUse = true
-        exportSession.exportAsynchronously { () -> Void in
-            handler(exportSession)
+        return Promise { fulfill, reject in
+            exportSession.outputURL = outputURL
+            exportSession.outputFileType = AVFileType.mov
+            exportSession.shouldOptimizeForNetworkUse = true
+            exportSession.exportAsynchronously { () -> Void in
+                if let err = exportSession.error {
+                    reject(err)
+                } else {
+                    fulfill(exportSession)
+                }
+            }
+        }
+    }
+    
+    func uploadFile(url: URL) -> Promise<URL> {
+        let videoName = "\(NSUUID().uuidString)\((url))"
+        let ref = DataService.instance.storageRef.child(videoName)
+        return Promise { fulfill, reject in
+            _ = ref.putFile(from: url, metadata: nil, completion: { (metadata, error) in
+                if let error = error {
+                    reject(error)
+                } else {
+                    let downloadURL = metadata!.downloadURL()
+                    fulfill(downloadURL!)
+                }
+            })
+            
         }
     }
     
     @IBAction func sendMedia(_ sender: Any) {
         showCamera()
-        UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
+        let task = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
         
-        currentRope.contribution! += 1
-        knotCountLabel.text = "\(5 - currentRope.contribution!)"
-        DataService.instance.updateContribution(currentRope.id!, currentRope.contribution!)
+        currentRope!.contribution += 1
+        knotCountLabel.text = "\(5 - currentRope!.contribution)"
+        DataService.instance.updateContribution(currentRope!.id, currentRope!.contribution)
         
-        print(currentRope.contribution!)
+        print(currentRope!.contribution)
         
-        let copyRopeIP = self.currentRope.copy() as! RopeIP
-        if currentRope.contribution! >= 5 {
+        let copyRopeIP = self.currentRope!.copy() as! RopeIP
+        if let videoURL = self.videoURL {
+            let asset = AVURLAsset(url: videoURL, options: nil)
+            let imgGenerator = AVAssetImageGenerator(asset: asset)
+            imgGenerator.appliesPreferredTrackTransform = true
+            do {
+                let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+                let thumbnail = UIImage(cgImage: cgImage)
+                let data = NSData(contentsOf: videoURL as URL)!
+                let key = DataService.instance.mainRef.childByAutoId().key
+                if self.currentRope != nil {
+                    self.progressDict[key] = 0
+                    print(self.progressDict)
+                }
+                print("File size before compression: \(Double(data.length / 1048576)) mb")
+                
+                let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".m4v")
+                print("starting task")
+                
+                //promise chain for compressing/uploading/updating
+                    self.compressVideo(inputURL: videoURL, outputURL: compressedURL)
+                        .then{ exportSession -> Promise<URL> in
+                            self.uploadFile(url: exportSession.outputURL!)
+                        }.then{ downloadURL -> Promise<Bool> in
+                            return DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL, mediaType: "video", ropeIP: copyRopeIP, thumbnailImage: thumbnail, key: key)
+                        }.then{ _ -> Void in
+                            UIApplication.shared.endBackgroundTask(task)
+                            DispatchQueue.main.async {
+                                if let rope = self.currentRope {
+                                    rope.printdetail()
+                                    self.progressDict[key] = 1
+                                }
+                                print(self.progressDict)
+                                print("Successfully uploaded knot")
+                            }
+                        }.catch{ error -> Void in
+                            print(error)
+                            if let _ = self.currentRope{
+                                self.progressDict[key] = -1
+                            }
+                    }
+                
+            } catch {
+                print("Thumbnail Fail")
+            }
+        }
+        if currentRope!.contribution >= 5 {
+            print("leaving")
             self.view.removeGestureRecognizer(longpress)
             self.noRopeIPLayout()
-            DataService.instance.leaveCurrentRope()
+            DispatchQueue.main.async {
+                self.currentRope = nil
+                DataService.instance.leaveCurrentRope()
+                self.progressDict = [:]
+            }
         }
-        
-        if let videoURL = videoURL {
-            let data = NSData(contentsOf: videoURL as URL)!
-            print("File size before compression: \(Double(data.length / 1048576)) mb")
-            let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".m4v")
-            
             //DispatchQueue.global(qos: .background).async {
-                print("starting task")
-                self.compressVideo(inputURL: videoURL, outputURL: compressedURL) { (exportSession) in
-                    guard let session = exportSession else {
-                        print("export session cmopression failed")
-                        return
-                    }
-                    
-                    switch session.status {
-                        
-                    case .completed:
-                        
-                        guard let compressedData = NSData(contentsOf: (exportSession?.outputURL!)!) else {
-                            print("compress data failed")
-                            return
-                        }
-                        
-                        let videoName = "\(NSUUID().uuidString)\((exportSession?.outputURL!)!)"
-                        let ref = DataService.instance.storageRef.child(videoName)
-                        _ = ref.putFile(from: (exportSession?.outputURL!)!, metadata: nil, completion: { (metadata, error) in
-                            if let error = error {
-                                print("error: \(error.localizedDescription)")
-                            } else {
-                                let downloadURL = metadata?.downloadURL()
-                                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: copyRopeIP, videoURL: (exportSession?.outputURL!)!, image: nil)
-                                self.videoURL = nil
-                            }
-                        })
-                        
-                        print("File size after compression: \(Double(compressedData.length / 1048576)) mb")
-                        
-                    default:
-                        print("error compressing")
-                        break
-                    }
-                }
+//                print("starting task")
+//                self.compressVideo(inputURL: videoURL, outputURL: compressedURL) { (exportSession) in
+//                    guard let session = exportSession else {
+//                        print("export session cmopression failed")
+//                        return
+//                    }
+//
+//                    switch session.status {
+//
+//                    case .completed:
+//
+//                        guard let compressedData = NSData(contentsOf: (exportSession?.outputURL!)!) else {
+//                            print("compress data failed")
+//                            return
+//                        }
+//
+//                        let videoName = "\(NSUUID().uuidString)\((exportSession?.outputURL!)!)"
+//                        let ref = DataService.instance.storageRef.child(videoName)
+//                        _ = ref.putFile(from: (exportSession?.outputURL!)!, metadata: nil, completion: { (metadata, error) in
+//                            if let error = error {
+//                                print("error: \(error.localizedDescription)")
+//                            } else {
+//                                let downloadURL = metadata?.downloadURL()
+//                                    DataService.instance.sendMedia(senderID: (Auth.auth().currentUser?.uid)!, mediaURL: downloadURL!, mediaType: "video", ropeIP: copyRopeIP, videoURL: (exportSession?.outputURL!)!, image: nil)
+//                                self.videoURL = nil
+//                            }
+//                        })
+//
+//                        print("File size after compression: \(Double(compressedData.length / 1048576)) mb")
+//
+//                    default:
+//                        print("error compressing")
+//                        break
+//                    }
+//                }
             //}
-        }
         
     }
     
@@ -546,29 +639,28 @@ class CameraViewController: UIViewController {
     //default setup for camera view
     func showCamera() {
         
-        if let title = currentRope.title {
-            self.navigationItem.title = title
+        if let rope = self.currentRope {
+            self.navigationItem.title = rope.title
+            switch rope.role {
+                
+            case 0:
+                if !self.captureSession!.inputs.contains(self.frontCameraInput) {
+                    self.captureSession?.removeInput(self.backCameraInput)
+                    self.captureSession?.addInput(self.frontCameraInput)
+                }
+                self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
+            case 1:
+                if !self.captureSession!.inputs.contains(self.backCameraInput) {
+                    self.captureSession?.removeInput(self.frontCameraInput)
+                    self.captureSession?.addInput(self.backCameraInput)
+                }
+                self.roleButton.setImage(#imageLiteral(resourceName: "videolandscape").withRenderingMode(.alwaysTemplate), for: .normal)
+            default:
+                print("error setting up camera")
+            }
         }
         
         self.view.addGestureRecognizer(longpress)
-        
-        switch self.currentRope.role! {
-            
-        case 0:
-            if !self.captureSession!.inputs.contains(self.frontCameraInput) {
-                self.captureSession?.removeInput(self.backCameraInput)
-                self.captureSession?.addInput(self.frontCameraInput)
-            }
-            self.roleButton.setImage(#imageLiteral(resourceName: "videoselfie").withRenderingMode(.alwaysTemplate), for: .normal)
-        case 1:
-            if !self.captureSession!.inputs.contains(self.backCameraInput) {
-                self.captureSession?.removeInput(self.frontCameraInput)
-                self.captureSession?.addInput(self.backCameraInput)
-            }
-            self.roleButton.setImage(#imageLiteral(resourceName: "videolandscape").withRenderingMode(.alwaysTemplate), for: .normal)
-        default:
-            print("error setting up camera")
-        }
         
         previewView.isHidden = true
         previewView.removeExistingContent()

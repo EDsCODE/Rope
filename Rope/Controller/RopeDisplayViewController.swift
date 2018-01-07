@@ -146,7 +146,6 @@ class RopeDisplayViewController: UIViewController {
             thumbnailSpinner.layer.removeAllAnimations()
             displayRope(currentIndex)
             if let media = object as? Media {
-                print("removing observer")
                 media.removeObserver(self, forKeyPath: "loadState")
             }
         }
@@ -157,12 +156,10 @@ class RopeDisplayViewController: UIViewController {
     }
     
     func displayRope(_ index: Int) {
-        print("displaying \(currentIndex)")
         if index < rope.media.count - 1 && index >= -1 && self.rope.media[index + 1].loadState == .unloaded {
             self.rope.media[index + 1].load(completion: { (loaded) in
                 if loaded {
                     self.rope.media[index + 1].loadState = .loaded
-                    print("media at \(index + 1) loaded")
                 }
             })
         }
@@ -225,7 +222,8 @@ class RopeDisplayViewController: UIViewController {
                 let startDate = Date(timeIntervalSince1970: Double(rope.media[0].sentDate / 1000))
                 let endDate = Date(timeIntervalSince1970: Double(rope.media[rope.media.count - 1].sentDate / 1000))
                 let dayTimePeriodFormatter = DateFormatter()
-                dayTimePeriodFormatter.dateFormat = "MMMM dd, YYYY"
+                dayTimePeriodFormatter.dateFormat = "MMMM dd, yyyy"
+                dayTimePeriodFormatter.timeZone = TimeZone.current
                 let startdateString = dayTimePeriodFormatter.string(from: startDate)
                 let enddateString = dayTimePeriodFormatter.string(from: endDate)
                 timeLabel.text = (startdateString == enddateString) ? "\(startdateString)": "\(startdateString) - \(enddateString)"

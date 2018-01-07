@@ -11,7 +11,9 @@ target 'Rope' do
 	pod 'Firebase/Messaging'
 	pod 'PhoneNumberKit'
 	pod 'KSTokenView', '~> 4.0'
+	pod "PromiseKit", "~> 4.4"
 	pod 'SkyFloatingLabelTextField', '~> 3.0'
+	pod 'paper-onboarding'
 
   
   # Pods for Rope

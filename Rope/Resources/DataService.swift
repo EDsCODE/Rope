@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import AVFoundation
+import PromiseKit
 
 class DataService {
     private static let _instance = DataService()
@@ -58,26 +59,25 @@ class DataService {
                 return
             }
             completion(true)
-            print("saved user successfully")
         }
         self.mainRef.child("usernames").child(CurrentUser.username.lowercased()).setValue(uid)
     }
     
-    func initialFetchRopesIP(completion: @escaping (_ ropeIP: RopeIP) -> Void) {
-        print("fetching ropes")
-        if let currentUser = Auth.auth().currentUser {
-            mainRef.child("users").child(currentUser.uid).child("ropeIP").observe(.childAdded, with: {(snapshot) in
-                    self.mainRef.child("ropesIP").child(snapshot.key).observeSingleEvent(of: .value, with: { (ropeshot) in
-                        let _ropeIP = RopeIP()
-                        _ropeIP.id = snapshot.key
-                        _ropeIP.expirationDate = ropeshot.childSnapshot(forPath: "expirationDate").value as? Int
-                        _ropeIP.title = ropeshot.childSnapshot(forPath: "title").value as? String
-                        _ropeIP.contribution = ropeshot.childSnapshot(forPath: "contribution").value as? Int
-                        completion(_ropeIP)
-                    })
-            })
-        }
-    }
+//    func initialFetchRopesIP(completion: @escaping (_ ropeIP: RopeIP) -> Void) {
+//        print("fetching ropes")
+//        if let currentUser = Auth.auth().currentUser {
+//            mainRef.child("users").child(currentUser.uid).child("ropeIP").observe(.childAdded, with: {(snapshot) in
+//                    self.mainRef.child("ropesIP").child(snapshot.key).observeSingleEvent(of: .value, with: { (ropeshot) in
+//                        let _ropeIP = RopeIP()
+//                        _ropeIP.id = snapshot.key
+//                        _ropeIP.expirationDate = ropeshot.childSnapshot(forPath: "expirationDate").value as? Int
+//                        _ropeIP.title = ropeshot.childSnapshot(forPath: "title").value as? String
+//                        _ropeIP.contribution = ropeshot.childSnapshot(forPath: "contribution").value as? Int
+//                        completion(_ropeIP)
+//                    })
+//            })
+//        }
+//    }
     
     func updateContribution(_ ropeIPkey: String, _ contribution: Int) {
         mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropeIP").child(ropeIPkey).child("contribution").setValue(contribution)
@@ -158,56 +158,40 @@ class DataService {
         mainRef.child("users").child((Auth.auth().currentUser?.uid)!).child("ropes").child(ropeID).child("viewed").setValue(true)
     }
     
-    func sendMedia(senderID: String, mediaURL: URL, mediaType: String, ropeIP: RopeIP, videoURL: URL?, image: Data?){
+    func sendMedia(senderID: String, mediaURL: URL, mediaType: String, ropeIP: RopeIP, thumbnailImage: UIImage, key: String) -> Promise<Bool>{
         
-        let key = mainRef.childByAutoId().key
-        let id = ropeIP.id!
-        let date = Date()
-        print("sending media")
-        let pr: Dictionary<String, AnyObject> = ["mediaType": mediaType as AnyObject,
-                                                 "mediaURL" : mediaURL.absoluteString as AnyObject,
-                                                 "sentDate": Int(date.timeIntervalSince1970 * 1000) as AnyObject,
-                                                 "senderID": senderID as AnyObject,
-                                                 "senderName": "\(CurrentUser.firstname) \(CurrentUser.lastname)" as AnyObject]
-
-        self.mainRef.child("ropesIP").child(id).child("media").child(key).updateChildValues(pr){
-            error, databaseReference in
-            if let error = error  {
-                print("error sending media DataService#sendMedia: \(error.localizedDescription)")
-            }
-            print("sucess sending message")
-        }
+        // Do a deep-path update
         
-        let uid = NSUUID().uuidString
-        let ref = self.storageRef.child("\(uid).jpg")
-        
-        //add thumbnail
-        if let videoURL = videoURL {
-            let asset = AVURLAsset(url: videoURL, options: nil)
-            let imgGenerator = AVAssetImageGenerator(asset: asset)
-            imgGenerator.appliesPreferredTrackTransform = true
-            do {
-                let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
-                let uiImage = UIImage(cgImage: cgImage)
-                _ = ref.putData(UIImageJPEGRepresentation(uiImage, 0.5)!, metadata: nil, completion: {(metadata, error) in
+        return Promise { fulfill, reject in
+                let uid = NSUUID().uuidString
+                let ref = self.storageRef.child("\(uid).jpg")
+                let uploadTask = ref.putData(UIImageJPEGRepresentation(thumbnailImage, 0.5)!, metadata: nil, completion: {(metadata, error) in
                     if let error  = error {
+                        reject(error)
                         print("error: \(error.localizedDescription))")
                     } else {
                         let downloadURL = metadata?.downloadURL()
-                        self.mainRef.child("ropesIP").child(id).child("thumbnail").child(key).setValue(downloadURL?.absoluteString){
-                            error, databaseReference in
-                            
+                        let id = ropeIP.id
+                        let date = Date()
+                        let updatedMediaData = ["media/\(key)": ["mediaType": mediaType as AnyObject,
+                                                                 "mediaURL" : mediaURL.absoluteString as AnyObject,
+                                                                 "sentDate": Int(date.timeIntervalSince1970 * 1000) as AnyObject,
+                                                                 "senderID": senderID as AnyObject,
+                                                                 "senderName": "\(CurrentUser.firstname) \(CurrentUser.lastname)" as AnyObject],
+                                                "thumbnail/\(key)": downloadURL?.absoluteString as AnyObject] as [String : Any]
+                        self.mainRef.child("ropesIP").child(id).updateChildValues(updatedMediaData) {error, databaseReference in
                             if let error = error  {
+                                reject(error)
                                 print("error sending media DataService#sendMedia: \(error.localizedDescription)")
                             }
+                            fulfill(true)
                         }
                     }
                 })
-            } catch {
-                print("thumbnail error: \(error)")
+            _ = uploadTask.observe(.progress) { snapshot in
+                print(snapshot.progress!) // NSProgress object
             }
         }
-        
     }
 }
 

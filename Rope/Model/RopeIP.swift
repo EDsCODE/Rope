@@ -9,30 +9,29 @@
 import Foundation
 
 class RopeIP: NSObject, NSCopying {
-    var expirationDate: Int?
-    var participants: [User]?
-    var title: String?
-    var id: String?
-    var role: Int?
-    var contribution: Int?
+    var expirationDate: Int
+    var participants: [User]
+    var title: String
+    var id: String
+    var role: Int
+    var contribution: Int
+    
+    init(expirationDate: Int, participants: [User], title: String, id: String, role: Int, contribution: Int) {
+        self.expirationDate = expirationDate
+        self.participants = participants
+        self.title = title
+        self.id = id
+        self.role = role
+        self.contribution = contribution
+    }
     
     func printdetail() {
-        if let expiration = expirationDate {
-            print(expiration)
-        }
-        if let title = title {
-            print(title)
-        }
+        print(expirationDate)
+        print(title)
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = RopeIP()
-        copy.expirationDate = expirationDate
-        copy.participants = participants
-        copy.title = title
-        copy.id = id
-        copy.role = role
-        copy.contribution = contribution
+        let copy = RopeIP(expirationDate: expirationDate, participants: participants, title: title, id: id, role: role, contribution: contribution)
         return copy
     }
     

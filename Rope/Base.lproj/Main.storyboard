@@ -51,13 +51,25 @@
                                     <action selector="cancel:" destination="JU1-ZX-elb" eventType="touchUpInside" id="5hK-yk-L8w"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow other Rope users to join this Rope by letting them scan this QR code" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFb-JK-1n8">
+                                <rect key="frame" x="15" y="325" width="345" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="aWL-uV-616"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="om0-IM-WOX" firstAttribute="top" secondItem="WDD-a7-vE7" secondAttribute="top" constant="5" id="0c5-LY-PrJ"/>
                             <constraint firstItem="grU-J4-TPI" firstAttribute="centerX" secondItem="WDD-a7-vE7" secondAttribute="centerX" id="2iy-zI-y7u"/>
                             <constraint firstItem="om0-IM-WOX" firstAttribute="leading" secondItem="WDD-a7-vE7" secondAttribute="leading" constant="20" id="5vB-Ag-hgm"/>
+                            <constraint firstItem="WDD-a7-vE7" firstAttribute="trailing" secondItem="sFb-JK-1n8" secondAttribute="trailing" constant="15" id="82d-a9-ydI"/>
                             <constraint firstItem="5zO-VB-4lU" firstAttribute="centerY" secondItem="grU-J4-TPI" secondAttribute="centerY" id="BYx-Qw-E4J"/>
+                            <constraint firstItem="sFb-JK-1n8" firstAttribute="leading" secondItem="WDD-a7-vE7" secondAttribute="leading" constant="15" id="CIq-kn-yRz"/>
+                            <constraint firstItem="sFb-JK-1n8" firstAttribute="top" secondItem="grU-J4-TPI" secondAttribute="bottom" constant="30" id="FWH-Te-D5e"/>
                             <constraint firstItem="5zO-VB-4lU" firstAttribute="width" secondItem="BVy-7e-DhZ" secondAttribute="width" multiplier="0.15" id="U8e-wp-EHo"/>
                             <constraint firstItem="grU-J4-TPI" firstAttribute="top" secondItem="WDD-a7-vE7" secondAttribute="top" constant="50" id="aHb-DC-T96"/>
                             <constraint firstItem="grU-J4-TPI" firstAttribute="width" secondItem="BVy-7e-DhZ" secondAttribute="width" multiplier="0.6" id="jEp-z2-Ehb"/>
@@ -159,7 +171,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square4" translatesAutoresizingMaskIntoConstraints="NO" id="SLW-FX-KWk">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square4" translatesAutoresizingMaskIntoConstraints="NO" id="SLW-FX-KWk">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xjk-To-NzT">
@@ -308,19 +320,19 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Zj-ht-HHA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1300" y="3084"/>
+            <point key="canvasLocation" x="-455" y="2985"/>
         </scene>
-        <!--Settings Table View Controller-->
+        <!--Settings-->
         <scene sceneID="gPo-eD-HLi">
             <objects>
                 <tableViewController id="x0M-My-M2Z" customClass="SettingsTableViewController" customModule="Rope" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="oEO-RZ-TYo">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="oEO-RZ-TYo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="5cS-pW-pnQ">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5cS-pW-pnQ" id="EDq-oh-Qex">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -333,6 +345,10 @@
                             <outlet property="delegate" destination="x0M-My-M2Z" id="4lD-bJ-OGW"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="aOX-Ps-frC"/>
+                    <connections>
+                        <segue destination="cyM-Pb-zY4" kind="show" identifier="showWebView" id="Ytg-ZF-4HA"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xsj-x5-Hz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -503,6 +519,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h8l-Z1-dqB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-455" y="532"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="Yed-1l-ZJa">
+            <objects>
+                <viewController id="cyM-Pb-zY4" customClass="WebViewController" customModule="PickSkip" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FCa-7F-puW"/>
+                        <viewControllerLayoutGuide type="bottom" id="fiv-Z2-hqu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a05-ch-5Nc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UHV-QD-iI2">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UHV-QD-iI2" firstAttribute="leading" secondItem="a05-ch-5Nc" secondAttribute="leading" id="3OL-RJ-ew2"/>
+                            <constraint firstItem="UHV-QD-iI2" firstAttribute="top" secondItem="FCa-7F-puW" secondAttribute="bottom" id="HeV-eh-Cdc"/>
+                            <constraint firstItem="fiv-Z2-hqu" firstAttribute="top" secondItem="UHV-QD-iI2" secondAttribute="bottom" id="Rz0-Cq-HTh"/>
+                            <constraint firstAttribute="trailing" secondItem="UHV-QD-iI2" secondAttribute="trailing" id="SeW-Cu-7B3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sVj-kA-umz"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="UHV-QD-iI2" id="89C-yP-yRU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Heo-Sh-iNC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1538" y="2193"/>
         </scene>
     </scenes>
     <resources>

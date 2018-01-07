@@ -48,7 +48,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             metadataOutput.metadataObjectTypes = metadataOutput.availableMetadataObjectTypes
-            print(metadataOutput.metadataObjectTypes)
         } else {
             failed()
             return
@@ -101,13 +100,30 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     func found(code: String) {
-        DataService.instance.join(ropeID: code, completion: { (result) in
-            if result {
-                self.dismiss(animated: false, completion: nil)
+        
+        DataService.instance.mainRef.child("ropesIP").observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.hasChild(code) {
+                DataService.instance.join(ropeID: code, completion: { (result) in
+                    if result {
+                        self.dismiss(animated: false, completion: nil)
+                    } else {
+                        self.codeNotValid()
+                    }
+                })
             } else {
-                self.captureSession.startRunning()
+                self.codeNotValid()
             }
+        }
+    }
+    
+    func codeNotValid() {
+        let alert = UIAlertController(title: "Invalid QR Code", message: "This is not a Rope QR code", preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel, handler: { (_) in
+            self.captureSession.startRunning()
         })
+        action.setValue(UIColor.black, forKey: "titleTextColor")
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func createOverlay(frame : CGRect) -> UIView
